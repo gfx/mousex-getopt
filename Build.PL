@@ -7,7 +7,7 @@ my $build = Module::Build->new(
     license => 'perl',
     requires => {   
         'Moose'        => '0.17',
-        'Getopt::Long' => '0',
+        'Getopt::Long' => '2.36',
     },
     optional => {
     },

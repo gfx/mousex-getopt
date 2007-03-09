@@ -4,49 +4,53 @@ use Moose::Role;
 
 use Getopt::Long;
 
-use MooseX::Getopt::OptionTypes;
+use MooseX::Getopt::OptionTypeMap;
 use MooseX::Getopt::Meta::Attribute;
+
+our $VERSION   = '0.01';
+our $AUTHORITY = 'cpan:STEVAN';
 
 sub new_with_options {
     my ($class, %params) = @_;
 
-    my (%options, %constructor_options);
+    my (@options, %name_to_init_arg);
     foreach my $attr ($class->meta->compute_all_applicable_attributes) {
         my $name = $attr->name;
         
         if ($attr->isa('MooseX::Getopt::Meta::Attribute') && $attr->has_cmd_flag) { 
             $name = $attr->cmd_flag;
-        }
+        }          
         
-        my $init_arg = $attr->init_arg;
-        
-        # create a suitable default value 
-        $constructor_options{$init_arg} = '';            
+        $name_to_init_arg{$name} = $attr->init_arg;        
         
         if ($attr->has_type_constraint) {
             my $type_name = $attr->type_constraint->name;
-            if (MooseX::Getopt::OptionTypes->has_option_type($type_name)) {                   
-                $name .= MooseX::Getopt::OptionTypes->get_option_type($type_name);
+            if (MooseX::Getopt::OptionTypeMap->has_option_type($type_name)) {                   
+                $name .= MooseX::Getopt::OptionTypeMap->get_option_type($type_name);
             }
         }
         
-        $options{$name} = \($constructor_options{$init_arg});
+        push @options => $name;
     }
 
-    GetOptions(%options);
+    my %options;
     
-    # filter out options which 
-    # were not passed at all
-    %constructor_options = map {
-        $constructor_options{$_} ne ''
-            ? ($_ => $constructor_options{$_})
-            : ()
-    } keys %constructor_options;
+    GetOptions(\%options, @options);
     
-    $class->new(%params, %constructor_options);
+    #use Data::Dumper;
+    #warn Dumper \@options;
+    #warn Dumper \%name_to_init_arg;
+    #warn Dumper \%options;
+    
+    $class->new(
+        %params, 
+        map { 
+            $name_to_init_arg{$_} => $options{$_} 
+        } keys %options
+    );
 }
 
-1;
+no Moose::Role; 1;
 
 __END__
 
@@ -54,7 +58,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Getopt - 
+MooseX::Getopt - A Moose role for processing command line options
 
 =head1 SYNOPSIS
 
@@ -82,13 +86,120 @@ MooseX::Getopt -
 
 =head1 DESCRIPTION
 
+This is a role which provides an alternate constructor for creating 
+objects using parameters passed in from the command line. 
+
+This module attempts to DWIM as much as possible with the command line 
+params by introspecting your class's attributes. It will use the name 
+of your attribute as the command line option, and if there is a type 
+constraint defined, it will configure Getopt::Long to handle the option
+accordingly. 
+
+=head2 Supported Type Constraints
+
+=over 4
+
+=item I<Bool>
+
+A I<Bool> type constraint is set up as a boolean option with 
+Getopt::Long. So that this attribute description:
+
+  has 'verbose' => (is => 'rw', isa => 'Bool');
+
+would translate into C<verbose!> as a Getopt::Long option descriptor, 
+which would enable the following command line options:
+
+  % my_script.pl --verbose
+  % my_script.pl --noverbose  
+  
+=item I<Int>, I<Float>, I<Str>
+
+These type constraints are set up as properly typed options with 
+Getopt::Long, using the C<=i>, C<=f> and C<=s> modifiers as appropriate.
+
+=item I<ArrayRef>
+
+An I<ArrayRef> type constraint is set up as a multiple value option
+in Getopt::Long. So that this attribute description:
+
+  has 'include' => (
+      is      => 'rw', 
+      isa     => 'ArrayRef', 
+      default => sub { [] }
+  );
+
+would translate into C<includes=s@> as a Getopt::Long option descriptor, 
+which would enable the following command line options:
+
+  % my_script.pl --include /usr/lib --include /usr/local/lib
+
+=item I<HashRef>
+
+A I<HashRef> type constraint is set up as a hash value option
+in Getopt::Long. So that this attribute description:
+
+  has 'define' => (
+      is      => 'rw', 
+      isa     => 'HashRef', 
+      default => sub { {} }
+  );
+
+would translate into C<define=s%> as a Getopt::Long option descriptor, 
+which would enable the following command line options:
+
+  % my_script.pl --define os=linux --define vendor=debian
+
+=back
+
+=head2 Custom Type Constraints
+
+It is possible to create custom type constraint to option spec 
+mappings if you need them. The process is fairly simple (but a
+little verbose maybe). First you create a custom subtype, like 
+so:
+
+  subtype 'ArrayOfInts'
+      => as 'ArrayRef'
+      => where { scalar (grep { looks_like_number($_) } @$_)  };
+
+Then you register the mapping, like so:
+
+  MooseX::Getopt::OptionTypeMap->add_option_type_to_map(
+      'ArrayOfInts' => '=i@'
+  );
+
+Now any attribute declarations using this type constraint will 
+get the custom option spec. So that, this:
+
+  has 'nums' => (
+      is      => 'ro',
+      isa     => 'ArrayOfInts',
+      default => sub { [0] }
+  );
+
+Will translate to the following on the command line:
+
+  % my_script.pl --nums 5 --nums 88 --nums 199
+
+This example is fairly trivial, but more complex validations are 
+easily possible with a little creativity. The trick is balancing
+the type constraint validations with the Getopt::Long validations.
+
+Better examples are certainly welcome :)
+
 =head1 METHODS
 
 =over 4
 
 =item B<new_with_options (%params)>
 
+This method will take a set of default C<%params> and then collect 
+params from the command line (possibly overriding those in C<%params>)
+and then return a newly constructed object.
+
 =item B<meta>
+
+This returns the role meta object.
 
 =back
 
