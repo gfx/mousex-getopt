@@ -37,7 +37,7 @@ BEGIN {
         isa         => 'Str',
         default     => 'bray',
         cmd_flag    => 'horsey',
-        cmd_aliases => ['x'],
+        cmd_aliases => 'x',
     );
 
     has 'length' => (
