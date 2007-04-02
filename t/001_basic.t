@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 47;
+use Test::More tests => 49;
 
 BEGIN {
     use_ok('MooseX::Getopt');
@@ -61,7 +61,21 @@ BEGIN {
         is      => 'ro',
         isa     => 'HashRef',
         default => sub { {} },
-    );    
+    );
+
+    has '_private_stuff' => (
+        is      => 'ro',
+        isa     => 'Int',
+        default => 713
+    );
+
+    has '_private_stuff_cmdline' => (
+        metaclass => 'MooseX::Getopt::Meta::Attribute',        
+        is        => 'ro',
+        isa       => 'Int',
+        default   => 832,
+        cmd_flag  => 'p',
+    );
   
 }
 
@@ -180,4 +194,12 @@ BEGIN {
     my $app = App->new_with_options;
     isa_ok($app, 'App');
     is($app->horse, 321, 'cmd_alias+cmd_flag, using alias');
+}
+
+# Test _foo + cmd_flag
+{
+    local @ARGV = ('-p', '666');
+    my $app = App->new_with_options;
+    isa_ok($app, 'App');
+    is($app->_private_stuff_cmdline, 666, '_foo + cmd_flag');
 }
