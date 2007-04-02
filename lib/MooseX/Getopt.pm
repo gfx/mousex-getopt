@@ -16,21 +16,27 @@ sub new_with_options {
     my (@options, %name_to_init_arg);
     foreach my $attr ($class->meta->compute_all_applicable_attributes) {
         my $name = $attr->name;
-        
-        if ($attr->isa('MooseX::Getopt::Meta::Attribute') && $attr->has_cmd_flag) { 
-            $name = $attr->cmd_flag;
+        my $aliases;
+
+        if ($attr->isa('MooseX::Getopt::Meta::Attribute')) {
+            $name = $attr->cmd_flag if $attr->has_cmd_flag;
+            $aliases = $attr->cmd_aliases if $attr->has_cmd_aliases;
         }          
         
         $name_to_init_arg{$name} = $attr->init_arg;        
         
+        my $opt_string = $aliases
+            ? join(q{|}, $name, @$aliases)
+            : $name;
+
         if ($attr->has_type_constraint) {
             my $type_name = $attr->type_constraint->name;
             if (MooseX::Getopt::OptionTypeMap->has_option_type($type_name)) {                   
-                $name .= MooseX::Getopt::OptionTypeMap->get_option_type($type_name);
+                $opt_string .= MooseX::Getopt::OptionTypeMap->get_option_type($type_name);
             }
         }
         
-        push @options => $name;
+        push @options => $opt_string;
     }
 
     my %options;
