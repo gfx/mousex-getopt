@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 49;
+use Test::More tests => 51;
 
 BEGIN {
     use_ok('MooseX::Getopt');
@@ -202,4 +202,13 @@ BEGIN {
     my $app = App->new_with_options;
     isa_ok($app, 'App');
     is($app->_private_stuff_cmdline, 666, '_foo + cmd_flag');
+}
+
+# Test ARGV support
+{
+    my @args = ('-p', 12345, '-c', 99);
+    local @ARGV = @args;
+    my $app = App->new_with_options;
+    isa_ok($app, 'App');
+    is_deeply($app->ARGV, \@args);
 }
