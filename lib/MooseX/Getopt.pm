@@ -10,7 +10,7 @@ use MooseX::Getopt::Meta::Attribute;
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
-has ARGV => (is => rw, isa => 'ArrayRef');
+has ARGV => (is => 'rw', isa => 'ArrayRef');
 
 sub new_with_options {
     my ($class, %params) = @_;
@@ -56,11 +56,11 @@ sub new_with_options {
     #warn Dumper \%options;
     
     $class->new(
+        ARGV => $saved_argv,
         %params, 
         map { 
             $name_to_init_arg{$_} => $options{$_} 
         } keys %options,
-        ARGV => $saved_argv;
     );
 }
 
