@@ -3,7 +3,7 @@ package MooseX::Getopt::Meta::Attribute;
 use Moose;
 use Moose::Util::TypeConstraints;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.02';
 our $AUTHORITY = 'cpan:STEVAN';
 
 extends 'Moose::Meta::Attribute'; # << Moose extending Moose :)
@@ -30,10 +30,15 @@ has 'cmd_aliases' => (
     coerce    => 1,
 );
 
-no Moose; 1;
+no Moose;
+
+# register this as a metaclass alias ...
+package Moose::Meta::Attribute::Custom::Getopt;
+sub register_implementation { 'MooseX::Getopt::Meta::Attribute' }
+
+1;
 
 __END__
-
 
 =pod
 
@@ -49,7 +54,7 @@ MooseX::Getopt::Meta::Attribute - Optional meta attribute for custom option name
   with 'MooseX::Getopt';
   
   has 'data' => (
-      metaclass => 'MooseX::Getopt::Meta::Attribute',        
+      metaclass => 'MooseX::Getopt::Meta::Attribute',     
       is        => 'ro',
       isa       => 'Str',
       default   => 'file.dat',
@@ -76,6 +81,14 @@ which L<MooseX::Getopt> will create for you.
 
 This is certainly not the prettiest way to go about this, but for 
 now it works for those who might need such a feature.
+
+=head2 Custom Metaclass alias
+
+This now takes advantage of the Moose 0.19 feature to support 
+custom attribute metaclass aliases. This means you can also
+use this as the B<Getopt> alias, like so:
+
+  has 'foo' => (metaclass => 'Getopt', cmd_flag => 'f');
 
 =head1 METHODS
 

@@ -1,4 +1,17 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.02
+
+    * MooseX::Getopt
+      - added the ARGV attribute (thanks to blblack)
+        - added tests and docs for this
+
+    * MooseX::Getopt::Meta::Attribute
+      - added the cmd_aliases attribute (thanks to blblack)
+        - added tests and docs for this
+      - added support for Moose 0.19's custom 
+        attribute metaclass alias registry.
+        - added tests and docs for this
+
 0.01 Friday, March 9, 2007
     - module released to CPAN

@@ -24,7 +24,7 @@ BEGIN {
     );
 
     has 'cow' => (
-        metaclass   => 'MooseX::Getopt::Meta::Attribute',        
+        metaclass   => 'Getopt',        
         is          => 'ro',
         isa         => 'Str',
         default     => 'moo',
