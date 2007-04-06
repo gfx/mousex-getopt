@@ -1,7 +1,6 @@
 Revision history for Perl extension MooseX-Getopt
 
-0.02
-
+0.02 Friday, April 6, 2007
     * MooseX::Getopt
       - added the ARGV attribute (thanks to blblack)
         - added tests and docs for this
