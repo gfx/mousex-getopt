@@ -1,5 +1,10 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.03
+    * downgraded the Getopt version requirement
+      to 2.35 as per RT #26844
+      
+
 0.02 Friday, April 6, 2007
     * MooseX::Getopt
       - added the ARGV attribute (thanks to blblack)
