@@ -1,5 +1,5 @@
 
-package ;
+package MooseX::Getopt::Meta::Attribute;
 use Moose;
 use Moose::Util::TypeConstraints;
 
