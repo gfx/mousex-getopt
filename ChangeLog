@@ -1,9 +1,17 @@
 Revision history for Perl extension MooseX-Getopt
 
-0.03
-    * downgraded the Getopt version requirement
+0.03 Wed. May 2nd, 2007
+    ~ downgraded the Getopt version requirement
       to 2.35 as per RT #26844
+    ~ adding blblack to the authors list
       
+    * MooseX::Getopt      
+      - doc update to show simple way to of excluding 
+        an attribute, but not having accessors with 
+        underscores (thanks to Zaba on #moose for this)
+    * MooseX::Getopt::Meta::Attribute
+      - tightening up the type constraint in the 
+        cmd_alias coercion to only accept strings
 
 0.02 Friday, April 6, 2007
     * MooseX::Getopt

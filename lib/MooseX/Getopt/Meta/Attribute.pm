@@ -1,5 +1,5 @@
 
-package MooseX::Getopt::Meta::Attribute;
+package ;
 use Moose;
 use Moose::Util::TypeConstraints;
 
@@ -18,9 +18,10 @@ has 'cmd_flag' => (
 #  without polluting the built-in types
 subtype '_MooseX_Getopt_CmdAliases'
     => as 'ArrayRef'
-        => where { 1 };
+    => where { 1 };
+    
 coerce '_MooseX_Getopt_CmdAliases'
-    => from 'Value'
+    => from 'Str'
         => via { [$_] };
 
 has 'cmd_aliases' => (
@@ -124,6 +125,8 @@ to cpan-RT.
 =head1 AUTHOR
 
 Stevan Little E<lt>stevan@iinteractive.comE<gt>
+
+Brandon L. Black, E<lt>blblack@gmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 

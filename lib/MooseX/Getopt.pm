@@ -114,7 +114,17 @@ to get non-default commandline option names and aliases.
 
 By default, attributes which start with an underscore are not given
 commandline argument support, unless the attribute's metaclass is set
-to L<MooseX::Getopt::Meta::Attribute>.
+to L<MooseX::Getopt::Meta::Attribute>. If you don't want you accessors
+to have the leading underscore in thier name, you can do this:
+
+  # for read/write attributes
+  has '_foo' => (accessor => 'foo', ...);
+  
+  # or for read-only attributes
+  has '_bar' => (reader => 'bar', ...);  
+
+This will mean that Getopt will not handle a --foo param, but your 
+code can still call the C<foo> method. 
 
 =head2 Supported Type Constraints
 
