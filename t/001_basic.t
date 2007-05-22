@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 51;
+use Test::More tests => 53;
 
 BEGIN {
     use_ok('MooseX::Getopt');
@@ -206,9 +206,11 @@ BEGIN {
 
 # Test ARGV support
 {
-    my @args = ('-p', 12345, '-c', 99);
+    my @args = ('-p', 12345, '-c', 99, '-');
     local @ARGV = @args;
     my $app = App->new_with_options;
     isa_ok($app, 'App');
-    is_deeply($app->ARGV, \@args);
+    is_deeply($app->ARGV, \@args, 'ARGV accessor');
+    is_deeply(\@ARGV, \@args, '@ARGV unmangled');
+    is_deeply($app->extra_argv, ['-'], 'extra_argv accessor');
 }

@@ -1,5 +1,18 @@
 Revision history for Perl extension MooseX-Getopt
 
+    * MooseX::Getopt::OptionTypeMap
+      - Added support for subtype constraint inference
+        from parent types
+        - added tests and docs for this
+    * MooseX::Getopt
+      - Added extra_argv attribute
+        - added tests and docs for this
+      - We now unmangled the Getopt::Long-manged @ARGV
+        - added tests and docs for this
+      - We now throw an exception from new_with_options
+        if Getopt fails due to bad arguments.
+        - added tests and docs for this
+
 0.03 Wed. May 2nd, 2007
     ~ downgraded the Getopt version requirement
       to 2.35 as per RT #26844

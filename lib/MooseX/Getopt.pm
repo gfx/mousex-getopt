@@ -2,7 +2,7 @@
 package MooseX::Getopt;
 use Moose::Role;
 
-use Getopt::Long;
+use Getopt::Long ();
 
 use MooseX::Getopt::OptionTypeMap;
 use MooseX::Getopt::Meta::Attribute;
@@ -10,7 +10,8 @@ use MooseX::Getopt::Meta::Attribute;
 our $VERSION   = '0.03';
 our $AUTHORITY = 'cpan:STEVAN';
 
-has ARGV => (is => 'rw', isa => 'ArrayRef');
+has ARGV       => (is => 'rw', isa => 'ArrayRef');
+has extra_argv => (is => 'rw', isa => 'ArrayRef');
 
 sub new_with_options {
     my ($class, %params) = @_;
@@ -45,10 +46,21 @@ sub new_with_options {
         push @options => $opt_string;
     }
 
-    my $saved_argv = [ @ARGV ];
     my %options;
-    
-    GetOptions(\%options, @options);
+
+    # Get a clean copy of the original @ARGV
+    my $argv_copy = [ @ARGV ];
+
+    {
+        local $SIG{__WARN__} = sub { die $_[0] };
+        Getopt::Long::GetOptions(\%options, @options);
+    }
+
+    # Get a copy of the Getopt::Long-mangled @ARGV
+    my $argv_mangled = [ @ARGV ];
+
+    # Restore the original @ARGV;
+    @ARGV = @$argv_copy;
     
     #use Data::Dumper;
     #warn Dumper \@options;
@@ -56,7 +68,8 @@ sub new_with_options {
     #warn Dumper \%options;
     
     $class->new(
-        ARGV => $saved_argv,
+        ARGV => $argv_copy,
+        extra_argv => $argv_mangled,
         %params, 
         map { 
             $name_to_init_arg{$_} => $options{$_} 
@@ -218,6 +231,20 @@ the type constraint validations with the Getopt::Long validations.
 
 Better examples are certainly welcome :)
 
+=head2 Inferred Type Constraints
+
+If you define a custom subtype which is a subtype of one of the
+standard L</Supported Type Constraints> above, and do not explicitly
+provide custom support as in L</Custom Type Constraints> above,
+MooseX::Getopt will treat it like the parent type for Getopt
+purposes.
+
+For example, if you had the same custom C<ArrayOfInts> subtype
+from the examples above, but did not add a new custom option
+type for it to the C<OptionTypeMap>, it would be treated just
+like a normal C<ArrayRef> type for Getopt purposes (that is,
+C<=s@>).
+
 =head1 METHODS
 
 =over 4
@@ -228,11 +255,19 @@ This method will take a set of default C<%params> and then collect
 params from the command line (possibly overriding those in C<%params>)
 and then return a newly constructed object.
 
+If L<Getopt::Long/GetOptions> fails (due to invalid arguments),
+C<new_with_options> will throw an exception.
+
 =item B<ARGV>
 
 This accessor contains a reference to a copy of the C<@ARGV> array
-which was copied before L<Getopt::Long> mangled it, in case you want
-to see your original options.
+as it originally existed at the time of C<new_with_options>.
+
+=item B<extra_argv>
+
+This accessor contains an arrayref of leftover C<@ARGV> elements that
+L<Getopt::Long> did not parse.  Note that the real C<@ARGV> is left
+un-mangled.
 
 =item B<meta>
 

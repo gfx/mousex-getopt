@@ -16,8 +16,34 @@ my %option_type_map = (
     'HashRef'  => '=s%',    
 );
 
-sub has_option_type { exists $option_type_map{$_[1]} }
-sub get_option_type {        $option_type_map{$_[1]} }
+sub has_option_type {
+    my (undef, $type_name) = @_;
+    return 1 if exists $option_type_map{$type_name};
+
+    my $current = find_type_constraint($type_name);
+    while (my $parent = $current->parent) {
+        return 1 if exists $option_type_map{$parent->name};
+        $current = $parent;
+    }
+
+    return 0;
+}
+
+sub get_option_type {
+    my (undef, $type_name) = @_;
+    return $option_type_map{$type_name}
+        if exists $option_type_map{$type_name};
+
+    my $current = find_type_constraint($type_name);
+    while (my $parent = $current->parent) {
+        return $option_type_map{$parent->name}
+            if exists $option_type_map{$parent->name};
+        $current = $parent;
+    }
+
+    return;
+}
+
 sub add_option_type_to_map {
     my (undef, $type_name, $option_string) = @_;
     (defined $type_name && defined $option_string)
