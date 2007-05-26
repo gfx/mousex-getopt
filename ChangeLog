@@ -7,7 +7,7 @@ Revision history for Perl extension MooseX-Getopt
     * MooseX::Getopt
       - Added extra_argv attribute
         - added tests and docs for this
-      - We now unmangled the Getopt::Long-manged @ARGV
+      - We now unmangle the Getopt::Long-mangled @ARGV
         - added tests and docs for this
       - We now throw an exception from new_with_options
         if Getopt fails due to bad arguments.
