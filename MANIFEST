@@ -11,5 +11,6 @@ lib/MooseX/Getopt/Meta/Attribute.pm
 t/000_load.t
 t/001_basic.t
 t/002_custom_option_type.t
+t/003_inferred_option_type.t
 t/pod.t
 t/pod_coverage.t

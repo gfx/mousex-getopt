@@ -1,8 +1,9 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.04 Tues. June 26, 2007
     * MooseX::Getopt::OptionTypeMap
       - Added support for subtype constraint inference
-        from parent types
+        from parent types 
         - added tests and docs for this
     * MooseX::Getopt
       - Added extra_argv attribute
