@@ -1,9 +1,10 @@
 Revision history for Perl extension MooseX-Getopt
 
-0.05 
+0.05 Tues. July 3, 2007
     * MooseX::Getopt::OptionTypeMap
       - added some checks to make sure that the type 
-        constraints are found properly
+        constraints are found properly and to give 
+        better diagnostics
 
 0.04 Tues. June 26, 2007
     * MooseX::Getopt::OptionTypeMap
