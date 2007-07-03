@@ -7,7 +7,7 @@ use Getopt::Long ();
 use MooseX::Getopt::OptionTypeMap;
 use MooseX::Getopt::Meta::Attribute;
 
-our $VERSION   = '0.04';
+our $VERSION   = '0.05';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has ARGV       => (is => 'rw', isa => 'ArrayRef');

@@ -4,7 +4,7 @@ package MooseX::Getopt::OptionTypeMap;
 use Moose 'confess';
 use Moose::Util::TypeConstraints 'find_type_constraint';
 
-our $VERSION   = '0.02';
+our $VERSION   = '0.03';
 our $AUTHORITY = 'cpan:STEVAN';
 
 my %option_type_map = (
@@ -21,6 +21,10 @@ sub has_option_type {
     return 1 if exists $option_type_map{$type_name};
 
     my $current = find_type_constraint($type_name);
+    
+    (defined $current)
+        || confess "Could not find the type constraint for '$type_name'";
+    
     while (my $parent = $current->parent) {
         return 1 if exists $option_type_map{$parent->name};
         $current = $parent;
@@ -31,10 +35,15 @@ sub has_option_type {
 
 sub get_option_type {
     my (undef, $type_name) = @_;
+    
     return $option_type_map{$type_name}
         if exists $option_type_map{$type_name};
 
     my $current = find_type_constraint($type_name);
+    
+    (defined $current)
+        || confess "Could not find the type constraint for '$type_name'";    
+    
     while (my $parent = $current->parent) {
         return $option_type_map{$parent->name}
             if exists $option_type_map{$parent->name};
