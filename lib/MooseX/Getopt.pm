@@ -7,7 +7,7 @@ use Getopt::Long ();
 use MooseX::Getopt::OptionTypeMap;
 use MooseX::Getopt::Meta::Attribute;
 
-our $VERSION   = '0.05';
+our $VERSION   = '0.06';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has ARGV       => (is => 'rw', isa => 'ArrayRef');
@@ -16,7 +16,11 @@ has extra_argv => (is => 'rw', isa => 'ArrayRef');
 sub new_with_options {
     my ($class, %params) = @_;
 
-    my %processed = $class->_parse_argv( options => [ $class->_attrs_to_options( %params ) ] );
+    my %processed = $class->_parse_argv( 
+        options => [ 
+            $class->_attrs_to_options( %params ) 
+        ] 
+    );
 
     $class->new(
         ARGV       => $processed{argv_copy},

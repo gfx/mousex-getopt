@@ -1,5 +1,11 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.06
+    * MooseX::Getopt
+      - refactored &new_with_option some so that 
+        this will work better with other Getopt 
+        modules (nuffin)
+
 0.05 Tues. July 3, 2007
     * MooseX::Getopt::OptionTypeMap
       - added some checks to make sure that the type 
