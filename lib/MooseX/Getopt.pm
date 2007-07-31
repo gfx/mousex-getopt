@@ -80,6 +80,7 @@ sub _attrs_to_options {
         }
         else {
             next if $name =~ /^_/;
+            next if $attr->isa('MooseX::Getopt::Meta::NoGetopt');
         }
 
         my $opt_string = $aliases
