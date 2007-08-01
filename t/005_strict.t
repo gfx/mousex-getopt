@@ -15,7 +15,7 @@ BEGIN {
     package App;
     use Moose;
 
-    with 'MooseX::Getopt';
+    with 'MooseX::Getopt::Strict';
 
     has 'data' => (
         metaclass => 'MooseX::Getopt::Meta::Attribute',
@@ -66,14 +66,12 @@ BEGIN {
     );
 
     has 'private_stuff' => (
-        metaclass => 'MooseX::Getopt::Meta::NoGetopt',
         is       => 'ro',
         isa      => 'Int',
         default  => 713
     );
 
     has '_private_stuff_cmdline' => (
-        metaclass => 'MooseX::Getopt::Meta::Attribute',
         is        => 'ro',
         isa       => 'Int',
         default   => 832,

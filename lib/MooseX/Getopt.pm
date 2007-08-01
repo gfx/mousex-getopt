@@ -14,18 +14,18 @@ has ARGV       => (is => 'rw', isa => 'ArrayRef');
 has extra_argv => (is => 'rw', isa => 'ArrayRef');
 
 sub new_with_options {
-    my ($class, %params) = @_;
+    my ($class, @params) = @_;
 
     my %processed = $class->_parse_argv( 
         options => [ 
-            $class->_attrs_to_options( %params ) 
+            $class->_attrs_to_options( @params ) 
         ] 
     );
 
     $class->new(
         ARGV       => $processed{argv_copy},
         extra_argv => $processed{argv},
-        %params, # explicit params to ->new
+        @params, # explicit params to ->new
         %{ $processed{params} }, # params from CLI
     );
 }
@@ -64,12 +64,24 @@ sub _parse_argv {
     );
 }
 
+sub _compute_getopt_attrs {
+    my $class = shift;
+
+    grep {
+        $_->isa("MooseX::Getopt::Meta::Attribute")
+            or
+        $_->name !~ /^_/
+            &&
+        !$_->isa('MooseX::Getopt::Meta::NoGetopt')
+    } $class->meta->compute_all_applicable_attributes
+}
+
 sub _attrs_to_options {
     my $class = shift;
 
     my @options;
 
-    foreach my $attr ($class->meta->compute_all_applicable_attributes) {
+    foreach my $attr ($class->_compute_getopt_attrs) {
         my $name = $attr->name;
 
         my $aliases;
@@ -77,10 +89,6 @@ sub _attrs_to_options {
         if ($attr->isa('MooseX::Getopt::Meta::Attribute')) {
             $name = $attr->cmd_flag if $attr->has_cmd_flag;
             $aliases = $attr->cmd_aliases if $attr->has_cmd_aliases;
-        }
-        else {
-            next if $name =~ /^_/;
-            next if $attr->isa('MooseX::Getopt::Meta::NoGetopt');
         }
 
         my $opt_string = $aliases
