@@ -90,6 +90,8 @@ These are all class methods and should be called as such.
 
 =item B<add_option_type_to_map ($type_name, $option_spec)>
 
+=item B<meta>
+
 =back
 
 =head1 BUGS
