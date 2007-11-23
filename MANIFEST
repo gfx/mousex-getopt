@@ -7,10 +7,14 @@ MANIFEST.SKIP
 README
 lib/MooseX/Getopt.pm
 lib/MooseX/Getopt/OptionTypeMap.pm
+lib/MooseX/Getopt/Strict.pm
 lib/MooseX/Getopt/Meta/Attribute.pm
+lib/MooseX/Getopt/Meta/Attribute/NoGetopt.pm
 t/000_load.t
 t/001_basic.t
 t/002_custom_option_type.t
 t/003_inferred_option_type.t
+t/004_nogetop.t
+t/005_strict.t
 t/pod.t
 t/pod_coverage.t

@@ -6,6 +6,7 @@ use Getopt::Long ();
 
 use MooseX::Getopt::OptionTypeMap;
 use MooseX::Getopt::Meta::Attribute;
+use MooseX::Getopt::Meta::Attribute::NoGetopt;
 
 our $VERSION   = '0.06';
 our $AUTHORITY = 'cpan:STEVAN';
@@ -66,13 +67,12 @@ sub _parse_argv {
 
 sub _compute_getopt_attrs {
     my $class = shift;
-
     grep {
         $_->isa("MooseX::Getopt::Meta::Attribute")
             or
         $_->name !~ /^_/
             &&
-        !$_->isa('MooseX::Getopt::Meta::NoGetopt')
+        !$_->isa('MooseX::Getopt::Meta::Attribute::NoGetopt')
     } $class->meta->compute_all_applicable_attributes
 }
 
@@ -161,6 +161,9 @@ accordingly.
 
 You can use the attribute metaclass L<MooseX::Getopt::Meta::Attribute>
 to get non-default commandline option names and aliases.
+
+You can use the attribute metaclass L<MooseX::Getopt::Meta::Attribute::NoGetOpt>
+to have C<MooseX::Getopt> ignore your attribute in the commandline options.
 
 By default, attributes which start with an underscore are not given
 commandline argument support, unless the attribute's metaclass is set

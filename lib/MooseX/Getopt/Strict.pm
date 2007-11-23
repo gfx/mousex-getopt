@@ -4,14 +4,15 @@ use Moose::Role;
 
 with 'MooseX::Getopt';
 
-sub _compute_getopt_attrs {
+around '_compute_getopt_attrs' => sub {
+    my $next = shift;
     my ( $class, @args ) = @_;
     grep { 
         $_->isa("MooseX::Getopt::Meta::Attribute") 
-    } $class->MooseX::Getopt::_compute_getopt_attrs(@args);
-}
+    } $class->$next(@args);
+};
 
-__PACKAGE__;
+1;
 
 __END__
 
@@ -20,21 +21,40 @@ __END__
 =head1 NAME
 
 MooseX::Getopt::Strict - only make options for attrs with the Getopt metaclass
+    
+=head1 DESCRIPTION
 
-=head1 SYNOPSIS
-
-    # see MooseX::Getopt
+This is an stricter version of C<MooseX::Getopt> which only processes the 
+attributes if they explicitly set as C<Getopt> attributes. All other attributes
+are ignored by the command line handler.
+    
+=head1 METHODS
 
 =over 4
 
 =item meta
 
-Is a section devoted to making the #!#%^ stupid pod coverage test pass. Stevan, I do
-hope you're actually reading this.
-
-Love,
-Yuval
-
 =back
+
+=head1 BUGS
+
+All complex software has bugs lurking in it, and this module is no 
+exception. If you find a bug please either email me, or add the bug
+to cpan-RT.
+
+=head1 AUTHOR
+
+Stevan Little E<lt>stevan@iinteractive.comE<gt>
+
+Yuval Kogman  C<< <nuffin@cpan.org> >>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2007 by Infinity Interactive, Inc.
+
+L<http://www.iinteractive.com>
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
 
 =cut

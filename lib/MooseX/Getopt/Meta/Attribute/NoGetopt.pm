@@ -1,7 +1,6 @@
 
-package MooseX::Getopt::Meta::NoGetopt;
+package MooseX::Getopt::Meta::Attribute::NoGetopt;
 use Moose;
-use Moose::Util::TypeConstraints;
 
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
@@ -12,7 +11,7 @@ no Moose;
 
 # register this as a metaclass alias ...
 package Moose::Meta::Attribute::Custom::NoGetopt;
-sub register_implementation { 'MooseX::Getopt::Meta::NoGetopt' }
+sub register_implementation { 'MooseX::Getopt::Meta::Attribute::NoGetopt' }
 
 1;
 
@@ -22,7 +21,7 @@ __END__
 
 =head1 NAME
 
-MooseX::NoGetopt::Meta::Attribute - Optional meta attribute for custom option names
+MooseX::Getopt::Meta::Attribute::NoGetOpt - Optional meta attribute for ignoring params
 
 =head1 SYNOPSIS
 

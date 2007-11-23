@@ -11,14 +11,13 @@ BEGIN {
 }
 
 {
-
     package App;
     use Moose;
 
     with 'MooseX::Getopt';
 
     has 'data' => (
-        metaclass => 'MooseX::Getopt::Meta::Attribute',
+        metaclass => 'Getopt',
         is        => 'ro',
         isa       => 'Str',
         default   => 'file.dat',
@@ -34,7 +33,7 @@ BEGIN {
     );
 
     has 'horse' => (
-        metaclass   => 'MooseX::Getopt::Meta::Attribute',
+        metaclass   => 'Getopt',
         is          => 'ro',
         isa         => 'Str',
         default     => 'bray',
@@ -66,14 +65,14 @@ BEGIN {
     );
 
     has 'private_stuff' => (
-        metaclass => 'MooseX::Getopt::Meta::NoGetopt',
+        metaclass => 'NoGetopt',
         is       => 'ro',
         isa      => 'Int',
         default  => 713
     );
 
     has '_private_stuff_cmdline' => (
-        metaclass => 'MooseX::Getopt::Meta::Attribute',
+        metaclass => 'Getopt',
         is        => 'ro',
         isa       => 'Int',
         default   => 832,
