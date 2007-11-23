@@ -3,7 +3,7 @@ package MooseX::Getopt::Meta::Attribute;
 use Moose;
 use Moose::Util::TypeConstraints;
 
-our $VERSION   = '0.03';
+our $VERSION   = '0.04';
 our $AUTHORITY = 'cpan:STEVAN';
 
 extends 'Moose::Meta::Attribute'; # << Moose extending Moose :)
@@ -16,9 +16,7 @@ has 'cmd_flag' => (
 
 # This subtype is to support scalar -> arrayref coercion
 #  without polluting the built-in types
-subtype '_MooseX_Getopt_CmdAliases'
-    => as 'ArrayRef'
-    => where { 1 };
+subtype '_MooseX_Getopt_CmdAliases' => as 'ArrayRef';
     
 coerce '_MooseX_Getopt_CmdAliases'
     => from 'Str'
