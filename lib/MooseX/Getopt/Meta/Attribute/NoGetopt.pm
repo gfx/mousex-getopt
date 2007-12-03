@@ -10,7 +10,8 @@ extends 'Moose::Meta::Attribute'; # << Moose extending Moose :)
 no Moose;
 
 # register this as a metaclass alias ...
-package Moose::Meta::Attribute::Custom::NoGetopt;
+package # stop confusing PAUSE
+    Moose::Meta::Attribute::Custom::NoGetopt;
 sub register_implementation { 'MooseX::Getopt::Meta::Attribute::NoGetopt' }
 
 1;
@@ -21,7 +22,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Getopt::Meta::Attribute::NoGetOpt - Optional meta attribute for ignoring params
+MooseX::Getopt::Meta::Attribute::NoGetopt - Optional meta attribute for ignoring params
 
 =head1 SYNOPSIS
 
@@ -31,7 +32,7 @@ MooseX::Getopt::Meta::Attribute::NoGetOpt - Optional meta attribute for ignoring
   with 'MooseX::Getopt';
   
   has 'data' => (
-      metaclass => 'NoGetOpt',  # do not attempt to capture this param  
+      metaclass => 'NoGetopt',  # do not attempt to capture this param  
       is        => 'ro',
       isa       => 'Str',
       default   => 'file.dat',
@@ -41,7 +42,7 @@ MooseX::Getopt::Meta::Attribute::NoGetOpt - Optional meta attribute for ignoring
 
 This is a custom attribute metaclass which can be used to specify 
 that a specific attribute should B<not> be processed by 
-C<MooseX::Getopt>. All you need to do is specify the C<NoGetOpt> 
+C<MooseX::Getopt>. All you need to do is specify the C<NoGetopt> 
 metaclass.
 
   has 'foo' => (metaclass => 'NoGetopt', ... );

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 9;
+use Test::More tests => 10;
 use Test::Exception;
 
 BEGIN {
@@ -99,3 +99,10 @@ BEGIN {
 
     throws_ok { App->new_with_options } qr/Unknown option: private_stuff/;
 }
+
+{
+    local @ARGV = (qw/--length 100/);
+
+    throws_ok { App->new_with_options } qr/Unknown option: length/;
+}
+

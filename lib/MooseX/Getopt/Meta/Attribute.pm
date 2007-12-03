@@ -32,7 +32,8 @@ has 'cmd_aliases' => (
 no Moose;
 
 # register this as a metaclass alias ...
-package Moose::Meta::Attribute::Custom::Getopt;
+package # stop confusing PAUSE 
+    Moose::Meta::Attribute::Custom::Getopt;
 sub register_implementation { 'MooseX::Getopt::Meta::Attribute' }
 
 1;
