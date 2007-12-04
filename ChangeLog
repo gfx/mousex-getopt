@@ -1,6 +1,6 @@
 Revision history for Perl extension MooseX-Getopt
 
-0.07
+0.07 Tues. Dec. 4, 2007
     * MooseX::Getopt::Meta::Attribute::NoGetopt  
       - fixed miscapitalization of NoGetopt in the docs
 
