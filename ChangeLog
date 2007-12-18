@@ -1,5 +1,10 @@
 Revision history for Perl extension MooseX-Getopt
 
+    * MooseX::Getopt
+      - Added support for configfile loading via
+        MooseX::ConfigFromFile-based roles with
+        the -configfile commandline option.
+
 0.07 Tues. Dec. 4, 2007
     * MooseX::Getopt::Meta::Attribute::NoGetopt  
       - fixed miscapitalization of NoGetopt in the docs

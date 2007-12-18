@@ -23,11 +23,21 @@ sub new_with_options {
         ] 
     );
 
+    my $params = $processed{params};
+
+    if($class->meta->does_role('MooseX::ConfigFromFile')
+       && defined $params->{configfile}) {
+        %$params = (
+            %{$class->get_config_from_file($params->{configfile})},
+            %$params,
+        );
+    }
+
     $class->new(
         ARGV       => $processed{argv_copy},
         extra_argv => $processed{argv},
         @params, # explicit params to ->new
-        %{ $processed{params} }, # params from CLI
+        %$params, # params from CLI
     );
 }
 
@@ -178,6 +188,11 @@ to have the leading underscore in thier name, you can do this:
 
 This will mean that Getopt will not handle a --foo param, but your 
 code can still call the C<foo> method. 
+
+If your class also uses a configfile-loading role based on
+L<MooseX::ConfigFromFile>, such as L<MooseX::SimpleConfig>,
+L<MooseX::Getopt>'s C<new_with_options> will load the configfile
+specified by the C<--configfile> option for you.
 
 =head2 Supported Type Constraints
 
