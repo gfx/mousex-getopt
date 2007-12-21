@@ -1,5 +1,6 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.08 Tues. Dec. 8, 2007
     * MooseX::Getopt
       - Added support for configfile loading via
         MooseX::ConfigFromFile-based roles with
