@@ -55,7 +55,7 @@ sub _parse_argv {
 
     my ( $parsed_options, $usage ) = eval {
         local $SIG{__WARN__} = sub { push @err, @_ };
-        Getopt::Long::Descriptive::describe_options("usage: %c %o", @$opt_spec)
+        Getopt::Long::Descriptive::describe_options($class->_usage_format(%params), @$opt_spec)
     };
 
     die join "", grep { defined } @err, $@ if @err or $@;
@@ -75,6 +75,10 @@ sub _parse_argv {
         argv      => $argv_mangled,
         usage     => $usage
     );
+}
+
+sub _usage_format {
+    return "usage: %c %o";
 }
 
 sub _gld_spec {
