@@ -42,16 +42,57 @@ sub new_with_options {
 }
 
 sub _parse_argv {
+    my ( $class, @args ) = @_;
+
+    my ( $params, $argv_copy, $argv_mangled ) = $class->_call_getopt(@args);
+
+    return (
+        argv_copy => $argv_copy,
+        argv      => $argv_mangled,
+        params    => $params,
+    );
+}
+
+sub _call_getopt {
     my ( $class, %params ) = @_;
 
     local @ARGV = @{ $params{argv} || \@ARGV };
+
+    my ( $opt_spec, $name_to_init_arg ) = $class->_gld_spec(%params);
+
+    # Get a clean copy of the original @ARGV
+    my $argv_copy = [ @ARGV ];
+
+    my @err;
+
+    my ( $parsed_options, $usage ) = eval {
+        local $SIG{__WARN__} = sub { push @err, @_ };
+        Getopt::Long::Descriptive::describe_options("usage: %c %o", @$opt_spec)
+    };
+
+    die join "", grep { defined } @err, $@ if @err or $@;
+
+    # Get a copy of the Getopt::Long-mangled @ARGV
+    my $argv_mangled = [ @ARGV ];
+
+    my %constructor_args = (
+        map { 
+            $name_to_init_arg->{$_} => $parsed_options->{$_} 
+        } keys %$parsed_options,   
+    );
+
+    return ( \%constructor_args, $argv_copy, $argv_mangled );
+}
+
+sub _gld_spec {
+    my ( $class, %params ) = @_;
 
     my ( @options, %name_to_init_arg );
 
     foreach my $opt ( @{ $params{options} } ) {
         push @options, [
             $opt->{opt_string},
-            $opt->{doc} || ' ',
+            $opt->{doc} || ' ', # FIXME new GLD shouldn't need this hack
             {
                 ( $opt->{required} ? (required => $opt->{required}) : () ),
                 ( exists $opt->{default}  ? (default  => $opt->{default})  : () ),
@@ -61,30 +102,7 @@ sub _parse_argv {
         $name_to_init_arg{ $opt->{name} } = $opt->{init_arg};
     }
 
-    # Get a clean copy of the original @ARGV
-    my $argv_copy = [ @ARGV ];
-
-    my @err;
-
-    my ( $parsed_options, $usage ) = eval {
-        local $SIG{__WARN__} = sub { push @err, @_ };
-        Getopt::Long::Descriptive::describe_options("usage: %c %o", @options)
-    };
-
-    die join "", grep { defined } @err, $@ if @err or $@;
-
-    # Get a copy of the Getopt::Long-mangled @ARGV
-    my $argv_mangled = [ @ARGV ];
-
-    return (
-        argv_copy => $argv_copy,
-        argv      => $argv_mangled,
-        params    => {
-            map { 
-                $name_to_init_arg{$_} => $parsed_options->{$_} 
-            } keys %$parsed_options,   
-        }
-    );
+    return ( \@options, \%name_to_init_arg );
 }
 
 sub _compute_getopt_attrs {
