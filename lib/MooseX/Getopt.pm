@@ -11,8 +11,8 @@ use MooseX::Getopt::Meta::Attribute::NoGetopt;
 our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
-has ARGV       => (is => 'rw', isa => 'ArrayRef');
-has extra_argv => (is => 'rw', isa => 'ArrayRef');
+has ARGV       => (is => 'rw', isa => 'ArrayRef', documentation => "hidden");
+has extra_argv => (is => 'rw', isa => 'ArrayRef', documentation => "hidden");
 
 sub new_with_options {
     my ($class, @params) = @_;
@@ -42,18 +42,6 @@ sub new_with_options {
 }
 
 sub _parse_argv {
-    my ( $class, @args ) = @_;
-
-    my ( $params, $argv_copy, $argv_mangled ) = $class->_call_getopt(@args);
-
-    return (
-        argv_copy => $argv_copy,
-        argv      => $argv_mangled,
-        params    => $params,
-    );
-}
-
-sub _call_getopt {
     my ( $class, %params ) = @_;
 
     local @ARGV = @{ $params{argv} || \@ARGV };
@@ -81,7 +69,12 @@ sub _call_getopt {
         } keys %$parsed_options,   
     );
 
-    return ( \%constructor_args, $argv_copy, $argv_mangled );
+    return (
+        params    => \%constructor_args,
+        argv_copy => $argv_copy,
+        argv      => $argv_mangled,
+        usage     => $usage
+    );
 }
 
 sub _gld_spec {
