@@ -2,17 +2,18 @@
 package MooseX::Getopt;
 use Moose::Role;
 
-use Getopt::Long ();
-
 use MooseX::Getopt::OptionTypeMap;
 use MooseX::Getopt::Meta::Attribute;
 use MooseX::Getopt::Meta::Attribute::NoGetopt;
 
+use Getopt::Long (); # GLD uses it anyway, doesn't hurt
+use constant HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
+
 our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
-has ARGV       => (is => 'rw', isa => 'ArrayRef');
-has extra_argv => (is => 'rw', isa => 'ArrayRef');
+has ARGV       => (is => 'rw', isa => 'ArrayRef', documentation => "hidden");
+has extra_argv => (is => 'rw', isa => 'ArrayRef', documentation => "hidden");
 
 sub new_with_options {
     my ($class, @params) = @_;
@@ -46,6 +47,51 @@ sub _parse_argv {
 
     local @ARGV = @{ $params{argv} || \@ARGV };
 
+    my ( $opt_spec, $name_to_init_arg ) = ( HAVE_GLD ? $class->_gld_spec(%params) : $class->_traditional_spec(%params) );
+
+    # Get a clean copy of the original @ARGV
+    my $argv_copy = [ @ARGV ];
+
+    my @err;
+
+    my ( $parsed_options, $usage ) = eval {
+        local $SIG{__WARN__} = sub { push @err, @_ };
+
+        if ( HAVE_GLD ) {
+            return Getopt::Long::Descriptive::describe_options($class->_usage_format(%params), @$opt_spec);
+        } else {
+            my %options;
+            Getopt::Long::GetOptions(\%options, @$opt_spec);
+            return ( \%options, undef );
+        }
+    };
+
+    die join "", grep { defined } @err, $@ if @err or $@;
+
+    # Get a copy of the Getopt::Long-mangled @ARGV
+    my $argv_mangled = [ @ARGV ];
+
+    my %constructor_args = (
+        map { 
+            $name_to_init_arg->{$_} => $parsed_options->{$_} 
+        } keys %$parsed_options,   
+    );
+
+    return (
+        params    => \%constructor_args,
+        argv_copy => $argv_copy,
+        argv      => $argv_mangled,
+        ( defined($usage) ? ( usage => $usage ) : () ),
+    );
+}
+
+sub _usage_format {
+    return "usage: %c %o";
+}
+
+sub _traditional_spec {
+    my ( $class, %params ) = @_;
+    
     my ( @options, %name_to_init_arg, %options );
 
     foreach my $opt ( @{ $params{options} } ) {
@@ -53,26 +99,28 @@ sub _parse_argv {
         $name_to_init_arg{ $opt->{name} } = $opt->{init_arg};
     }
 
-    # Get a clean copy of the original @ARGV
-    my $argv_copy = [ @ARGV ];
+    return ( \@options, \%name_to_init_arg );
+}
 
-    {
-        local $SIG{__WARN__} = sub { die $_[0] };
-        Getopt::Long::GetOptions(\%options, @options);
+sub _gld_spec {
+    my ( $class, %params ) = @_;
+
+    my ( @options, %name_to_init_arg );
+
+    foreach my $opt ( @{ $params{options} } ) {
+        push @options, [
+            $opt->{opt_string},
+            $opt->{doc} || ' ', # FIXME new GLD shouldn't need this hack
+            {
+                ( $opt->{required} ? (required => $opt->{required}) : () ),
+                ( exists $opt->{default}  ? (default  => $opt->{default})  : () ),
+            },
+        ];
+
+        $name_to_init_arg{ $opt->{name} } = $opt->{init_arg};
     }
 
-    # Get a copy of the Getopt::Long-mangled @ARGV
-    my $argv_mangled = [ @ARGV ];
-
-    return (
-        argv_copy => $argv_copy,
-        argv      => $argv_mangled,
-        params    => {
-            map { 
-                $name_to_init_arg{$_} => $options{$_} 
-            } keys %options,   
-        }
-    );
+    return ( \@options, \%name_to_init_arg );
 }
 
 sub _compute_getopt_attrs {
@@ -107,8 +155,8 @@ sub _attrs_to_options {
 
         if ($attr->has_type_constraint) {
             my $type_name = $attr->type_constraint->name;
-            if (MooseX::Getopt::OptionTypeMap->has_option_type($type_name)) {                   
-                $opt_string .= MooseX::Getopt::OptionTypeMap->get_option_type($type_name);
+            if (MooseX::Getopt::OptionTypeMap->has_option_type($type_name)) {
+                $opt_string .= MooseX::Getopt::OptionTypeMap->get_option_type($type_name)
             }
         }
 
@@ -117,6 +165,7 @@ sub _attrs_to_options {
             init_arg   => $attr->init_arg,
             opt_string => $opt_string,
             required   => $attr->is_required,
+            ( ( $attr->has_default && ( $attr->is_default_a_coderef xor $attr->is_lazy ) ) ? ( default => $attr->default({}) ) : () ),
             ( $attr->has_documentation ? ( doc => $attr->documentation ) : () ),
         }
     }
@@ -312,6 +361,9 @@ and then return a newly constructed object.
 
 If L<Getopt::Long/GetOptions> fails (due to invalid arguments),
 C<new_with_options> will throw an exception.
+
+If you have L<Getopt::Long::Descriptive> a the C<usage> param is also passed to
+C<new>.
 
 =item B<ARGV>
 
