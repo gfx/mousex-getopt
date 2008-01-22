@@ -1,5 +1,9 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.09 Tues. Jan. 22, 2008
+    * MooseX::Getopt
+        - Use Getopt::Long::Descriptive if it's available
+
 0.08 Tues. Dec. 8, 2007
     * MooseX::Getopt
       - Added support for configfile loading via
