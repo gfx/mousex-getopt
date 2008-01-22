@@ -2,11 +2,12 @@
 package MooseX::Getopt;
 use Moose::Role;
 
-use Getopt::Long::Descriptive ();
-
 use MooseX::Getopt::OptionTypeMap;
 use MooseX::Getopt::Meta::Attribute;
 use MooseX::Getopt::Meta::Attribute::NoGetopt;
+
+use Getopt::Long (); # GLD uses it anyway, doesn't hurt
+use constant HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
 our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
@@ -46,7 +47,7 @@ sub _parse_argv {
 
     local @ARGV = @{ $params{argv} || \@ARGV };
 
-    my ( $opt_spec, $name_to_init_arg ) = $class->_gld_spec(%params);
+    my ( $opt_spec, $name_to_init_arg ) = ( HAVE_GLD ? $class->_gld_spec(%params) : $class->_traditional_spec(%params) );
 
     # Get a clean copy of the original @ARGV
     my $argv_copy = [ @ARGV ];
@@ -55,7 +56,14 @@ sub _parse_argv {
 
     my ( $parsed_options, $usage ) = eval {
         local $SIG{__WARN__} = sub { push @err, @_ };
-        Getopt::Long::Descriptive::describe_options($class->_usage_format(%params), @$opt_spec)
+
+        if ( HAVE_GLD ) {
+            return Getopt::Long::Descriptive::describe_options($class->_usage_format(%params), @$opt_spec);
+        } else {
+            my %options;
+            Getopt::Long::GetOptions(\%options, @$opt_spec);
+            return ( \%options, MooseX::Getopt::FakeUsage->new(%params) );
+        }
     };
 
     die join "", grep { defined } @err, $@ if @err or $@;
@@ -79,6 +87,19 @@ sub _parse_argv {
 
 sub _usage_format {
     return "usage: %c %o";
+}
+
+sub _traditional_spec {
+    my ( $class, %params ) = @_;
+    
+    my ( @options, %name_to_init_arg, %options );
+
+    foreach my $opt ( @{ $params{options} } ) {
+        push @options, $opt->{opt_string};
+        $name_to_init_arg{ $opt->{name} } = $opt->{init_arg};
+    }
+
+    return ( \@options, \%name_to_init_arg );
 }
 
 sub _gld_spec {
@@ -150,6 +171,39 @@ sub _attrs_to_options {
     }
 
     return @options;
+}
+
+{
+    package MooseX::Getopt::FakeUsage;
+    use Moose;
+    # fakes Getopt::Long::Descriptive::Usage
+    
+    has text => (
+        isa => "Str",
+        is  => "rw",
+        default => "In order to get a usage text please install Getopt::Long::Descriptive\n",
+    );
+
+    sub warn {
+        my $self = shift;
+        warn $self->text;
+    }
+
+    sub die  { 
+        my $self = shift;
+        my $arg  = shift || {};
+
+        die(
+            join(
+                "", 
+                grep { defined } $arg->{pre_text}, $self->text, $arg->{post_text},
+            )
+        );
+    }
+
+    use overload (
+        q{""} => "text",
+    );
 }
 
 no Moose::Role; 1;
