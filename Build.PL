@@ -6,8 +6,8 @@ my $build = Module::Build->new(
     module_name => 'MooseX::Getopt',
     license => 'perl',
     requires => {   
-        'Moose'                     => '0.19',
-        'Getopt::Long::Descriptive' => '0.07',
+        'Moose'        => '0.19',
+        'Getopt::Long' => '2.34',
     },
     optional => {
     },
