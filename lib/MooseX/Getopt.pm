@@ -62,7 +62,7 @@ sub _parse_argv {
         } else {
             my %options;
             Getopt::Long::GetOptions(\%options, @$opt_spec);
-            return ( \%options, MooseX::Getopt::FakeUsage->new(%params) );
+            return ( \%options, undef );
         }
     };
 
@@ -81,7 +81,7 @@ sub _parse_argv {
         params    => \%constructor_args,
         argv_copy => $argv_copy,
         argv      => $argv_mangled,
-        usage     => $usage
+        ( defined($usage) ? ( usage => $usage ) : () ),
     );
 }
 
@@ -171,39 +171,6 @@ sub _attrs_to_options {
     }
 
     return @options;
-}
-
-{
-    package MooseX::Getopt::FakeUsage;
-    use Moose;
-    # fakes Getopt::Long::Descriptive::Usage
-    
-    has text => (
-        isa => "Str",
-        is  => "rw",
-        default => "In order to get a usage text please install Getopt::Long::Descriptive\n",
-    );
-
-    sub warn {
-        my $self = shift;
-        warn $self->text;
-    }
-
-    sub die  { 
-        my $self = shift;
-        my $arg  = shift || {};
-
-        die(
-            join(
-                "", 
-                grep { defined } $arg->{pre_text}, $self->text, $arg->{post_text},
-            )
-        );
-    }
-
-    use overload (
-        q{""} => "text",
-    );
 }
 
 no Moose::Role; 1;
