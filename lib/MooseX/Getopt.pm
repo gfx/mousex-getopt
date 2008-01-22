@@ -12,8 +12,8 @@ use constant HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 our $VERSION   = '0.09';
 our $AUTHORITY = 'cpan:STEVAN';
 
-has ARGV       => (is => 'rw', isa => 'ArrayRef', documentation => "hidden");
-has extra_argv => (is => 'rw', isa => 'ArrayRef', documentation => "hidden");
+has ARGV       => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
+has extra_argv => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
 
 sub new_with_options {
     my ($class, @params) = @_;
