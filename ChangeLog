@@ -1,5 +1,10 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.10 Wed. Jan. 23, 2008
+    * MooseX::Getopt
+        - Support default configfile attribute when
+          used with MooseX::ConfigFromFile-based roles
+
 0.09 Tues. Jan. 22, 2008
     * MooseX::Getopt
         - Use Getopt::Long::Descriptive if it's available

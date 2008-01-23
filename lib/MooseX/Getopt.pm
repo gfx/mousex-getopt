@@ -9,7 +9,7 @@ use MooseX::Getopt::Meta::Attribute::NoGetopt;
 use Getopt::Long (); # GLD uses it anyway, doesn't hurt
 use constant HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
-our $VERSION   = '0.09';
+our $VERSION   = '0.10';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has ARGV       => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
@@ -26,12 +26,23 @@ sub new_with_options {
 
     my $params = $processed{params};
 
-    if($class->meta->does_role('MooseX::ConfigFromFile')
-       && defined $params->{configfile}) {
-        %$params = (
-            %{$class->get_config_from_file($params->{configfile})},
-            %$params,
-        );
+    if($class->meta->does_role('MooseX::ConfigFromFile')) {
+        my $configfile;
+
+        if(defined $params->{configfile}) {
+            $configfile = $params->{configfile}
+        }
+        else {
+            my $cfmeta = $class->meta->get_attribute('configfile');
+            $configfile = $cfmeta->default if $cfmeta->has_default;
+        }
+
+        if(defined $configfile) {
+            %$params = (
+                %{$class->get_config_from_file($configfile)},
+                %$params,
+            );
+        }
     }
 
     $class->new(
@@ -241,7 +252,12 @@ code can still call the C<foo> method.
 If your class also uses a configfile-loading role based on
 L<MooseX::ConfigFromFile>, such as L<MooseX::SimpleConfig>,
 L<MooseX::Getopt>'s C<new_with_options> will load the configfile
-specified by the C<--configfile> option for you.
+specified by the C<--configfile> option (or the default you've
+given for the configfile attribute) for you.
+
+Options specified in multiple places follow the following
+precendence order: commandline overrides configfile, which
+overrides explicit new_with_options parameters.
 
 =head2 Supported Type Constraints
 
