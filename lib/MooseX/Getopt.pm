@@ -9,7 +9,7 @@ use MooseX::Getopt::Meta::Attribute::NoGetopt;
 use Getopt::Long (); # GLD uses it anyway, doesn't hurt
 use constant HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
-our $VERSION   = '0.10';
+our $VERSION   = '0.11';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has ARGV       => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
@@ -175,7 +175,7 @@ sub _attrs_to_options {
             name       => $name,
             init_arg   => $attr->init_arg,
             opt_string => $opt_string,
-            required   => $attr->is_required,
+            required   => $attr->is_required && !$attr->has_default && !$attr->has_builder,
             ( ( $attr->has_default && ( $attr->is_default_a_coderef xor $attr->is_lazy ) ) ? ( default => $attr->default({}) ) : () ),
             ( $attr->has_documentation ? ( doc => $attr->documentation ) : () ),
         }

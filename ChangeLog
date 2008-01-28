@@ -1,5 +1,11 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.11 Sun. Jan. 27, 2008
+    * MooseX::Getopt
+        - Commandline option shouldn't be required in the
+          case that the given "required" attribute has
+          a default or a builder method.
+
 0.10 Wed. Jan. 23, 2008
     * MooseX::Getopt
         - Support default configfile attribute when
