@@ -145,24 +145,30 @@ sub _compute_getopt_attrs {
     } $class->meta->compute_all_applicable_attributes
 }
 
+sub _get_cmd_flags_for_attr {
+    my ( $class, $attr ) = @_;
+
+    my $flag = $attr->name;
+
+    my @aliases;
+
+    if ($attr->isa('MooseX::Getopt::Meta::Attribute')) {
+        $flag = $attr->cmd_flag if $attr->has_cmd_flag;
+        @aliases = @{ $attr->cmd_aliases } if $attr->has_cmd_aliases;
+    }
+
+    return ( $flag, @aliases );
+}
+
 sub _attrs_to_options {
     my $class = shift;
 
     my @options;
 
     foreach my $attr ($class->_compute_getopt_attrs) {
-        my $name = $attr->name;
+        my ( $flag, @aliases ) = $class->_get_cmd_flags_for_attr($attr);
 
-        my $aliases;
-
-        if ($attr->isa('MooseX::Getopt::Meta::Attribute')) {
-            $name = $attr->cmd_flag if $attr->has_cmd_flag;
-            $aliases = $attr->cmd_aliases if $attr->has_cmd_aliases;
-        }
-
-        my $opt_string = $aliases
-            ? join(q{|}, $name, @$aliases)
-            : $name;
+        my $opt_string = join(q{|}, $flag, @aliases);
 
         if ($attr->has_type_constraint) {
             my $type_name = $attr->type_constraint->name;
@@ -172,7 +178,7 @@ sub _attrs_to_options {
         }
 
         push @options, {
-            name       => $name,
+            name       => $flag,
             init_arg   => $attr->init_arg,
             opt_string => $opt_string,
             required   => $attr->is_required && !$attr->has_default && !$attr->has_builder,
