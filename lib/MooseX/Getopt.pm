@@ -107,7 +107,11 @@ sub _traditional_spec {
 
     foreach my $opt ( @{ $params{options} } ) {
         push @options, $opt->{opt_string};
-        $name_to_init_arg{ $opt->{name} } = $opt->{init_arg};
+
+        my $identifier = $opt->{name};
+        $identifier =~ s/\W/_/g; # Getopt::Long does this to all option names
+
+        $name_to_init_arg{$identifier} = $opt->{init_arg};
     }
 
     return ( \@options, \%name_to_init_arg );
@@ -128,7 +132,10 @@ sub _gld_spec {
             },
         ];
 
-        $name_to_init_arg{ $opt->{name} } = $opt->{init_arg};
+        my $identifier = $opt->{name};
+        $identifier =~ s/\W/_/g; # Getopt::Long does this to all option names
+
+        $name_to_init_arg{$identifier} = $opt->{init_arg};
     }
 
     return ( \@options, \%name_to_init_arg );
