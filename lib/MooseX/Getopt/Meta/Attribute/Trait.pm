@@ -1,20 +1,38 @@
 
-package MooseX::Getopt::Meta::Attribute;
-use Moose;
+package MooseX::Getopt::Meta::Attribute::Trait;
+use Moose::Role;
 use Moose::Util::TypeConstraints;
 
-our $VERSION   = '0.05';
+our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
-extends 'Moose::Meta::Attribute'; # << Moose extending Moose :)
-   with 'MooseX::Getopt::Meta::Attribute::Trait';
+has 'cmd_flag' => (
+    is        => 'rw',
+    isa       => 'Str',
+    predicate => 'has_cmd_flag',
+);
 
-no Moose;
+# This subtype is to support scalar -> arrayref coercion
+#  without polluting the built-in types
+subtype '_MooseX_Getopt_CmdAliases' => as 'ArrayRef';
+    
+coerce '_MooseX_Getopt_CmdAliases'
+    => from 'Str'
+        => via { [$_] };
+
+has 'cmd_aliases' => (
+    is        => 'rw',
+    isa       => '_MooseX_Getopt_CmdAliases',
+    predicate => 'has_cmd_aliases',
+    coerce    => 1,
+);
+
+no Moose::Role;
 
 # register this as a metaclass alias ...
 package # stop confusing PAUSE 
-    Moose::Meta::Attribute::Custom::Getopt;
-sub register_implementation { 'MooseX::Getopt::Meta::Attribute' }
+    Moose::Meta::Attribute::Custom::Trait::Getopt;
+sub register_implementation { 'MooseX::Getopt::Meta::Attribute::Trait' }
 
 1;
 
@@ -24,7 +42,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Getopt::Meta::Attribute - Optional meta attribute for custom option names
+MooseX::Getopt::Meta::Attribute::Trait - Optional meta attribute trait for custom option names
 
 =head1 SYNOPSIS
 
@@ -34,7 +52,7 @@ MooseX::Getopt::Meta::Attribute - Optional meta attribute for custom option name
   with 'MooseX::Getopt';
   
   has 'data' => (
-      metaclass => 'MooseX::Getopt::Meta::Attribute',     
+      traits    => [ 'Getopt' ],     
       is        => 'ro',
       isa       => 'Str',
       default   => 'file.dat',
@@ -55,20 +73,9 @@ MooseX::Getopt::Meta::Attribute - Optional meta attribute for custom option name
 
 =head1 DESCRIPTION
 
-This is a custom attribute metaclass which can be used to specify a 
-the specific command line flag to use instead of the default one 
-which L<MooseX::Getopt> will create for you. 
-
-This is certainly not the prettiest way to go about this, but for 
-now it works for those who might need such a feature.
-
-=head2 Custom Metaclass alias
-
-This now takes advantage of the Moose 0.19 feature to support 
-custom attribute metaclass aliases. This means you can also
-use this as the B<Getopt> alias, like so:
-
-  has 'foo' => (metaclass => 'Getopt', cmd_flag => 'f');
+This is a custom attribute metaclass trait which can be used to 
+specify a the specific command line flag to use instead of the 
+default one which L<MooseX::Getopt> will create for you. 
 
 =head1 METHODS
 
@@ -104,8 +111,6 @@ to cpan-RT.
 =head1 AUTHOR
 
 Stevan Little E<lt>stevan@iinteractive.comE<gt>
-
-Brandon L. Black, E<lt>blblack@gmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -1,19 +1,16 @@
 
-package MooseX::Getopt::Meta::Attribute::NoGetopt;
-use Moose;
+package MooseX::Getopt::Meta::Attribute::Trait::NoGetopt;
+use Moose::Role;
 
-our $VERSION   = '0.02';
+our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
-extends 'Moose::Meta::Attribute'; # << Moose extending Moose :)
-   with 'MooseX::Getopt::Meta::Attribute::Trait::NoGetopt';
-
-no Moose;
+no Moose::Role;
 
 # register this as a metaclass alias ...
 package # stop confusing PAUSE
-    Moose::Meta::Attribute::Custom::NoGetopt;
-sub register_implementation { 'MooseX::Getopt::Meta::Attribute::NoGetopt' }
+    Moose::Meta::Attribute::Custom::Trait::NoGetopt;
+sub register_implementation { 'MooseX::Getopt::Meta::Attribute::Trait::NoGetopt' }
 
 1;
 
@@ -23,7 +20,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Getopt::Meta::Attribute::NoGetopt - Optional meta attribute for ignoring params
+MooseX::Getopt::Meta::Attribute::Trait::NoGetopt - Optional meta attribute trait for ignoring params
 
 =head1 SYNOPSIS
 
@@ -33,20 +30,20 @@ MooseX::Getopt::Meta::Attribute::NoGetopt - Optional meta attribute for ignoring
   with 'MooseX::Getopt';
   
   has 'data' => (
-      metaclass => 'NoGetopt',  # do not attempt to capture this param  
-      is        => 'ro',
-      isa       => 'Str',
-      default   => 'file.dat',
+      traits  => [ 'NoGetopt' ],  # do not attempt to capture this param  
+      is      => 'ro',
+      isa     => 'Str',
+      default => 'file.dat',
   );
 
 =head1 DESCRIPTION
 
-This is a custom attribute metaclass which can be used to specify 
-that a specific attribute should B<not> be processed by 
+This is a custom attribute metaclass trait which can be used to 
+specify that a specific attribute should B<not> be processed by 
 C<MooseX::Getopt>. All you need to do is specify the C<NoGetopt> 
-metaclass.
+metaclass trait.
 
-  has 'foo' => (metaclass => 'NoGetopt', ... );
+  has 'foo' => (traits => [ 'NoGetopt', ... ], ... );
 
 =head1 METHODS
 
@@ -65,8 +62,6 @@ to cpan-RT.
 =head1 AUTHOR
 
 Stevan Little E<lt>stevan@iinteractive.comE<gt>
-
-Chris Prather  C<< <perigrin@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 

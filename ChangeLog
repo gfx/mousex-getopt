@@ -1,19 +1,35 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.12 Fri. March 14, 2008
+    ~~ updated copyright dates ~~
+    
+    - upped the Moose dependency to support
+      the custom metaclass traits
+    - added Getopt::Long::Descriptive as an 
+      optional dependency
+
+    * MooseX::Getopt
+      MooseX::Getopt::Meta::Attribute
+      MooseX::Getopt::Meta::Attribute::Trait
+      MooseX::Getopt::Meta::Attribute::NoGetopt
+      MooseX::Getopt::Meta::Attribute::Trait::NoGetopt
+      - added support for custom metaclass traits 
+        - added tests for this
+
 0.11 Sun. Jan. 27, 2008
     * MooseX::Getopt
-        - Commandline option shouldn't be required in the
-          case that the given "required" attribute has
-          a default or a builder method.
+      - Commandline option shouldn't be required in the
+        case that the given "required" attribute has
+        a default or a builder method.
 
 0.10 Wed. Jan. 23, 2008
     * MooseX::Getopt
-        - Support default configfile attribute when
-          used with MooseX::ConfigFromFile-based roles
+      - Support default configfile attribute when
+        used with MooseX::ConfigFromFile-based roles
 
 0.09 Tues. Jan. 22, 2008
     * MooseX::Getopt
-        - Use Getopt::Long::Descriptive if it's available
+      - Use Getopt::Long::Descriptive if it's available
 
 0.08 Tues. Dec. 8, 2007
     * MooseX::Getopt

@@ -9,7 +9,7 @@ use MooseX::Getopt::Meta::Attribute::NoGetopt;
 use Getopt::Long (); # GLD uses it anyway, doesn't hurt
 use constant HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
-our $VERSION   = '0.11';
+our $VERSION   = '0.12';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has ARGV       => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
@@ -144,11 +144,11 @@ sub _gld_spec {
 sub _compute_getopt_attrs {
     my $class = shift;
     grep {
-        $_->isa("MooseX::Getopt::Meta::Attribute")
+        $_->does("MooseX::Getopt::Meta::Attribute::Trait")
             or
         $_->name !~ /^_/
-            &&
-        !$_->isa('MooseX::Getopt::Meta::Attribute::NoGetopt')
+    } grep {
+        !$_->does('MooseX::Getopt::Meta::Attribute::Trait::NoGetopt')
     } $class->meta->compute_all_applicable_attributes
 }
 
@@ -159,7 +159,7 @@ sub _get_cmd_flags_for_attr {
 
     my @aliases;
 
-    if ($attr->isa('MooseX::Getopt::Meta::Attribute')) {
+    if ($attr->does('MooseX::Getopt::Meta::Attribute::Trait')) {
         $flag = $attr->cmd_flag if $attr->has_cmd_flag;
         @aliases = @{ $attr->cmd_aliases } if $attr->has_cmd_aliases;
     }
@@ -425,7 +425,7 @@ Brandon L. Black, E<lt>blblack@gmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007 by Infinity Interactive, Inc.
+Copyright 2007-2008 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 
