@@ -80,18 +80,15 @@ else
 
     throws_ok { App->new_with_options } qr/Required option missing: required_from_config/;
 
-
-    TODO: {
-        local $TODO = 'Cannot supply required args from config';
-
-        my $app = eval { App::DefaultConfigFile->new_with_options };
+    {
+        my $app = App::DefaultConfigFile->new_with_options;
         isa_ok( $app, 'App::DefaultConfigFile' );
         app_ok( $app );
 
-        ok( $app && !$app->config_from_override,
+        ok(  !$app->config_from_override,
             '... config_from_override false as expected' );
 
-        is( $app && $app->configfile, '/notused/default',
+        is( $app->configfile, '/notused/default',
             '... configfile is /notused/default as expected' );
     }
 }
@@ -100,25 +97,21 @@ else
 {
     local @ARGV = qw( --configfile /notused --required_from_argv 1 );
 
-    TODO: {
-        local $TODO = 'Cannot supply required args from config';
-
-        my $app = eval { App->new_with_options };
+    {
+        my $app = App->new_with_options;
         isa_ok( $app, 'App' );
         app_ok( $app );
     }
 
-    TODO: {
-        local $TODO = 'Cannot supply required args from config';
-
-        my $app = eval { App::DefaultConfigFile->new_with_options };
+    {
+        my $app = App::DefaultConfigFile->new_with_options;
         isa_ok( $app, 'App::DefaultConfigFile' );
         app_ok( $app );
 
-        is ( $app && $app->config_from_override,
+        ok( $app->config_from_override,
              '... config_from_override true as expected' );
 
-        is( $app && $app->configfile, '/notused',
+        is( $app->configfile, '/notused',
             '... configfile is /notused as expected' );
     }
 }
@@ -160,12 +153,12 @@ else
 sub app_ok {
     my $app = shift;
 
-    is( $app && $app->required_from_config, 'from_config_1',
+    is( $app->required_from_config, 'from_config_1',
         '... required_from_config is from_config_1 as expected' );
 
-    is( $app && $app->optional_from_config, 'from_config_2',
+    is( $app->optional_from_config, 'from_config_2',
         '... optional_from_config is from_config_2 as expected' );
 
-    is( $app && $app->required_from_argv, '1',
+    is( $app->required_from_argv, '1',
         '... required_from_argv is 1 as expected' );
 }

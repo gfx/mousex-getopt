@@ -18,32 +18,31 @@ has extra_argv => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
 sub new_with_options {
     my ($class, @params) = @_;
 
-    my %processed = $class->_parse_argv( 
-        options => [ 
-            $class->_attrs_to_options( @params ) 
-        ] 
-    );
-
-    my $params = $processed{params};
-
+    my $config_from_file;
     if($class->meta->does_role('MooseX::ConfigFromFile')) {
-        my $configfile;
+        local @ARGV = @ARGV;
 
-        if(defined $params->{configfile}) {
-            $configfile = $params->{configfile}
-        }
-        else {
+        my $configfile;
+        my $opt_parser = Getopt::Long::Parser->new( config => [ qw( pass_through ) ] );
+        $opt_parser->getoptions( "configfile=s" => \$configfile );
+
+        if(!defined $configfile) {
             my $cfmeta = $class->meta->get_attribute('configfile');
             $configfile = $cfmeta->default if $cfmeta->has_default;
         }
 
         if(defined $configfile) {
-            %$params = (
-                %{$class->get_config_from_file($configfile)},
-                %$params,
-            );
+            $config_from_file = $class->get_config_from_file($configfile);
         }
     }
+
+    my %processed = $class->_parse_argv(
+        options => [
+            $class->_attrs_to_options( $config_from_file )
+        ]
+    );
+
+    my $params = $config_from_file ? { %$config_from_file, %{$processed{params}} } : $processed{params};
 
     $class->new(
         ARGV       => $processed{argv_copy},
@@ -83,9 +82,9 @@ sub _parse_argv {
     my $argv_mangled = [ @ARGV ];
 
     my %constructor_args = (
-        map { 
-            $name_to_init_arg->{$_} => $parsed_options->{$_} 
-        } keys %$parsed_options,   
+        map {
+            $name_to_init_arg->{$_} => $parsed_options->{$_}
+        } keys %$parsed_options,
     );
 
     return (
@@ -102,7 +101,7 @@ sub _usage_format {
 
 sub _traditional_spec {
     my ( $class, %params ) = @_;
-    
+
     my ( @options, %name_to_init_arg, %options );
 
     foreach my $opt ( @{ $params{options} } ) {
@@ -169,6 +168,7 @@ sub _get_cmd_flags_for_attr {
 
 sub _attrs_to_options {
     my $class = shift;
+    my $config_from_file = shift || {};
 
     my @options;
 
@@ -188,7 +188,7 @@ sub _attrs_to_options {
             name       => $flag,
             init_arg   => $attr->init_arg,
             opt_string => $opt_string,
-            required   => $attr->is_required && !$attr->has_default && !$attr->has_builder,
+            required   => $attr->is_required && !$attr->has_default && !$attr->has_builder && !exists $config_from_file->{$attr->name},
             ( ( $attr->has_default && ( $attr->is_default_a_coderef xor $attr->is_lazy ) ) ? ( default => $attr->default({}) ) : () ),
             ( $attr->has_documentation ? ( doc => $attr->documentation ) : () ),
         }
@@ -209,36 +209,36 @@ MooseX::Getopt - A Moose role for processing command line options
 
 =head1 SYNOPSIS
 
-  ## In your class 
+  ## In your class
   package My::App;
   use Moose;
-  
+
   with 'MooseX::Getopt';
-  
+
   has 'out' => (is => 'rw', isa => 'Str', required => 1);
   has 'in'  => (is => 'rw', isa => 'Str', required => 1);
-  
+
   # ... rest of the class here
-  
+
   ## in your script
   #!/usr/bin/perl
-  
+
   use My::App;
-  
+
   my $app = My::App->new_with_options();
   # ... rest of the script here
-  
+
   ## on the command line
   % perl my_app_script.pl -in file.input -out file.dump
 
 =head1 DESCRIPTION
 
-This is a role which provides an alternate constructor for creating 
-objects using parameters passed in from the command line. 
+This is a role which provides an alternate constructor for creating
+objects using parameters passed in from the command line.
 
-This module attempts to DWIM as much as possible with the command line 
-params by introspecting your class's attributes. It will use the name 
-of your attribute as the command line option, and if there is a type 
+This module attempts to DWIM as much as possible with the command line
+params by introspecting your class's attributes. It will use the name
+of your attribute as the command line option, and if there is a type
 constraint defined, it will configure Getopt::Long to handle the option
 accordingly.
 
@@ -255,12 +255,12 @@ to have the leading underscore in thier name, you can do this:
 
   # for read/write attributes
   has '_foo' => (accessor => 'foo', ...);
-  
-  # or for read-only attributes
-  has '_bar' => (reader => 'bar', ...);  
 
-This will mean that Getopt will not handle a --foo param, but your 
-code can still call the C<foo> method. 
+  # or for read-only attributes
+  has '_bar' => (reader => 'bar', ...);
+
+This will mean that Getopt will not handle a --foo param, but your
+code can still call the C<foo> method.
 
 If your class also uses a configfile-loading role based on
 L<MooseX::ConfigFromFile>, such as L<MooseX::SimpleConfig>,
@@ -278,20 +278,20 @@ overrides explicit new_with_options parameters.
 
 =item I<Bool>
 
-A I<Bool> type constraint is set up as a boolean option with 
+A I<Bool> type constraint is set up as a boolean option with
 Getopt::Long. So that this attribute description:
 
   has 'verbose' => (is => 'rw', isa => 'Bool');
 
-would translate into C<verbose!> as a Getopt::Long option descriptor, 
+would translate into C<verbose!> as a Getopt::Long option descriptor,
 which would enable the following command line options:
 
   % my_script.pl --verbose
-  % my_script.pl --noverbose  
-  
+  % my_script.pl --noverbose
+
 =item I<Int>, I<Float>, I<Str>
 
-These type constraints are set up as properly typed options with 
+These type constraints are set up as properly typed options with
 Getopt::Long, using the C<=i>, C<=f> and C<=s> modifiers as appropriate.
 
 =item I<ArrayRef>
@@ -300,12 +300,12 @@ An I<ArrayRef> type constraint is set up as a multiple value option
 in Getopt::Long. So that this attribute description:
 
   has 'include' => (
-      is      => 'rw', 
-      isa     => 'ArrayRef', 
+      is      => 'rw',
+      isa     => 'ArrayRef',
       default => sub { [] }
   );
 
-would translate into C<includes=s@> as a Getopt::Long option descriptor, 
+would translate into C<includes=s@> as a Getopt::Long option descriptor,
 which would enable the following command line options:
 
   % my_script.pl --include /usr/lib --include /usr/local/lib
@@ -316,12 +316,12 @@ A I<HashRef> type constraint is set up as a hash value option
 in Getopt::Long. So that this attribute description:
 
   has 'define' => (
-      is      => 'rw', 
-      isa     => 'HashRef', 
+      is      => 'rw',
+      isa     => 'HashRef',
       default => sub { {} }
   );
 
-would translate into C<define=s%> as a Getopt::Long option descriptor, 
+would translate into C<define=s%> as a Getopt::Long option descriptor,
 which would enable the following command line options:
 
   % my_script.pl --define os=linux --define vendor=debian
@@ -330,9 +330,9 @@ which would enable the following command line options:
 
 =head2 Custom Type Constraints
 
-It is possible to create custom type constraint to option spec 
+It is possible to create custom type constraint to option spec
 mappings if you need them. The process is fairly simple (but a
-little verbose maybe). First you create a custom subtype, like 
+little verbose maybe). First you create a custom subtype, like
 so:
 
   subtype 'ArrayOfInts'
@@ -345,7 +345,7 @@ Then you register the mapping, like so:
       'ArrayOfInts' => '=i@'
   );
 
-Now any attribute declarations using this type constraint will 
+Now any attribute declarations using this type constraint will
 get the custom option spec. So that, this:
 
   has 'nums' => (
@@ -358,7 +358,7 @@ Will translate to the following on the command line:
 
   % my_script.pl --nums 5 --nums 88 --nums 199
 
-This example is fairly trivial, but more complex validations are 
+This example is fairly trivial, but more complex validations are
 easily possible with a little creativity. The trick is balancing
 the type constraint validations with the Getopt::Long validations.
 
@@ -384,7 +384,7 @@ C<=s@>).
 
 =item B<new_with_options (%params)>
 
-This method will take a set of default C<%params> and then collect 
+This method will take a set of default C<%params> and then collect
 params from the command line (possibly overriding those in C<%params>)
 and then return a newly constructed object.
 
@@ -413,7 +413,7 @@ This returns the role meta object.
 
 =head1 BUGS
 
-All complex software has bugs lurking in it, and this module is no 
+All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 
