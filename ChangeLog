@@ -6,7 +6,7 @@ Revision history for Perl extension MooseX-Getopt
         case that the given "required" attribute has
         been loaded from config (MooseX::ConfigFromFile)
       - Support for MooseX::ConfigFromFile shouldn't require
-	that role be added at the same level as Getopt.
+        that role be added at the same level as Getopt.
 
 0.12 Fri. March 14, 2008
     ~~ updated copyright dates ~~
