@@ -6,7 +6,7 @@ use warnings;
 use Test::Exception;
 use Test::More;
 
-if ( !require MooseX::ConfigFromFile )
+if ( !eval { require MooseX::ConfigFromFile } )
 {
     plan skip_all => 'Test requires MooseX::ConfigFromFile';
 }

@@ -1,11 +1,17 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.13 Unreleased
+    * MooseX::Getopt
+      - Commandline option shouldn't be required in the
+        case that the given "required" attribute has
+        been loaded from config (MooseX::ConfigFromFile)
+
 0.12 Fri. March 14, 2008
     ~~ updated copyright dates ~~
-    
+
     - upped the Moose dependency to support
       the custom metaclass traits
-    - added Getopt::Long::Descriptive as an 
+    - added Getopt::Long::Descriptive as an
       optional dependency
 
     * MooseX::Getopt
@@ -13,7 +19,7 @@ Revision history for Perl extension MooseX-Getopt
       MooseX::Getopt::Meta::Attribute::Trait
       MooseX::Getopt::Meta::Attribute::NoGetopt
       MooseX::Getopt::Meta::Attribute::Trait::NoGetopt
-      - added support for custom metaclass traits 
+      - added support for custom metaclass traits
         - added tests for this
 
 0.11 Sun. Jan. 27, 2008
@@ -38,37 +44,37 @@ Revision history for Perl extension MooseX-Getopt
         the -configfile commandline option.
 
 0.07 Tues. Dec. 4, 2007
-    * MooseX::Getopt::Meta::Attribute::NoGetopt  
+    * MooseX::Getopt::Meta::Attribute::NoGetopt
       - fixed miscapitalization of NoGetopt in the docs
 
 0.06 Fri. Nov. 23, 2007
     * MooseX::Getopt
-      - refactored &new_with_option some so that 
-        this will work better with other Getopt 
+      - refactored &new_with_option some so that
+        this will work better with other Getopt
         modules (nuffin)
-    
+
     + MooseX::Getopt::Strict
-      - version of MooseX::Getopt which requires 
-        you to specify which attributes you want 
+      - version of MooseX::Getopt which requires
+        you to specify which attributes you want
         processed explicity
         - added tests for this
-    
+
     + MooseX::Getopt::Meta::Attribute::NoGetopt
-      - a custom meta-attribute which can be 
-        used to specify that an attribute should 
+      - a custom meta-attribute which can be
+        used to specify that an attribute should
         not be processed
         - added tests for this
 
 0.05 Tues. July 3, 2007
     * MooseX::Getopt::OptionTypeMap
-      - added some checks to make sure that the type 
-        constraints are found properly and to give 
+      - added some checks to make sure that the type
+        constraints are found properly and to give
         better diagnostics
 
 0.04 Tues. June 26, 2007
     * MooseX::Getopt::OptionTypeMap
       - Added support for subtype constraint inference
-        from parent types 
+        from parent types
         - added tests and docs for this
     * MooseX::Getopt
       - Added extra_argv attribute
@@ -83,13 +89,13 @@ Revision history for Perl extension MooseX-Getopt
     ~ downgraded the Getopt version requirement
       to 2.35 as per RT #26844
     ~ adding blblack to the authors list
-      
-    * MooseX::Getopt      
-      - doc update to show simple way to of excluding 
-        an attribute, but not having accessors with 
+
+    * MooseX::Getopt
+      - doc update to show simple way to of excluding
+        an attribute, but not having accessors with
         underscores (thanks to Zaba on #moose for this)
     * MooseX::Getopt::Meta::Attribute
-      - tightening up the type constraint in the 
+      - tightening up the type constraint in the
         cmd_alias coercion to only accept strings
 
 0.02 Friday, April 6, 2007
@@ -100,7 +106,7 @@ Revision history for Perl extension MooseX-Getopt
     * MooseX::Getopt::Meta::Attribute
       - added the cmd_aliases attribute (thanks to blblack)
         - added tests and docs for this
-      - added support for Moose 0.19's custom 
+      - added support for Moose 0.19's custom
         attribute metaclass alias registry.
         - added tests and docs for this
 

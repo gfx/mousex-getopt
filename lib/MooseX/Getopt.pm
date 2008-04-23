@@ -9,7 +9,7 @@ use MooseX::Getopt::Meta::Attribute::NoGetopt;
 use Getopt::Long (); # GLD uses it anyway, doesn't hurt
 use constant HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
-our $VERSION   = '0.12';
+our $VERSION   = '0.12_01';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has ARGV       => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
@@ -422,6 +422,10 @@ to cpan-RT.
 Stevan Little E<lt>stevan@iinteractive.comE<gt>
 
 Brandon L. Black, E<lt>blblack@gmail.comE<gt>
+
+=head1 CONTRIBUTORS
+
+Ryan D Johnson, E<lt>ryan@innerfence.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
