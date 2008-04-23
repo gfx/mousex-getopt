@@ -12,7 +12,7 @@ if ( !eval { require MooseX::ConfigFromFile } )
 }
 else
 {
-    plan tests => 24;
+    plan tests => 25;
 }
 
 {
@@ -148,6 +148,27 @@ else
 
     ok( !defined $app->optional_from_config,
         '... optional_from_config is undef as expected' );
+}
+
+{
+    package BaseApp::WithConfig;
+    use Moose;
+    with 'MooseX::ConfigFromFile';
+
+    sub get_config_from_file { return {}; }
+}
+
+{
+    package DerivedApp::Getopt;
+    use Moose;
+    extends 'BaseApp::WithConfig';
+    with 'MooseX::Getopt';
+}
+
+# With DerivedApp, the Getopt role was applied at a different level
+# than the ConfigFromFile role
+{
+    lives_ok { DerivedApp::Getopt->new_with_options } 'Can create DerivedApp';
 }
 
 sub app_ok {

@@ -27,7 +27,7 @@ sub new_with_options {
         $opt_parser->getoptions( "configfile=s" => \$configfile );
 
         if(!defined $configfile) {
-            my $cfmeta = $class->meta->get_attribute('configfile');
+            my $cfmeta = $class->meta->find_attribute_by_name('configfile');
             $configfile = $cfmeta->default if $cfmeta->has_default;
         }
 
