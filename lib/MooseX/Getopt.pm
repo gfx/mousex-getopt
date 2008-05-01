@@ -245,7 +245,7 @@ accordingly.
 You can use the attribute metaclass L<MooseX::Getopt::Meta::Attribute>
 to get non-default commandline option names and aliases.
 
-You can use the attribute metaclass L<MooseX::Getopt::Meta::Attribute::NoGetOpt>
+You can use the attribute metaclass L<MooseX::Getopt::Meta::Attribute::NoGetopt>
 to have C<MooseX::Getopt> ignore your attribute in the commandline options.
 
 By default, attributes which start with an underscore are not given
