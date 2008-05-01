@@ -1,0 +1,20 @@
+use inc::Module::Install;
+
+name 'MooseX-Getopt';
+license 'perl';
+
+all_from 'lib/MooseX/Getopt.pm';
+
+requires 'Moose'        => '0.43';
+requires 'Getopt::Long' => '2.37';
+
+# optional
+requires 'Getopt::Long::Descriptive' => 0;
+
+build_requires 'Test::More'       => '0.62';
+build_requires 'Test::Exception'  => '0.21';
+
+tests_recursive();
+auto_install;
+
+WriteAll;
