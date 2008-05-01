@@ -242,10 +242,12 @@ of your attribute as the command line option, and if there is a type
 constraint defined, it will configure Getopt::Long to handle the option
 accordingly.
 
-You can use the attribute metaclass L<MooseX::Getopt::Meta::Attribute>
-to get non-default commandline option names and aliases.
+You can use the trait L<MooseX::Getopt::Meta::Attribute::Trait> or the
+attribute metaclass L<MooseX::Getopt::Meta::Attribute> to get non-default
+commandline option names and aliases.
 
-You can use the attribute metaclass L<MooseX::Getopt::Meta::Attribute::NoGetopt>
+You can use the trait L<MooseX::Getopt::Meta::Attribute::Trait::NoGetopt>
+or the attribute metaclass L<MooseX::Getopt::Meta::Attribute::NoGetopt>
 to have C<MooseX::Getopt> ignore your attribute in the commandline options.
 
 By default, attributes which start with an underscore are not given

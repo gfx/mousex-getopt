@@ -7,6 +7,8 @@ Revision history for Perl extension MooseX-Getopt
         been loaded from config (MooseX::ConfigFromFile)
       - Support for MooseX::ConfigFromFile shouldn't require
         that role be added at the same level as Getopt.
+      - fixed miscapitalization of NoGetopt in the docs
+      - added links to the traits in the docs
 
 0.12 Fri. March 14, 2008
     ~~ updated copyright dates ~~
