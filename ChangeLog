@@ -1,6 +1,6 @@
 Revision history for Perl extension MooseX-Getopt
 
-0.13 Unreleased
+0.13 Saturday, May 24, 2008
     * MooseX::Getopt
       - Commandline option shouldn't be required in the
         case that the given "required" attribute has
@@ -9,6 +9,9 @@ Revision history for Perl extension MooseX-Getopt
         that role be added at the same level as Getopt.
       - fixed miscapitalization of NoGetopt in the docs
       - added links to the traits in the docs
+      
+    ~ converted to Module::Install instead of 
+      Module::Build
 
 0.12 Fri. March 14, 2008
     ~~ updated copyright dates ~~
