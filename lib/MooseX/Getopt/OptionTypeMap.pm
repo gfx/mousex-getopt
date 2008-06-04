@@ -11,7 +11,7 @@ my %option_type_map = (
     'Bool'     => '!',
     'Str'      => '=s',
     'Int'      => '=i',
-    'Float'    => '=f',
+    'Num'      => '=f',
     'ArrayRef' => '=s@',
     'HashRef'  => '=s%',    
 );

@@ -1,5 +1,9 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.14 ???
+	* MooseX::Getopt::OptionTypeMap
+	  - Change 'Float' which doesn't exist to 'Num' which does (perigrin)
+
 0.13 Saturday, May 24, 2008
     * MooseX::Getopt
       - Commandline option shouldn't be required in the
