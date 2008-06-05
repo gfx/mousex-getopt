@@ -3,15 +3,10 @@
 use strict;
 use warnings;
 
-use Test::More;
+use Test::More tests => 5;
 use Test::Exception;
 
-BEGIN {
-    eval "use Getopt::Long::Descriptive;";
-    plan skip_all => "Getopt::Long::Descriptive required for this test" if $@;
-    plan tests => 5;
-    use_ok('MooseX::Getopt');
-}
+BEGIN { use_ok('MooseX::Getopt') }
 
 {
     package Testing::Foo;
@@ -32,7 +27,7 @@ BEGIN {
     );    
 }
 
-our @ARGV = qw(bar 10);
+@ARGV = qw(--bar 10);
 
 my $foo;
 lives_ok {

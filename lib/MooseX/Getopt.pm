@@ -6,6 +6,8 @@ use MooseX::Getopt::OptionTypeMap;
 use MooseX::Getopt::Meta::Attribute;
 use MooseX::Getopt::Meta::Attribute::NoGetopt;
 
+use Carp ();
+
 use Getopt::Long (); # GLD uses it anyway, doesn't hurt
 use constant HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
@@ -36,10 +38,16 @@ sub new_with_options {
         }
     }
 
+    my $constructor_params = ( @params == 1 ? $params[0] : {@params} );
+    
+    Carp::croak("Single parameters to new_with_options() must be a HASH ref")
+        unless ref($constructor_params) eq 'HASH';
+
     my %processed = $class->_parse_argv(
         options => [
             $class->_attrs_to_options( $config_from_file )
-        ]
+        ],
+        params => $constructor_params,
     );
 
     my $params = $config_from_file ? { %$config_from_file, %{$processed{params}} } : $processed{params};
@@ -121,12 +129,14 @@ sub _gld_spec {
 
     my ( @options, %name_to_init_arg );
 
+    my $constructor_params = $params{params};
+
     foreach my $opt ( @{ $params{options} } ) {
         push @options, [
             $opt->{opt_string},
             $opt->{doc} || ' ', # FIXME new GLD shouldn't need this hack
             {
-                ( $opt->{required} ? (required => $opt->{required}) : () ),
+                ( ( $opt->{required} && !exists($constructor_params->{$opt->{init_arg}}) ) ? (required => $opt->{required}) : () ),
                 ( exists $opt->{default}  ? (default  => $opt->{default})  : () ),
             },
         ];
