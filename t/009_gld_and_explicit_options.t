@@ -3,10 +3,15 @@
 use strict;
 use warnings;
 
-use Test::More tests => 5;
+use Test::More;
 use Test::Exception;
 
-BEGIN { use_ok('MooseX::Getopt') }
+BEGIN { 
+    eval 'use Getopt::Long::Descriptive;';
+    plan skip_all => "Getopt::Long::Descriptive required for this test" if $@;
+    plan tests => 5;
+    use_ok('MooseX::Getopt');
+}
 
 {
     package Testing::Foo;
