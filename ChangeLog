@@ -1,5 +1,9 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.15 Sat. July 26 2008
+	* MooseX::Getopt::OptionTypeMap
+	  - Accept type constraint objects in the type mapping, not just names
+
 0.14 Thurs. July 10, 2008
 	* MooseX::Getopt::OptionTypeMap
 	  - Change 'Float' which doesn't exist to 'Num' which does (perigrin)
