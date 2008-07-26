@@ -4,7 +4,7 @@ package MooseX::Getopt::OptionTypeMap;
 use Moose 'confess', 'blessed';
 use Moose::Util::TypeConstraints 'find_type_constraint';
 
-our $VERSION   = '0.03';
+our $VERSION   = '0.04';
 our $AUTHORITY = 'cpan:STEVAN';
 
 my %option_type_map = (
