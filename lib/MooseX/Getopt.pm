@@ -194,9 +194,9 @@ sub _attrs_to_options {
         my $opt_string = join(q{|}, $flag, @aliases);
 
         if ($attr->has_type_constraint) {
-            my $type_name = $attr->type_constraint->name;
-            if (MooseX::Getopt::OptionTypeMap->has_option_type($type_name)) {
-                $opt_string .= MooseX::Getopt::OptionTypeMap->get_option_type($type_name)
+            my $type = $attr->type_constraint;
+            if (MooseX::Getopt::OptionTypeMap->has_option_type($type)) {
+                $opt_string .= MooseX::Getopt::OptionTypeMap->get_option_type($type)
             }
         }
 
