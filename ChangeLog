@@ -1,5 +1,9 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.16 Tue. February 17 2009
+	* t/
+		- run pod tests only if RELEASE_TESTING env var is set
+
 0.15 Sat. July 26 2008
 	* MooseX::Getopt::OptionTypeMap
 	  - Accept type constraint objects in the type mapping, not just names

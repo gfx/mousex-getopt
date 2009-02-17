@@ -11,7 +11,7 @@ use Carp ();
 use Getopt::Long (); # GLD uses it anyway, doesn't hurt
 use constant HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
-our $VERSION   = '0.15';
+our $VERSION   = '0.16';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has ARGV       => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
