@@ -164,7 +164,7 @@ sub _compute_getopt_attrs {
         $_->name !~ /^_/
     } grep {
         !$_->does('MooseX::Getopt::Meta::Attribute::Trait::NoGetopt')
-    } $class->meta->compute_all_applicable_attributes
+    } $class->meta->get_all_attributes
 }
 
 sub _get_cmd_flags_for_attr {

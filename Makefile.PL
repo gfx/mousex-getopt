@@ -5,7 +5,7 @@ license 'perl';
 
 all_from 'lib/MooseX/Getopt.pm';
 
-requires 'Moose'        => '0.43';
+requires 'Moose'        => '0.56';
 requires 'Getopt::Long' => '2.37';
 
 # optional
