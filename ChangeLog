@@ -1,8 +1,10 @@
 Revision history for Perl extension MooseX-Getopt
 
-0.17
+0.17 Wed. April 8 2009
   * MooseX::Getopt
 		- work with latest Moose (hdp)
+
+	~ unify module version numbers with dist version (hdp)
 
 0.16 Tue. February 17 2009
 	* t/
