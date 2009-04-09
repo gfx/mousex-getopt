@@ -25,6 +25,14 @@ __END__
 
 MooseX::Getopt::Dashes - convert underscores in attribute names to dashes
 
+=head1 SYNOPSIS
+
+  package My::App;
+  use Moose;
+  with 'MooseX::Getopt::Dashes';
+
+  # use as MooseX::Getopt
+
 =head1 DESCRIPTION
 
 This is a version of C<MooseX::Getopt> which converts underscores in
