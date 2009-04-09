@@ -11,6 +11,7 @@ inc/Module/Install/Metadata.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/MooseX/Getopt.pm
+lib/MooseX/Getopt/Dashes.pm
 lib/MooseX/Getopt/Meta/Attribute.pm
 lib/MooseX/Getopt/Meta/Attribute/NoGetopt.pm
 lib/MooseX/Getopt/Meta/Attribute/Trait.pm
