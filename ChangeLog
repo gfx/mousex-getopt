@@ -1,5 +1,12 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.18 Thu. April 9 2009
+	* MooseX::Getopt::Dashes
+		- New module, for converting undercores to dashes
+
+	* t/
+		- Tests for MooseX::Getopt::Dashes
+
 0.17 Wed. April 8 2009
   * MooseX::Getopt
 		- work with latest Moose (hdp)
