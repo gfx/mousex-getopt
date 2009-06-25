@@ -55,7 +55,7 @@ sub new_with_options {
     $class->new(
         ARGV       => $processed{argv_copy},
         extra_argv => $processed{argv},
-        @params, # explicit params to ->new
+        %$constructor_params, # explicit params to ->new
         %$params, # params from CLI
     );
 }
