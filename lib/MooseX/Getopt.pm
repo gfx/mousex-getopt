@@ -52,6 +52,12 @@ sub new_with_options {
 
     my $params = $config_from_file ? { %$config_from_file, %{$processed{params}} } : $processed{params};
 
+    # did the user request usage information?
+    if ( $processed{usage} && ($params->{'?'} or $params->{help} or $params->{usage}) )
+    {
+        $processed{usage}->die();
+    }
+
     $class->new(
         ARGV       => $processed{argv_copy},
         extra_argv => $processed{argv},
@@ -417,6 +423,15 @@ and then return a newly constructed object.
 If L<Getopt::Long/GetOptions> fails (due to invalid arguments),
 C<new_with_options> will throw an exception.
 
+If L<Getopt::Long::Descriptive> is installed and any of the following
+command line params are passed, the program will exit with usage 
+information. You can add descriptions for each option by including a
+B<documentation> option for each attribute to document.
+
+  --?
+  --help
+  --usage
+
 If you have L<Getopt::Long::Descriptive> a the C<usage> param is also passed to
 C<new>.
 
@@ -454,6 +469,8 @@ Yuval Kogman, E<lt>nothingmuch@woobling.orgE<gt>
 =head1 CONTRIBUTORS
 
 Ryan D Johnson, E<lt>ryan@innerfence.comE<gt>
+
+Drew Taylor, E<lt>drew@drewtaylor.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
