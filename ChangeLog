@@ -1,12 +1,16 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.19
+  * MooseX::Getopt
+    - Applied patches in RT43200 and RT43255
+
 0.18 Thu. April 9 2009
-	* MooseX::Getopt::Dashes
-		- New module, for converting undercores to dashes (ilmari)
+  * MooseX::Getopt::Dashes
+    - New module, for converting undercores to dashes (ilmari)
 
 0.17 Wed. April 8 2009
   * MooseX::Getopt
-		- work with latest Moose (hdp)
+    - work with latest Moose (hdp)
 
 	~ unify module version numbers with dist version (hdp)
 
