@@ -5,6 +5,7 @@ use warnings;
 
 use Test::Exception;
 use Test::More;
+use File::Spec;
 
 if ( !eval { require MooseX::ConfigFromFile } )
 {
@@ -55,7 +56,8 @@ else
             optional_from_config => 'from_config_2',
         );
 
-        if ( $file ne '/notused/default' ) {
+        my $cpath = File::Spec->canonpath('/notused/default');
+        if ( $file ne $cpath ) {
             $config{config_from_override} = 1;
         }
 
@@ -70,7 +72,7 @@ else
     extends 'App';
 
     has '+configfile' => (
-        default => '/notused/default',
+        default => File::Spec->canonpath('/notused/default'),
     );
 }
 
@@ -88,7 +90,7 @@ else
         ok(  !$app->config_from_override,
             '... config_from_override false as expected' );
 
-        is( $app->configfile, '/notused/default',
+        is( $app->configfile, File::Spec->canonpath('/notused/default'),
             '... configfile is /notused/default as expected' );
     }
 }
@@ -111,7 +113,7 @@ else
         ok( $app->config_from_override,
              '... config_from_override true as expected' );
 
-        is( $app->configfile, '/notused',
+        is( $app->configfile, File::Spec->canonpath('/notused'),
             '... configfile is /notused as expected' );
     }
 }
