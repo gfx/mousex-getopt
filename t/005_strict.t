@@ -70,14 +70,6 @@ BEGIN {
         isa      => 'Int',
         default  => 713
     );
-
-    has '_private_stuff_cmdline' => (
-        is        => 'ro',
-        isa       => 'Int',
-        default   => 832,
-        cmd_flag  => 'p',
-    );
-
 }
 
 {

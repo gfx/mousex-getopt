@@ -1,5 +1,8 @@
 Revision history for Perl extension MooseX-Getopt
 
+   * Tests
+        - Fix warning from tests with new Moose (t0m)
+
 0.18 Thu. April 9 2009
 	* MooseX::Getopt::Dashes
 		- New module, for converting undercores to dashes (ilmari)
