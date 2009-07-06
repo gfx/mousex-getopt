@@ -1,5 +1,8 @@
 Revision history for Perl extension MooseX-Getopt
 
+   * MooseX::Getopt
+        - Fix Getopt config spec for --configfile (t0m)
+
    * Tests
         - Fix warning from tests with new Moose (t0m)
         - Fix tests on Win32 from RT#44909 (taro-nishino)
