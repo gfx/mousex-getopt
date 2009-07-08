@@ -1,13 +1,14 @@
 Revision history for Perl extension MooseX-Getopt
 
-   * MooseX::Getopt
-        - Fix Getopt config spec for --configfile (t0m)
-        - Add support for --usage/--help/--? (drew@drewtaylor.com)
-        - Fix new_with_options to accept a hashref (DOUGDUDE@cpan.org)
+0.19 Wed. July 8 2009
+  * MooseX::Getopt
+    - Fix Getopt config spec for --configfile (t0m)
+    - Add support for --usage/--help/--? (drew@drewtaylor.com)
+    - Fix new_with_options to accept a hashref (DOUGDUDE@cpan.org)
 
-   * Tests
-        - Fix warning from tests with new Moose (t0m)
-        - Fix tests on Win32 from RT#44909 (taro-nishino)
+  * Tests
+    - Fix warning from tests with new Moose (t0m)
+    - Fix tests on Win32 from RT#44909 (taro-nishino)
 
 0.18 Thu. April 9 2009
 	* MooseX::Getopt::Dashes

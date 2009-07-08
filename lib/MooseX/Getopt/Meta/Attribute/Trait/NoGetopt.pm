@@ -2,7 +2,7 @@
 package MooseX::Getopt::Meta::Attribute::Trait::NoGetopt;
 use Moose::Role;
 
-our $VERSION   = '0.18';
+our $VERSION   = '0.19';
 our $AUTHORITY = 'cpan:STEVAN';
 
 no Moose::Role;
