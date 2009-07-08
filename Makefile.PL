@@ -15,6 +15,6 @@ build_requires 'Test::More'       => '0.62';
 build_requires 'Test::Exception'  => '0.21';
 
 tests_recursive();
-auto_install;
+auto_manifest();
 
 WriteAll;
