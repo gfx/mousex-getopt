@@ -417,7 +417,7 @@ and then return a newly constructed object.
 If L<Getopt::Long/GetOptions> fails (due to invalid arguments),
 C<new_with_options> will throw an exception.
 
-If you have L<Getopt::Long::Descriptive> a the C<usage> param is also passed to
+If you have L<Getopt::Long::Descriptive> the C<usage> param is also passed to
 C<new>.
 
 =item B<ARGV>
