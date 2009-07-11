@@ -276,8 +276,8 @@ to have C<MooseX::Getopt> ignore your attribute in the commandline options.
 
 By default, attributes which start with an underscore are not given
 commandline argument support, unless the attribute's metaclass is set
-to L<MooseX::Getopt::Meta::Attribute>. If you don't want you accessors
-to have the leading underscore in thier name, you can do this:
+to L<MooseX::Getopt::Meta::Attribute>. If you don't want your accessors
+to have the leading underscore in their name, you can do this:
 
   # for read/write attributes
   has '_foo' => (accessor => 'foo', ...);
