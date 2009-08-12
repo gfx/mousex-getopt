@@ -3,7 +3,7 @@ package MooseX::Getopt::Meta::Attribute;
 use Moose;
 use Moose::Util::TypeConstraints;
 
-our $VERSION   = '0.18';
+our $VERSION   = '0.20';
 our $AUTHORITY = 'cpan:STEVAN';
 
 extends 'Moose::Meta::Attribute'; # << Moose extending Moose :)
