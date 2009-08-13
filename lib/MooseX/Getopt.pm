@@ -71,7 +71,9 @@ sub _parse_argv {
 
     local @ARGV = @{ $params{params}{argv} || \@ARGV };
 
-    my ( $opt_spec, $name_to_init_arg ) = ( HAVE_GLD ? $class->_gld_spec(%params) : $class->_traditional_spec(%params) );
+    my $use_gld = (HAVE_GLD && !$params{params}{disable_gld});
+
+    my ( $opt_spec, $name_to_init_arg ) = ( $use_gld ? $class->_gld_spec(%params) : $class->_traditional_spec(%params) );
 
     # Get a clean copy of the original @ARGV
     my $argv_copy = [ @ARGV ];
@@ -81,7 +83,7 @@ sub _parse_argv {
     my ( $parsed_options, $usage ) = eval {
         local $SIG{__WARN__} = sub { push @err, @_ };
 
-        if ( HAVE_GLD ) {
+        if ( $use_gld ) {
             return Getopt::Long::Descriptive::describe_options($class->_usage_format(%params), @$opt_spec);
         } else {
             my %options;
@@ -425,6 +427,9 @@ and then return a newly constructed object.
 
 The special parameter C<argv>, if specified should point to an array  
 reference with an array to use instead of C<@ARGV>.
+
+The paramater C<disable_gld>, if specified and a true value will disable
+the use of L<Getopt::Long::Descriptive> .
 
 If L<Getopt::Long/GetOptions> fails (due to invalid arguments),
 C<new_with_options> will throw an exception.
