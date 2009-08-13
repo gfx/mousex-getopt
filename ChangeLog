@@ -2,6 +2,9 @@ Revision history for Perl extension MooseX-Getopt
 
   * MooseX::Getopt
     - Enable and document the argv parameter to the constructor.
+  * MooseX::Getopt
+    - Split into MooseX::Getopt::Basic (without the G::L::Descriptive support)
+    and MooseX::Getopt::GLD.
 
 0.20 Wed. July 9 2009
 	~ fix MANIFEST.SKIP to avoid double-packaging
