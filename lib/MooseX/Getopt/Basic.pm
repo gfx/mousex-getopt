@@ -1,243 +1,26 @@
-
-package MooseX::Getopt;
+package MooseX::Getopt::Basic;
 use Moose::Role;
 
-use MooseX::Getopt::OptionTypeMap;
-use MooseX::Getopt::Meta::Attribute;
-use MooseX::Getopt::Meta::Attribute::NoGetopt;
-
-use Carp ();
-
-use Getopt::Long (); # GLD uses it anyway, doesn't hurt
-use constant HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
-
-our $VERSION   = '0.20';
-our $AUTHORITY = 'cpan:STEVAN';
-
-my @roles = ('MooseX::Getopt::Basic');
-if (HAVE_GLD) { push @roles, 'MooseX::Getopt::GLD' }
-
-with @roles;
-
-has ARGV       => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
-has extra_argv => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
-
-sub new_with_options {
-    my ($class, @params) = @_;
-
-    my $config_from_file;
-    if($class->meta->does_role('MooseX::ConfigFromFile')) {
-        local @ARGV = @ARGV;
-
-        my $configfile;
-        my $opt_parser = Getopt::Long::Parser->new( config => [ qw( pass_through ) ] );
-        $opt_parser->getoptions( "configfile=s" => \$configfile );
-
-        if(!defined $configfile) {
-            my $cfmeta = $class->meta->find_attribute_by_name('configfile');
-            $configfile = $cfmeta->default if $cfmeta->has_default;
-        }
-
-        if(defined $configfile) {
-            $config_from_file = $class->get_config_from_file($configfile);
-        }
-    }
-
-    my $constructor_params = ( @params == 1 ? $params[0] : {@params} );
-    
-    Carp::croak("Single parameters to new_with_options() must be a HASH ref")
-        unless ref($constructor_params) eq 'HASH';
-
-    my %processed = $class->_parse_argv(
-        options => [
-            $class->_attrs_to_options( $config_from_file )
-        ],
-        params => $constructor_params,
-    );
-
-    my $params = $config_from_file ? { %$config_from_file, %{$processed{params}} } : $processed{params};
-
-    # did the user request usage information?
-    if ( $processed{usage} && ($params->{'?'} or $params->{help} or $params->{usage}) )
-    {
-        $processed{usage}->die();
-    }
-
-    $class->new(
-        ARGV       => $processed{argv_copy},
-        extra_argv => $processed{argv},
-        %$constructor_params, # explicit params to ->new
-        %$params, # params from CLI
-    );
+sub _getopt_spec {
+    my ($class, %params) = @_;
+    return $class->_traditional_spec(%params) 
 }
 
-sub _parse_argv {
-    my ( $class, %params ) = @_;
-
-    local @ARGV = @{ $params{params}{argv} || \@ARGV };
-
-    my ( $opt_spec, $name_to_init_arg ) = $class->_getopt_spec(%params);
-
-    # Get a clean copy of the original @ARGV
-    my $argv_copy = [ @ARGV ];
-
-    my @err;
-
-    my ( $parsed_options, $usage ) = eval {
-        local $SIG{__WARN__} = sub { push @err, @_ };
-
-        return $class->_get_options(\%params, $opt_spec);
-    };
-
-    die join "", grep { defined } @err, $@ if @err or $@;
-
-    # Get a copy of the Getopt::Long-mangled @ARGV
-    my $argv_mangled = [ @ARGV ];
-
-    my %constructor_args = (
-        map {
-            $name_to_init_arg->{$_} => $parsed_options->{$_}
-        } keys %$parsed_options,
-    );
-
-    return (
-        params    => \%constructor_args,
-        argv_copy => $argv_copy,
-        argv      => $argv_mangled,
-        ( defined($usage) ? ( usage => $usage ) : () ),
-    );
+sub _get_options {
+    my ($class, undef, $opt_spec) = @_;
+    my %options;
+    Getopt::Long::GetOptions(\%options, @$opt_spec);
+    return ( \%options, undef );
 }
 
-sub _usage_format {
-    return "usage: %c %o";
-}
-
-sub _traditional_spec {
-    my ( $class, %params ) = @_;
-
-    my ( @options, %name_to_init_arg, %options );
-
-    foreach my $opt ( @{ $params{options} } ) {
-        push @options, $opt->{opt_string};
-
-        my $identifier = $opt->{name};
-        $identifier =~ s/\W/_/g; # Getopt::Long does this to all option names
-
-        $name_to_init_arg{$identifier} = $opt->{init_arg};
-    }
-
-    return ( \@options, \%name_to_init_arg );
-}
-
-sub _gld_spec {
-    my ( $class, %params ) = @_;
-
-    my ( @options, %name_to_init_arg );
-
-    my $constructor_params = $params{params};
-
-    foreach my $opt ( @{ $params{options} } ) {
-        push @options, [
-            $opt->{opt_string},
-            $opt->{doc} || ' ', # FIXME new GLD shouldn't need this hack
-            {
-                ( ( $opt->{required} && !exists($constructor_params->{$opt->{init_arg}}) ) ? (required => $opt->{required}) : () ),
-                # NOTE:
-                # remove this 'feature' because it didn't work 
-                # all the time, and so is better to not bother
-                # since Moose will handle the defaults just 
-                # fine anyway.
-                # - SL
-                #( exists $opt->{default}  ? (default  => $opt->{default})  : () ),
-            },
-        ];
-
-        my $identifier = $opt->{name};
-        $identifier =~ s/\W/_/g; # Getopt::Long does this to all option names
-
-        $name_to_init_arg{$identifier} = $opt->{init_arg};
-    }
-
-    return ( \@options, \%name_to_init_arg );
-}
-
-sub _compute_getopt_attrs {
-    my $class = shift;
-    grep {
-        $_->does("MooseX::Getopt::Meta::Attribute::Trait")
-            or
-        $_->name !~ /^_/
-    } grep {
-        !$_->does('MooseX::Getopt::Meta::Attribute::Trait::NoGetopt')
-    } $class->meta->get_all_attributes
-}
-
-sub _get_cmd_flags_for_attr {
-    my ( $class, $attr ) = @_;
-
-    my $flag = $attr->name;
-
-    my @aliases;
-
-    if ($attr->does('MooseX::Getopt::Meta::Attribute::Trait')) {
-        $flag = $attr->cmd_flag if $attr->has_cmd_flag;
-        @aliases = @{ $attr->cmd_aliases } if $attr->has_cmd_aliases;
-    }
-
-    return ( $flag, @aliases );
-}
-
-sub _attrs_to_options {
-    my $class = shift;
-    my $config_from_file = shift || {};
-
-    my @options;
-
-    foreach my $attr ($class->_compute_getopt_attrs) {
-        my ( $flag, @aliases ) = $class->_get_cmd_flags_for_attr($attr);
-
-        my $opt_string = join(q{|}, $flag, @aliases);
-
-        if ($attr->name eq 'configfile') {
-            $opt_string .= '=s';
-        }
-        elsif ($attr->has_type_constraint) {
-            my $type = $attr->type_constraint;
-            if (MooseX::Getopt::OptionTypeMap->has_option_type($type)) {
-                $opt_string .= MooseX::Getopt::OptionTypeMap->get_option_type($type)
-            }
-        }
-
-        push @options, {
-            name       => $flag,
-            init_arg   => $attr->init_arg,
-            opt_string => $opt_string,
-            required   => $attr->is_required && !$attr->has_default && !$attr->has_builder && !exists $config_from_file->{$attr->name},
-            # NOTE:
-            # this "feature" was breaking because 
-            # Getopt::Long::Descriptive would return 
-            # the default value as if it was a command 
-            # line flag, which would then override the
-            # one passed into a constructor.
-            # See 100_gld_default_bug.t for an example
-            # - SL
-            #( ( $attr->has_default && ( $attr->is_default_a_coderef xor $attr->is_lazy ) ) ? ( default => $attr->default({}) ) : () ),
-            ( $attr->has_documentation ? ( doc => $attr->documentation ) : () ),
-        }
-    }
-
-    return @options;
-}
-
-no Moose::Role; 1;
-
-__END__
+1;
 
 =pod
 
 =head1 NAME
 
-MooseX::Getopt - A Moose role for processing command line options
+MooseX::Getopt::Basic - role to implement the basic functionality of
+L<MooseX::Getopt> without GLD.
 
 =head1 SYNOPSIS
 
@@ -458,10 +241,6 @@ un-mangled.
 
 This returns the role meta object.
 
-=item B<HAVE_GLD>
-
-A constant for internal use.
-
 =back
 
 =head1 BUGS
@@ -494,3 +273,4 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
+
