@@ -432,9 +432,6 @@ and then return a newly constructed object.
 The special parameter C<argv>, if specified should point to an array  
 reference with an array to use instead of C<@ARGV>.
 
-The paramater C<disable_gld>, if specified and a true value will disable
-the use of L<Getopt::Long::Descriptive> .
-
 If L<Getopt::Long/GetOptions> fails (due to invalid arguments),
 C<new_with_options> will throw an exception.
 
