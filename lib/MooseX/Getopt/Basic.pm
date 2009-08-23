@@ -135,38 +135,6 @@ sub _traditional_spec {
     return ( \@options, \%name_to_init_arg );
 }
 
-sub _gld_spec {
-    my ( $class, %params ) = @_;
-
-    my ( @options, %name_to_init_arg );
-
-    my $constructor_params = $params{params};
-
-    foreach my $opt ( @{ $params{options} } ) {
-        push @options, [
-            $opt->{opt_string},
-            $opt->{doc} || ' ', # FIXME new GLD shouldn't need this hack
-            {
-                ( ( $opt->{required} && !exists($constructor_params->{$opt->{init_arg}}) ) ? (required => $opt->{required}) : () ),
-                # NOTE:
-                # remove this 'feature' because it didn't work 
-                # all the time, and so is better to not bother
-                # since Moose will handle the defaults just 
-                # fine anyway.
-                # - SL
-                #( exists $opt->{default}  ? (default  => $opt->{default})  : () ),
-            },
-        ];
-
-        my $identifier = $opt->{name};
-        $identifier =~ s/\W/_/g; # Getopt::Long does this to all option names
-
-        $name_to_init_arg{$identifier} = $opt->{init_arg};
-    }
-
-    return ( \@options, \%name_to_init_arg );
-}
-
 sub _compute_getopt_attrs {
     my $class = shift;
     grep {
