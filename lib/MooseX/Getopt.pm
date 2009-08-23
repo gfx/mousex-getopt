@@ -2,6 +2,9 @@
 package MooseX::Getopt;
 use Moose::Role;
 
+our $VERSION   = '0.20';
+our $AUTHORITY = 'cpan:STEVAN';
+
 use constant HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
 my @roles = ('MooseX::Getopt::Basic');
