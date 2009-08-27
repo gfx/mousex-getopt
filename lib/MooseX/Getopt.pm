@@ -69,7 +69,7 @@ sub new_with_options {
 sub _parse_argv {
     my ( $class, %params ) = @_;
 
-    local @ARGV = @{ $params{argv} || \@ARGV };
+    local @ARGV = @{ $params{params}{argv} || \@ARGV };
 
     my ( $opt_spec, $name_to_init_arg ) = ( HAVE_GLD ? $class->_gld_spec(%params) : $class->_traditional_spec(%params) );
 
