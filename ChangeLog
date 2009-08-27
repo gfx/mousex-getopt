@@ -3,9 +3,11 @@ Revision history for Perl extension MooseX-Getopt
   * MooseX::Getopt
     - Enable and document the argv parameter to the constructor.
     - Applied patches in RT43200 and RT43255
+    - Applied patch from RT#47766 to not die if SimpleConfig cannot find the
+      default config file name.
 
 0.20 Wed. July 9 2009
-	~ fix MANIFEST.SKIP to avoid double-packaging
+	- fix MANIFEST.SKIP to avoid double-packaging
 
 0.19 Wed. July 8 2009
   * MooseX::Getopt
