@@ -13,7 +13,7 @@ if ( !eval { require MooseX::ConfigFromFile } )
 }
 else
 {
-    plan tests => 25;
+    plan tests => 37;
 }
 
 {
@@ -76,6 +76,17 @@ else
     );
 }
 
+{
+    package App::DefaultConfigFileCodeRef;
+
+    use Moose;
+    extends 'App';
+
+    has '+configfile' => (
+        default => sub { return File::Spec->canonpath('/notused/default') },
+    );
+}
+
 # No config specified
 {
     local @ARGV = qw( --required_from_argv 1 );
@@ -85,6 +96,23 @@ else
     {
         my $app = App::DefaultConfigFile->new_with_options;
         isa_ok( $app, 'App::DefaultConfigFile' );
+        app_ok( $app );
+
+        ok(  !$app->config_from_override,
+            '... config_from_override false as expected' );
+
+        is( $app->configfile, File::Spec->canonpath('/notused/default'),
+            '... configfile is /notused/default as expected' );
+    }
+}
+
+# No config specified
+{
+    local @ARGV = qw( --required_from_argv 1 );
+
+    {
+        my $app = App::DefaultConfigFileCodeRef->new_with_options;
+        isa_ok( $app, 'App::DefaultConfigFileCodeRef' );
         app_ok( $app );
 
         ok(  !$app->config_from_override,
@@ -108,6 +136,17 @@ else
     {
         my $app = App::DefaultConfigFile->new_with_options;
         isa_ok( $app, 'App::DefaultConfigFile' );
+        app_ok( $app );
+
+        ok( $app->config_from_override,
+             '... config_from_override true as expected' );
+
+        is( $app->configfile, File::Spec->canonpath('/notused'),
+            '... configfile is /notused as expected' );
+    }
+    {
+        my $app = App::DefaultConfigFileCodeRef->new_with_options;
+        isa_ok( $app, 'App::DefaultConfigFileCodeRef' );
         app_ok( $app );
 
         ok( $app->config_from_override,
