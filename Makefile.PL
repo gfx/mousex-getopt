@@ -15,6 +15,8 @@ build_requires 'Test::Moose';
 build_requires 'Test::More'       => '0.62';
 build_requires 'Test::Exception'  => '0.21';
 
+resources repository => 'git://git.moose.perl.org/MooseX-Getopt.git';
+
 auto_manifest();
 
 WriteAll;
