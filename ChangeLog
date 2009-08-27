@@ -1,5 +1,6 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.21 Thu. Aug 27 2009
   * MooseX::Getopt
     - Enable and document the argv parameter to the constructor.
     - Applied patches in RT43200 and RT43255
