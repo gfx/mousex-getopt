@@ -11,6 +11,7 @@ requires 'Getopt::Long' => '2.37';
 # optional
 requires 'Getopt::Long::Descriptive' => 0;
 
+test_requires 'Test::Moose';
 build_requires 'Test::More'       => '0.62';
 build_requires 'Test::Exception'  => '0.21';
 
