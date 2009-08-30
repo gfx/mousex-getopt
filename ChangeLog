@@ -5,6 +5,9 @@ Revision history for Perl extension MooseX-Getopt
     - Split into MooseX::Getopt::Basic (without the G::L::Descriptive support)
     and MooseX::Getopt::GLD.
 
+  * Tests
+     - Ensure author tests get run when in author mode.
+
 0.21 Thu. Aug 27 2009
   * MooseX::Getopt
     - Enable and document the argv parameter to the constructor.
