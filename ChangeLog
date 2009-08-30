@@ -1,13 +1,19 @@
 Revision history for Perl extension MooseX-Getopt
 
-  * MooseX::Getopt
-    - Enable and document the argv parameter to the constructor.
+0.22
   * MooseX::Getopt
     - Split into MooseX::Getopt::Basic (without the G::L::Descriptive support)
     and MooseX::Getopt::GLD.
 
+0.21 Thu. Aug 27 2009
+  * MooseX::Getopt
+    - Enable and document the argv parameter to the constructor.
+    - Applied patches in RT43200 and RT43255
+    - Applied patch from RT#47766 to not die if SimpleConfig cannot find the
+      default config file name.
+
 0.20 Wed. July 9 2009
-	~ fix MANIFEST.SKIP to avoid double-packaging
+	- fix MANIFEST.SKIP to avoid double-packaging
 
 0.19 Wed. July 8 2009
   * MooseX::Getopt
@@ -20,12 +26,12 @@ Revision history for Perl extension MooseX-Getopt
     - Fix tests on Win32 from RT#44909 (taro-nishino)
 
 0.18 Thu. April 9 2009
-	* MooseX::Getopt::Dashes
-		- New module, for converting undercores to dashes (ilmari)
+  * MooseX::Getopt::Dashes
+    - New module, for converting undercores to dashes (ilmari)
 
 0.17 Wed. April 8 2009
   * MooseX::Getopt
-		- work with latest Moose (hdp)
+    - work with latest Moose (hdp)
 
 	~ unify module version numbers with dist version (hdp)
 

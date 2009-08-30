@@ -44,8 +44,13 @@ sub new_with_options {
             $configfile = $cfmeta->default if $cfmeta->has_default;
         }
 
-        if(defined $configfile) {
-            $config_from_file = $class->get_config_from_file($configfile);
+        if (defined $configfile) {
+            $config_from_file = eval {
+                $class->get_config_from_file($configfile);
+            };
+            if ($@) {
+                die $@ unless $@ =~ /Specified configfile '\Q$configfile\E' does not exist/;
+            }
         }
     }
 
