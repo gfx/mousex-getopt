@@ -1,6 +1,8 @@
 Revision history for Perl extension MooseX-Getopt
 
-0.22
+0.22 Sat. Sept 05 2009
+    - Require GLD 0.077 for RT#49427 as some versions are broken
+
   * MooseX::Getopt
     - Split into MooseX::Getopt::Basic (without the G::L::Descriptive support)
     and MooseX::Getopt::GLD.
