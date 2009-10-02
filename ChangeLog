@@ -1,5 +1,10 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.23 Fri. Oct  02 2009
+  * MooseX::Getopt
+    - Allow the config file to be a code ref which is called to return
+      the config file location (Gordon Irving)
+
 0.22 Sat. Sept 05 2009
     - Require GLD 0.077 for RT#49427 as some versions are broken
 
