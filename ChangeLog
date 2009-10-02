@@ -2,7 +2,7 @@ Revision history for Perl extension MooseX-Getopt
 
 0.23 Fri. Oct  02 2009
   * MooseX::Getopt
-    - Allow the config file to be a code ref which is called to return
+    - Allow the config file to return a code ref which is called to return
       the config file location (Gordon Irving)
 
 0.22 Sat. Sept 05 2009
