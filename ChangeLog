@@ -1,5 +1,9 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.24 Fri. Oct  23 2009
+  * MooseX::Getopt
+    - Fix bug with mixed case attribute names (MAROS)
+
 0.23 Fri. Oct  02 2009
   * MooseX::Getopt
     - Allow the config file to return a code ref which is called to return
