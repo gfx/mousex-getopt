@@ -51,7 +51,7 @@ sub new_with_options {
     }
 
     my $constructor_params = ( @params == 1 ? $params[0] : {@params} );
-    
+
     Carp::croak("Single parameters to new_with_options() must be a HASH ref")
         unless ref($constructor_params) eq 'HASH';
 
@@ -435,7 +435,7 @@ This method will take a set of default C<%params> and then collect
 params from the command line (possibly overriding those in C<%params>)
 and then return a newly constructed object.
 
-The special parameter C<argv>, if specified should point to an array  
+The special parameter C<argv>, if specified should point to an array
 reference with an array to use instead of C<@ARGV>.
 
 If L<Getopt::Long/GetOptions> fails (due to invalid arguments),
