@@ -55,7 +55,7 @@ sub new_with_options {
     }
 
     my $constructor_params = ( @params == 1 ? $params[0] : {@params} );
-    
+
     Carp::croak("Single parameters to new_with_options() must be a HASH ref")
         unless ref($constructor_params) eq 'HASH';
 
@@ -71,7 +71,7 @@ sub new_with_options {
     # did the user request usage information?
     if ( $processed{usage} && ($params->{'?'} or $params->{help} or $params->{usage}) )
     {
-        $processed{usage}->die();
+        $class->_exit_with_usage($processed{usage});
     }
 
     $class->new(
@@ -80,6 +80,11 @@ sub new_with_options {
         %$constructor_params, # explicit params to ->new
         %$params, # params from CLI
     );
+}
+
+sub _exit_with_usage {
+    my ($self, $usage) = @_;
+    $usage->die();
 }
 
 sub _parse_argv {
