@@ -6,6 +6,7 @@ Revision history for Perl extension MooseX-Getopt
      overridden.
    - Split out calling ->die on Getopt::Long::Descriptive::Usage so that
      it can be overridden.
+   - Properly split roles as promised in 0.22.
 
 0.24 Fri. Oct  23 2009
   * MooseX::Getopt
