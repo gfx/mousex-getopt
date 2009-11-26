@@ -1,6 +1,6 @@
 Revision history for Perl extension MooseX-Getopt
 
-0.25 UNRELEAED
+0.25 Thu. Nov 26 2009
   * MooseX::Getopt
    - Split out the warnings and the exception from Getopt so that they can be
      overridden.
