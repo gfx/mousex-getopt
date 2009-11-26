@@ -4,6 +4,8 @@ Revision history for Perl extension MooseX-Getopt
   * MooseX::Getopt
    - Split out the warnings and the exception from Getopt so that they can be
      overridden.
+   - Split out calling ->die on Getopt::Long::Descriptive::Usage so that
+     it can be overridden.
 
 0.24 Fri. Oct  23 2009
   * MooseX::Getopt

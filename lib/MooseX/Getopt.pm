@@ -67,7 +67,7 @@ sub new_with_options {
     # did the user request usage information?
     if ( $processed{usage} && ($params->{'?'} or $params->{help} or $params->{usage}) )
     {
-        $processed{usage}->die();
+        $class->_getopt_full_usage($processed{usage});
     }
 
     $class->new(
@@ -126,6 +126,11 @@ sub _getopt_spec_warnings { }
 sub _getopt_spec_exception {
     my ($self, $warnings, $exception) = @_;
     die @$warnings, $exception;
+}
+
+sub _getopt_full_usage {
+    my ($self, $usage) = @_;
+    $usage->die;
 }
 
 sub _usage_format {
