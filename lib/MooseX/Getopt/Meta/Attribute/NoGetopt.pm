@@ -2,7 +2,7 @@
 package MooseX::Getopt::Meta::Attribute::NoGetopt;
 use Moose;
 
-our $VERSION   = '0.20';
+our $VERSION   = '0.25';
 our $AUTHORITY = 'cpan:STEVAN';
 
 extends 'Moose::Meta::Attribute'; # << Moose extending Moose :)

@@ -1,4 +1,4 @@
-MooseX::Getopt version 0.21
+MooseX::Getopt version 0.25
 ===========================
 
 See the individual module documentation for more information
@@ -21,7 +21,7 @@ This module requires these other modules and libraries:
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2007-2008 Infinity Interactive, Inc.
+Copyright (C) 2007-2009 Infinity Interactive, Inc.
 
 http://www.iinteractive.com
 

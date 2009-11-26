@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use inc::Module::Install 0.75;
+use inc::Module::Install 0.91;
 
 if ($Module::Install::AUTHOR) {
     require Module::Install::AuthorRequires;
