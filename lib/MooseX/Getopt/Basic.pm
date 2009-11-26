@@ -9,6 +9,8 @@ use Carp ();
 
 use Getopt::Long ();
 
+our $VERSION = '0.25';
+
 has ARGV       => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
 has extra_argv => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
 
