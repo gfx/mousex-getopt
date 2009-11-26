@@ -88,10 +88,9 @@ sub _parse_argv {
     # Get a clean copy of the original @ARGV
     my $argv_copy = [ @ARGV ];
 
-    my @err;
-
+    my @warnings;
     my ( $parsed_options, $usage ) = eval {
-        local $SIG{__WARN__} = sub { push @err, @_ };
+        local $SIG{__WARN__} = sub { push @warnings, @_ };
 
         if ( HAVE_GLD ) {
             return Getopt::Long::Descriptive::describe_options($class->_usage_format(%params), @$opt_spec);
@@ -102,7 +101,8 @@ sub _parse_argv {
         }
     };
 
-    die join "", grep { defined } @err, $@ if @err or $@;
+    $class->_getopt_spec_warnings(@warnings) if @warnings;
+    $class->_getopt_spec_exception(\@warnings, $@) if $@;
 
     # Get a copy of the Getopt::Long-mangled @ARGV
     my $argv_mangled = [ @ARGV ];
@@ -119,6 +119,13 @@ sub _parse_argv {
         argv      => $argv_mangled,
         ( defined($usage) ? ( usage => $usage ) : () ),
     );
+}
+
+sub _getopt_spec_warnings { }
+
+sub _getopt_spec_exception {
+    my ($self, $warnings, $exception) = @_;
+    die @$warnings, $exception;
 }
 
 sub _usage_format {

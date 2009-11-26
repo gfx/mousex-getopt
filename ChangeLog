@@ -1,5 +1,10 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.25 UNRELEAED
+  * MooseX::Getopt
+   - Split out the warnings and the exception from Getopt so that they can be
+     overridden.
+
 0.24 Fri. Oct  23 2009
   * MooseX::Getopt
     - Fix bug with mixed case attribute names (MAROS)
