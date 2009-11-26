@@ -1,25 +1,21 @@
-package MooseX::Getopt::GLD;
 
+package MooseX::Getopt::GLD;
 use Moose::Role;
 
-around '_getopt_spec' => sub {
-    my $orig = shift;
-    my $self = shift;
+use Getopt::Long::Descriptive;
 
-    return $self->_gld_spec(@_);
-    # Ignore $orig, code for _gld_spec here
+with 'MooseX::Getopt::Basic';
+
+around _getopt_spec => sub {
+    shift;
+    shift->_gld_spec(@_);
 };
 
-around '_get_options' => sub {
-    my $orig = shift;
-    my $class = shift;
-
-    my ($params, $opt_spec) = @_;
-    return Getopt::Long::Descriptive::describe_options(
-        $class->_usage_format(%$params), @$opt_spec
-    );
+around _getopt_get_options => sub {
+    shift;
+    my ($class, $params, $opt_spec) = @_;
+    return Getopt::Long::Descriptive::describe_options($class->_usage_format(%$params), @$opt_spec);
 };
-
 
 sub _gld_spec {
     my ( $class, %params ) = @_;
@@ -44,7 +40,7 @@ sub _gld_spec {
             },
         ];
 
-        my $identifier = $opt->{name};
+        my $identifier = lc($opt->{name});
         $identifier =~ s/\W/_/g; # Getopt::Long does this to all option names
 
         $name_to_init_arg{$identifier} = $opt->{init_arg};
@@ -53,7 +49,7 @@ sub _gld_spec {
     return ( \@options, \%name_to_init_arg );
 }
 
-1;
+no Moose::Role; 1;
 
 __END__
 
@@ -61,42 +57,37 @@ __END__
 
 =head1 NAME
 
-MooseX::Getopt::GLD - role to implement specific functionality for 
-L<Getopt::Long::Descriptive>
+MooseX::Getopt::GLD - A Moose role for processing command line options with Getopt::Long::Descriptive
 
 =head1 SYNOPSIS
-    
-For internal use.
+
+  ## In your class
+  package My::App;
+  use Moose;
+
+  with 'MooseX::Getopt::GLD';
+
+  has 'out' => (is => 'rw', isa => 'Str', required => 1);
+  has 'in'  => (is => 'rw', isa => 'Str', required => 1);
+
+  # ... rest of the class here
+
+  ## in your script
+  #!/usr/bin/perl
+
+  use My::App;
+
+  my $app = My::App->new_with_options();
+  # ... rest of the script here
+
+  ## on the command line
+  % perl my_app_script.pl -in file.input -out file.dump
 
 =head1 DESCRIPTION
 
-This is a role for C<MooseX::Getopt>.
-
-=head1 METHODS
-
-=over 4
-
-=item meta
-
-=back
-
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=head1 AUTHOR
-
-Dagfinn Ilmari MannsE<aring>ker E<lt>ilmari@ilmari.orgE<gt>
-
-Stevan Little E<lt>stevan@iinteractive.comE<gt>
-
-Yuval Kogman  C<< <nuffin@cpan.org> >>
-
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+Copyright 2007-2009 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 
@@ -104,4 +95,3 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
-=head1 

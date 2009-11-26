@@ -1,3 +1,4 @@
+
 package MooseX::Getopt::Basic;
 use Moose::Role;
 
@@ -6,27 +7,10 @@ use MooseX::Getopt::Meta::Attribute;
 use MooseX::Getopt::Meta::Attribute::NoGetopt;
 use Carp ();
 
-use Getopt::Long (); # GLD uses it anyway, doesn't hurt
-
-our $VERSION   = '0.20';
-our $AUTHORITY = 'cpan:STEVAN';
+use Getopt::Long ();
 
 has ARGV       => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
 has extra_argv => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
-
-# _getopt_spec() and _getoptions() are overrided by MooseX::Getopt::GLD.
-
-sub _getopt_spec {
-    my ($class, %params) = @_;
-    return $class->_traditional_spec(%params) 
-}
-
-sub _get_options {
-    my ($class, undef, $opt_spec) = @_;
-    my %options;
-    Getopt::Long::GetOptions(\%options, @$opt_spec);
-    return ( \%options, undef );
-}
 
 sub new_with_options {
     my ($class, @params) = @_;
@@ -42,15 +26,22 @@ sub new_with_options {
         if(!defined $configfile) {
             my $cfmeta = $class->meta->find_attribute_by_name('configfile');
             $configfile = $cfmeta->default if $cfmeta->has_default;
-        }
-
-        if (defined $configfile) {
-            $config_from_file = eval {
-                $class->get_config_from_file($configfile);
-            };
-            if ($@) {
-                die $@ unless $@ =~ /Specified configfile '\Q$configfile\E' does not exist/;
+            if (ref $configfile eq 'CODE') {
+                # not sure theres a lot you can do with the class and may break some assumptions
+                # warn?
+                $configfile = &$configfile($class);
             }
+            if (defined $configfile) {
+                $config_from_file = eval {
+                    $class->get_config_from_file($configfile);
+                };
+                if ($@) {
+                    die $@ unless $@ =~ /Specified configfile '\Q$configfile\E' does not exist/;
+                }
+            }
+        }
+        else {
+            $config_from_file = $class->get_config_from_file($configfile);
         }
     }
 
@@ -71,7 +62,7 @@ sub new_with_options {
     # did the user request usage information?
     if ( $processed{usage} && ($params->{'?'} or $params->{help} or $params->{usage}) )
     {
-        $class->_exit_with_usage($processed{usage});
+        $class->_getopt_full_usage($processed{usage});
     }
 
     $class->new(
@@ -82,10 +73,7 @@ sub new_with_options {
     );
 }
 
-sub _exit_with_usage {
-    my ($self, $usage) = @_;
-    $usage->die();
-}
+sub _getopt_spec { shift->_traditional_spec(@_); }
 
 sub _parse_argv {
     my ( $class, %params ) = @_;
@@ -97,15 +85,15 @@ sub _parse_argv {
     # Get a clean copy of the original @ARGV
     my $argv_copy = [ @ARGV ];
 
-    my @err;
-
+    my @warnings;
     my ( $parsed_options, $usage ) = eval {
-        local $SIG{__WARN__} = sub { push @err, @_ };
+        local $SIG{__WARN__} = sub { push @warnings, @_ };
 
-        return $class->_get_options(\%params, $opt_spec);
+        return $class->_getopt_get_options(\%params, $opt_spec);
     };
 
-    die join "", grep { defined } @err, $@ if @err or $@;
+    $class->_getopt_spec_warnings(@warnings) if @warnings;
+    $class->_getopt_spec_exception(\@warnings, $@) if $@;
 
     # Get a copy of the Getopt::Long-mangled @ARGV
     my $argv_mangled = [ @ARGV ];
@@ -124,6 +112,25 @@ sub _parse_argv {
     );
 }
 
+sub _getopt_get_options {
+    my ($class, $params, $opt_spec) = @_;
+    my %options;
+    Getopt::Long::GetOptions(\%options, @$opt_spec);
+    return ( \%options, undef );
+}
+
+sub _getopt_spec_warnings { }
+
+sub _getopt_spec_exception {
+    my ($self, $warnings, $exception) = @_;
+    die @$warnings, $exception;
+}
+
+sub _getopt_full_usage {
+    my ($self, $usage) = @_;
+    $usage->die;
+}
+
 sub _usage_format {
     return "usage: %c %o";
 }
@@ -136,7 +143,7 @@ sub _traditional_spec {
     foreach my $opt ( @{ $params{options} } ) {
         push @options, $opt->{opt_string};
 
-        my $identifier = $opt->{name};
+        my $identifier = lc($opt->{name});
         $identifier =~ s/\W/_/g; # Getopt::Long does this to all option names
 
         $name_to_init_arg{$identifier} = $opt->{init_arg};
@@ -215,14 +222,13 @@ sub _attrs_to_options {
 
 no Moose::Role; 1;
 
-1;
+__END__
 
 =pod
 
 =head1 NAME
 
-MooseX::Getopt::Basic - role to implement the basic functionality of
-L<MooseX::Getopt> without GLD.
+MooseX::Getopt::Basic - role to implement the Getopt::Long functionality
 
 =head1 SYNOPSIS
 
@@ -255,39 +261,9 @@ doesn't make use of L<Getopt::Long::Descriptive> (or "GLD" for short).
 
 =head1 METHODS
 
-=over 4
+=head2 new_with_options
 
-=item B<new_with_options>
-
-See L<MooseX::Getopt> .
-
-=item B<meta>
-
-This returns the role meta object.
-
-=back
-
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=head1 AUTHOR
-
-Stevan Little E<lt>stevan@iinteractive.comE<gt>
-
-Brandon L. Black, E<lt>blblack@gmail.comE<gt>
-
-Yuval Kogman, E<lt>nothingmuch@woobling.orgE<gt>
-
-=head1 CONTRIBUTORS
-
-Ryan D Johnson, E<lt>ryan@innerfence.comE<gt>
-
-Drew Taylor, E<lt>drew@drewtaylor.comE<gt>
-
-Shlomi Fish E<lt>shlomif@cpan.orgE<gt>
+See L<MooseX::Getopt/new_with_options>.
 
 =head1 COPYRIGHT AND LICENSE
 
