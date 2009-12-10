@@ -2,6 +2,9 @@ Revision history for Perl extension MooseX-Getopt
 
   * MooseX::Getopt::Basic
    - Fix bug with attribute names containing upper case letters.
+  * Test suite:
+    - Add t/106_no_ignore_case.t for testing the compatibility with
+      no_ignore_case
 
 0.25 Thu. Nov 26 2009
   * MooseX::Getopt
