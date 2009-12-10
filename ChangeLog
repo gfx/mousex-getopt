@@ -1,5 +1,6 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.26 Thu. Dec 10 2009
   * MooseX::Getopt::Basic
    - Fix bug with attribute names containing upper case letters.
   * Test suite:
