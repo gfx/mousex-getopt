@@ -1,12 +1,12 @@
 package MooseX::Getopt;
 use Moose::Role;
 
-use constant HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
+use constant _HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
 our $VERSION   = '0.25';
 our $AUTHORITY = 'cpan:STEVAN';
 
-with HAVE_GLD ? 'MooseX::Getopt::GLD' : 'MooseX::Getopt::Basic';
+with _HAVE_GLD ? 'MooseX::Getopt::GLD' : 'MooseX::Getopt::Basic';
 
 no Moose::Role; 1;
 
