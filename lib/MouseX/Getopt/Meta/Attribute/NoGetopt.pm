@@ -2,7 +2,7 @@
 package MouseX::Getopt::Meta::Attribute::NoGetopt;
 use Mouse;
 
-our $VERSION   = '0.26';
+our $VERSION   = '0.2600';
 our $AUTHORITY = 'cpan:STEVAN';
 
 extends 'Mouse::Meta::Attribute'; # << Mouse extending Mouse :)
