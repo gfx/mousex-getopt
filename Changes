@@ -1,0 +1,11 @@
+Revision history for Perl extension MooseX-Getopt
+
+0.26
+    - Forked from MooseX::Getopt 0.26 by Any::Moose::Convert
+
+0.2201 Tue Oct 20 11:13:11 2009
+    - Add Getopt::Long::Descript to deps, as MooseX::Getopt does
+
+0.2200 Mon Oct 19 16:21:08 2009
+    - Forked from MooseX::Getopt 0.22
+
