@@ -1,14 +1,14 @@
-package MooseX::Getopt;
-use Moose::Role;
+package MouseX::Getopt;
+use Mouse::Role;
 
 use constant _HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
 our $VERSION   = '0.26';
 our $AUTHORITY = 'cpan:STEVAN';
 
-with _HAVE_GLD ? 'MooseX::Getopt::GLD' : 'MooseX::Getopt::Basic';
+with _HAVE_GLD ? 'MouseX::Getopt::GLD' : 'MouseX::Getopt::Basic';
 
-no Moose::Role; 1;
+no Mouse::Role; 1;
 
 __END__
 
@@ -16,15 +16,15 @@ __END__
 
 =head1 NAME
 
-MooseX::Getopt - A Moose role for processing command line options
+MouseX::Getopt - A Mouse role for processing command line options
 
 =head1 SYNOPSIS
 
   ## In your class
   package My::App;
-  use Moose;
+  use Mouse;
 
-  with 'MooseX::Getopt';
+  with 'MouseX::Getopt';
 
   has 'out' => (is => 'rw', isa => 'Str', required => 1);
   has 'in'  => (is => 'rw', isa => 'Str', required => 1);
@@ -53,17 +53,17 @@ of your attribute as the command line option, and if there is a type
 constraint defined, it will configure Getopt::Long to handle the option
 accordingly.
 
-You can use the trait L<MooseX::Getopt::Meta::Attribute::Trait> or the
-attribute metaclass L<MooseX::Getopt::Meta::Attribute> to get non-default
+You can use the trait L<MouseX::Getopt::Meta::Attribute::Trait> or the
+attribute metaclass L<MouseX::Getopt::Meta::Attribute> to get non-default
 commandline option names and aliases.
 
-You can use the trait L<MooseX::Getopt::Meta::Attribute::Trait::NoGetopt>
-or the attribute metaclass L<MooseX::Getopt::Meta::Attribute::NoGetopt>
-to have C<MooseX::Getopt> ignore your attribute in the commandline options.
+You can use the trait L<MouseX::Getopt::Meta::Attribute::Trait::NoGetopt>
+or the attribute metaclass L<MouseX::Getopt::Meta::Attribute::NoGetopt>
+to have C<MouseX::Getopt> ignore your attribute in the commandline options.
 
 By default, attributes which start with an underscore are not given
 commandline argument support, unless the attribute's metaclass is set
-to L<MooseX::Getopt::Meta::Attribute>. If you don't want your accessors
+to L<MouseX::Getopt::Meta::Attribute>. If you don't want your accessors
 to have the leading underscore in their name, you can do this:
 
   # for read/write attributes
@@ -76,8 +76,8 @@ This will mean that Getopt will not handle a --foo param, but your
 code can still call the C<foo> method.
 
 If your class also uses a configfile-loading role based on
-L<MooseX::ConfigFromFile>, such as L<MooseX::SimpleConfig>,
-L<MooseX::Getopt>'s C<new_with_options> will load the configfile
+L<MouseX::ConfigFromFile>, such as L<MouseX::SimpleConfig>,
+L<MouseX::Getopt>'s C<new_with_options> will load the configfile
 specified by the C<--configfile> option (or the default you've
 given for the configfile attribute) for you.
 
@@ -154,7 +154,7 @@ so:
 
 Then you register the mapping, like so:
 
-  MooseX::Getopt::OptionTypeMap->add_option_type_to_map(
+  MouseX::Getopt::OptionTypeMap->add_option_type_to_map(
       'ArrayOfInts' => '=i@'
   );
 
@@ -182,7 +182,7 @@ Better examples are certainly welcome :)
 If you define a custom subtype which is a subtype of one of the
 standard L</Supported Type Constraints> above, and do not explicitly
 provide custom support as in L</Custom Type Constraints> above,
-MooseX::Getopt will treat it like the parent type for Getopt
+MouseX::Getopt will treat it like the parent type for Getopt
 purposes.
 
 For example, if you had the same custom C<ArrayOfInts> subtype

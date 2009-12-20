@@ -7,8 +7,8 @@ use Test::More tests => 3;
 
 {
     package App;
-    use Moose;
-    with qw(MooseX::Getopt);
+    use Mouse;
+    with qw(MouseX::Getopt);
 
     has 'TrackingNumber' => (
         is  => 'rw',

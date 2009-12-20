@@ -1,14 +1,14 @@
 
-package MooseX::Getopt::Strict;
-use Moose::Role;
+package MouseX::Getopt::Strict;
+use Mouse::Role;
 
-with 'MooseX::Getopt';
+with 'MouseX::Getopt';
 
 around '_compute_getopt_attrs' => sub {
     my $next = shift;
     my ( $class, @args ) = @_;
     grep { 
-        $_->isa("MooseX::Getopt::Meta::Attribute") 
+        $_->isa("MouseX::Getopt::Meta::Attribute") 
     } $class->$next(@args);
 };
 
@@ -20,11 +20,11 @@ __END__
 
 =head1 NAME
 
-MooseX::Getopt::Strict - only make options for attrs with the Getopt metaclass
+MouseX::Getopt::Strict - only make options for attrs with the Getopt metaclass
     
 =head1 DESCRIPTION
 
-This is an stricter version of C<MooseX::Getopt> which only processes the 
+This is an stricter version of C<MouseX::Getopt> which only processes the 
 attributes if they explicitly set as C<Getopt> attributes. All other attributes
 are ignored by the command line handler.
     

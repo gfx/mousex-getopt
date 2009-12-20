@@ -1,16 +1,16 @@
 
-package MooseX::Getopt::Meta::Attribute::Trait::NoGetopt;
-use Moose::Role;
+package MouseX::Getopt::Meta::Attribute::Trait::NoGetopt;
+use Mouse::Role;
 
 our $VERSION   = '0.26';
 our $AUTHORITY = 'cpan:STEVAN';
 
-no Moose::Role;
+no Mouse::Role;
 
 # register this as a metaclass alias ...
 package # stop confusing PAUSE
-    Moose::Meta::Attribute::Custom::Trait::NoGetopt;
-sub register_implementation { 'MooseX::Getopt::Meta::Attribute::Trait::NoGetopt' }
+    Mouse::Meta::Attribute::Custom::Trait::NoGetopt;
+sub register_implementation { 'MouseX::Getopt::Meta::Attribute::Trait::NoGetopt' }
 
 1;
 
@@ -20,14 +20,14 @@ __END__
 
 =head1 NAME
 
-MooseX::Getopt::Meta::Attribute::Trait::NoGetopt - Optional meta attribute trait for ignoring params
+MouseX::Getopt::Meta::Attribute::Trait::NoGetopt - Optional meta attribute trait for ignoring params
 
 =head1 SYNOPSIS
 
   package App;
-  use Moose;
+  use Mouse;
   
-  with 'MooseX::Getopt';
+  with 'MouseX::Getopt';
   
   has 'data' => (
       traits  => [ 'NoGetopt' ],  # do not attempt to capture this param  
@@ -40,7 +40,7 @@ MooseX::Getopt::Meta::Attribute::Trait::NoGetopt - Optional meta attribute trait
 
 This is a custom attribute metaclass trait which can be used to 
 specify that a specific attribute should B<not> be processed by 
-C<MooseX::Getopt>. All you need to do is specify the C<NoGetopt> 
+C<MouseX::Getopt>. All you need to do is specify the C<NoGetopt> 
 metaclass trait.
 
   has 'foo' => (traits => [ 'NoGetopt', ... ], ... );

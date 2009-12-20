@@ -1,4 +1,4 @@
-MooseX::Getopt version 0.26
+MouseX::Getopt version 0.26
 ===========================
 
 See the individual module documentation for more information
@@ -16,7 +16,7 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-    Moose
+    Mouse
     Getopt::Long
 
 COPYRIGHT AND LICENCE

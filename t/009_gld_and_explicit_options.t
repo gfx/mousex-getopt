@@ -10,14 +10,14 @@ BEGIN {
     eval 'use Getopt::Long::Descriptive;';
     plan skip_all => "Getopt::Long::Descriptive required for this test" if $@;
     plan tests => 5;
-    use_ok('MooseX::Getopt');
+    use_ok('MouseX::Getopt');
 }
 
 {
     package Testing::Foo;
-    use Moose;
+    use Mouse;
     
-    with 'MooseX::Getopt';
+    with 'MouseX::Getopt';
     
     has 'bar' => (
         is       => 'ro',

@@ -1,7 +1,7 @@
-package MooseX::Getopt::Dashes;
-use Moose::Role;
+package MouseX::Getopt::Dashes;
+use Mouse::Role;
 
-with 'MooseX::Getopt';
+with 'MouseX::Getopt';
 
 around _get_cmd_flags_for_attr => sub {
     my $next = shift;
@@ -9,7 +9,7 @@ around _get_cmd_flags_for_attr => sub {
 
     my ( $flag, @aliases ) = $class->$next($attr, @rest);
     $flag =~ tr/_/-/
-        unless $attr->does('MooseX::Getopt::Meta::Attribute::Trait')
+        unless $attr->does('MouseX::Getopt::Meta::Attribute::Trait')
             && $attr->has_cmd_flag;
 
     return ( $flag, @aliases );
@@ -23,19 +23,19 @@ __END__
 
 =head1 NAME
 
-MooseX::Getopt::Dashes - convert underscores in attribute names to dashes
+MouseX::Getopt::Dashes - convert underscores in attribute names to dashes
 
 =head1 SYNOPSIS
 
   package My::App;
-  use Moose;
-  with 'MooseX::Getopt::Dashes';
+  use Mouse;
+  with 'MouseX::Getopt::Dashes';
 
-  # use as MooseX::Getopt
+  # use as MouseX::Getopt
 
 =head1 DESCRIPTION
 
-This is a version of C<MooseX::Getopt> which converts underscores in
+This is a version of C<MouseX::Getopt> which converts underscores in
 attribute names to dashes when generating command line flags.
 
 =head1 METHODS

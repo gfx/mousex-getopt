@@ -5,9 +5,9 @@ use Test::Exception;
 
 {
     package MyScript;
-    use Moose;
+    use Mouse;
 
-    with 'MooseX::Getopt';
+    with 'MouseX::Getopt';
 
     has foo => ( isa => 'Int', is => 'ro', documentation => 'A foo' );
     has help => ( isa => 'Bool', is => 'ro', default => 0, documentation => 'Help');

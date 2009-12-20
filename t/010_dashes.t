@@ -9,14 +9,14 @@ use Test::Exception;
 
 
 BEGIN {
-	use_ok('MooseX::Getopt');
+	use_ok('MouseX::Getopt');
 }
 
 {
 	package App;
-	use Moose;
+	use Mouse;
 
-	with 'MooseX::Getopt::Dashes';
+	with 'MouseX::Getopt::Dashes';
 
 	has 'some_thingy' => ( is => 'ro', isa => 'Str', default => 'foo' );
 }

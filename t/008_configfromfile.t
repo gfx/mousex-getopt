@@ -7,9 +7,9 @@ use Test::Exception;
 use Test::More;
 use File::Spec;
 
-if ( !eval { require MooseX::ConfigFromFile } )
+if ( !eval { require MouseX::ConfigFromFile } )
 {
-    plan skip_all => 'Test requires MooseX::ConfigFromFile';
+    plan skip_all => 'Test requires MouseX::ConfigFromFile';
 }
 else
 {
@@ -19,9 +19,9 @@ else
 {
     package App;
 
-    use Moose;
-    with 'MooseX::Getopt';
-    with 'MooseX::ConfigFromFile';
+    use Mouse;
+    with 'MouseX::Getopt';
+    with 'MouseX::ConfigFromFile';
 
     has 'config_from_override' => (
         is       => 'ro',
@@ -68,7 +68,7 @@ else
 {
     package App::DefaultConfigFile;
 
-    use Moose;
+    use Mouse;
     extends 'App';
 
     has '+configfile' => (
@@ -79,7 +79,7 @@ else
 {
     package App::DefaultConfigFileCodeRef;
 
-    use Moose;
+    use Mouse;
     extends 'App';
 
     has '+configfile' => (
@@ -193,17 +193,17 @@ else
 
 {
     package BaseApp::WithConfig;
-    use Moose;
-    with 'MooseX::ConfigFromFile';
+    use Mouse;
+    with 'MouseX::ConfigFromFile';
 
     sub get_config_from_file { return {}; }
 }
 
 {
     package DerivedApp::Getopt;
-    use Moose;
+    use Mouse;
     extends 'BaseApp::WithConfig';
-    with 'MooseX::Getopt';
+    with 'MouseX::Getopt';
 }
 
 # With DerivedApp, the Getopt role was applied at a different level

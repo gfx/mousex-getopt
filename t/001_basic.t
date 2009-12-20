@@ -6,17 +6,17 @@ use warnings;
 use Test::More tests => 69;
 
 BEGIN {
-    use_ok('MooseX::Getopt');
+    use_ok('MouseX::Getopt');
 }
 
 {
     package App;
-    use Moose;
+    use Mouse;
     
-    with 'MooseX::Getopt';
+    with 'MouseX::Getopt';
 
     has 'data' => (
-        metaclass => 'MooseX::Getopt::Meta::Attribute',        
+        metaclass => 'MouseX::Getopt::Meta::Attribute',        
         is        => 'ro',
         isa       => 'Str',
         default   => 'file.dat',
@@ -32,7 +32,7 @@ BEGIN {
     );
 
     has 'horse' => (
-        metaclass   => 'MooseX::Getopt::Meta::Attribute',        
+        metaclass   => 'MouseX::Getopt::Meta::Attribute',        
         is          => 'ro',
         isa         => 'Str',
         default     => 'bray',
@@ -70,7 +70,7 @@ BEGIN {
     );
 
     has '_private_stuff_cmdline' => (
-        metaclass => 'MooseX::Getopt::Meta::Attribute',        
+        metaclass => 'MouseX::Getopt::Meta::Attribute',        
         is        => 'ro',
         isa       => 'Int',
         default   => 832,
@@ -81,8 +81,8 @@ BEGIN {
 
 foreach my $attr_name (qw(data cow horse _private_stuff_cmdline)) {
     my $attr = App->meta->get_attribute($attr_name);
-    isa_ok($attr, 'Moose::Meta::Attribute');
-    isa_ok($attr, 'MooseX::Getopt::Meta::Attribute');
+    isa_ok($attr, 'Mouse::Meta::Attribute');
+    isa_ok($attr, 'MouseX::Getopt::Meta::Attribute');
     can_ok($attr, 'cmd_flag');
     can_ok($attr, 'cmd_aliases');    
 }

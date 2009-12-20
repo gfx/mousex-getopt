@@ -5,13 +5,13 @@ use warnings;
 
 use Test::More tests => 3;
 
-use MooseX::Getopt;
+use MouseX::Getopt;
 
 {
     package App;
-    use Moose;
+    use Mouse;
 
-    with 'MooseX::Getopt';
+    with 'MouseX::Getopt';
 
     has 'length' => (
         is      => 'ro',
@@ -24,7 +24,7 @@ use MooseX::Getopt;
         isa    => 'Bool',
         default => 0,
     );
-    no Moose;
+    no Mouse;
 }
 
 {

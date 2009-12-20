@@ -1,10 +1,10 @@
 
-package MooseX::Getopt::Basic;
-use Moose::Role;
+package MouseX::Getopt::Basic;
+use Mouse::Role;
 
-use MooseX::Getopt::OptionTypeMap;
-use MooseX::Getopt::Meta::Attribute;
-use MooseX::Getopt::Meta::Attribute::NoGetopt;
+use MouseX::Getopt::OptionTypeMap;
+use MouseX::Getopt::Meta::Attribute;
+use MouseX::Getopt::Meta::Attribute::NoGetopt;
 use Carp ();
 
 use Getopt::Long ();
@@ -16,7 +16,7 @@ sub new_with_options {
     my ($class, @params) = @_;
 
     my $config_from_file;
-    if($class->meta->does_role('MooseX::ConfigFromFile')) {
+    if($class->meta->does_role('MouseX::ConfigFromFile')) {
         local @ARGV = @ARGV;
 
         my $configfile;
@@ -155,11 +155,11 @@ sub _traditional_spec {
 sub _compute_getopt_attrs {
     my $class = shift;
     grep {
-        $_->does("MooseX::Getopt::Meta::Attribute::Trait")
+        $_->does("MouseX::Getopt::Meta::Attribute::Trait")
             or
         $_->name !~ /^_/
     } grep {
-        !$_->does('MooseX::Getopt::Meta::Attribute::Trait::NoGetopt')
+        !$_->does('MouseX::Getopt::Meta::Attribute::Trait::NoGetopt')
     } $class->meta->get_all_attributes
 }
 
@@ -170,7 +170,7 @@ sub _get_cmd_flags_for_attr {
 
     my @aliases;
 
-    if ($attr->does('MooseX::Getopt::Meta::Attribute::Trait')) {
+    if ($attr->does('MouseX::Getopt::Meta::Attribute::Trait')) {
         $flag = $attr->cmd_flag if $attr->has_cmd_flag;
         @aliases = @{ $attr->cmd_aliases } if $attr->has_cmd_aliases;
     }
@@ -194,8 +194,8 @@ sub _attrs_to_options {
         }
         elsif ($attr->has_type_constraint) {
             my $type = $attr->type_constraint;
-            if (MooseX::Getopt::OptionTypeMap->has_option_type($type)) {
-                $opt_string .= MooseX::Getopt::OptionTypeMap->get_option_type($type)
+            if (MouseX::Getopt::OptionTypeMap->has_option_type($type)) {
+                $opt_string .= MouseX::Getopt::OptionTypeMap->get_option_type($type)
             }
         }
 
@@ -220,7 +220,7 @@ sub _attrs_to_options {
     return @options;
 }
 
-no Moose::Role; 1;
+no Mouse::Role; 1;
 
 __END__
 
@@ -228,15 +228,15 @@ __END__
 
 =head1 NAME
 
-MooseX::Getopt::Basic - role to implement the Getopt::Long functionality
+MouseX::Getopt::Basic - role to implement the Getopt::Long functionality
 
 =head1 SYNOPSIS
 
   ## In your class
   package My::App;
-  use Moose;
+  use Mouse;
 
-  with 'MooseX::Getopt::Basic';
+  with 'MouseX::Getopt::Basic';
 
   has 'out' => (is => 'rw', isa => 'Str', required => 1);
   has 'in'  => (is => 'rw', isa => 'Str', required => 1);
@@ -256,14 +256,14 @@ MooseX::Getopt::Basic - role to implement the Getopt::Long functionality
 
 =head1 DESCRIPTION
 
-This is like L<MooseX::Getopt> and can be used instead except that it
+This is like L<MouseX::Getopt> and can be used instead except that it
 doesn't make use of L<Getopt::Long::Descriptive> (or "GLD" for short).
 
 =head1 METHODS
 
 =head2 new_with_options
 
-See L<MooseX::Getopt/new_with_options>.
+See L<MouseX::Getopt/new_with_options>.
 
 =head1 COPYRIGHT AND LICENSE
 
