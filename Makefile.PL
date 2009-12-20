@@ -28,4 +28,4 @@ auto_set_repository();
 
 auto_manifest();
 
-WriteAll;
+WriteAll(check_nmake => 0);
