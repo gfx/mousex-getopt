@@ -83,15 +83,8 @@ MouseX::Getopt::GLD - A Mouse role for processing command line options with Geto
   ## on the command line
   % perl my_app_script.pl -in file.input -out file.dump
 
-=head1 DESCRIPTION
+=head1 SEE ALSO
 
-=head1 COPYRIGHT AND LICENSE
-
-Copyright 2007-2009 by Infinity Interactive, Inc.
-
-L<http://www.iinteractive.com>
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+L<MouseX::Getopt>
 
 =cut

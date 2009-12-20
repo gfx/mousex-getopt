@@ -50,6 +50,7 @@ use Test::Exception;
 }
      ];
 
+     local $TODO = 'The order is different from MooseX::Getopt';
      is_deeply \@MyScript::exception, $exp;
 }
 

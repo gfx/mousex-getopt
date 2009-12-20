@@ -4,7 +4,6 @@ use Mouse::Role;
 use constant _HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
 our $VERSION   = '0.26';
-our $AUTHORITY = 'cpan:STEVAN';
 
 with _HAVE_GLD ? 'MouseX::Getopt::GLD' : 'MouseX::Getopt::Basic';
 
@@ -244,25 +243,27 @@ to cpan-RT.
 
 =head1 AUTHOR
 
-Stevan Little E<lt>stevan@iinteractive.comE<gt>
+NAKAGAWA Masaki E<lt>masaki@cpan.orgE<gt>
 
-Brandon L. Black, E<lt>blblack@gmail.comE<gt>
+FUJI Goro E<lt>gfuji@cpan.orgE<gt>
 
-Yuval Kogman, E<lt>nothingmuch@woobling.orgE<gt>
+=head1 OROGINAL AUTHORS
 
-=head1 CONTRIBUTORS
+This is based on C<MooseX::Getopt>.
 
-Ryan D Johnson, E<lt>ryan@innerfence.comE<gt>
+See L<MooseX::Getopt/AUTHOR> and L<MooseX::Getopt/CONTRIBUTORS>.
 
-Drew Taylor, E<lt>drew@drewtaylor.comE<gt>
+=head1 SEE ALSO
 
-Tomas Doran, (t0m) C<< <bobtfish@bobtfish.net> >>
+L<Mouse>
 
-=head1 COPYRIGHT AND LICENSE
+L<Moose>
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+L<MooseX::Getopt>
 
-L<http://www.iinteractive.com>
+L<Any::Moose::Convert>
+
+=head1 LICENSE
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

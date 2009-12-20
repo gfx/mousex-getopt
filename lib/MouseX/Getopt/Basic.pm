@@ -265,14 +265,9 @@ doesn't make use of L<Getopt::Long::Descriptive> (or "GLD" for short).
 
 See L<MouseX::Getopt/new_with_options>.
 
-=head1 COPYRIGHT AND LICENSE
+=head1 SEE ALSO
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
-
-L<http://www.iinteractive.com>
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+L<MouseX::Getopt>
 
 =cut
 
