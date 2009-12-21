@@ -1,5 +1,8 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.2601 Mon Dec 21 15:08:59 2009
+    - Mark several tests as TODO
+
 0.2600 Sun Dec 20 15:06:28 2009
     - Forked from MooseX::Getopt 0.26 by Any::Moose::Convert
 

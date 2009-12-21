@@ -3,7 +3,7 @@ use Mouse::Role;
 
 use constant _HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
-our $VERSION   = '0.2600';
+our $VERSION   = '0.2601';
 
 with _HAVE_GLD ? 'MouseX::Getopt::GLD' : 'MouseX::Getopt::Basic';
 
