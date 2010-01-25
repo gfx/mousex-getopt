@@ -1,8 +1,12 @@
 use strict;
 use warnings;
-use Capture::Tiny 'capture';
 use File::Spec::Functions 'catfile';
 use Test::More;
+
+BEGIN {
+    eval "use Capture::Tiny 'capture'";
+    plan skip_all => "Capture::Tiny unavailable" if $@;
+}
 
 my $HAVE_SIMPLECONFIG = eval {
     require MooseX::SimpleConfig;
