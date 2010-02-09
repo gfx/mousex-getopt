@@ -20,20 +20,16 @@ for my $opt (qw(-v --version -V)) {
 for my $test (qw(version_with_options.pl version_with_simpleconfig.pl)) {
     my $script = catfile('t', $test);
 
-    SKIP: {
-        if ($test eq 'version_with_simpleconfig.pl' && !$HAVE_SIMPLECONFIG) {
-            skip('MooseX::SimpleConfig unavailable', 3);
-        }
+    next if $test eq 'version_with_simpleconfig.pl' && !$HAVE_SIMPLECONFIG;
 
-        my ($v, undef) = capture { system $^X, $script, '-v' };
-        like($v, qr/^SUCCESS/, "Option -v is correct");
+    my ($v, undef) = capture { system $^X, $script, '-v' };
+    like($v, qr/^SUCCESS/, "Option -v is correct");
 
-        my ($version, undef) = capture { system $^X, $script, '--version' };
-        like($version, qr/^SUCCESS/, "Option --version is correct");
+    my ($version, undef) = capture { system $^X, $script, '--version' };
+    like($version, qr/^SUCCESS/, "Option --version is correct");
 
-        my (undef, $V) = capture { system $^X, $script, '-V' };
-        like($V, qr/^Unknown option/, "Option -V is unknown");
-    }
+    my (undef, $V) = capture { system $^X, $script, '-V' };
+    like($V, qr/^Unknown option/, "Option -V is unknown");
 }
 
 done_testing();
