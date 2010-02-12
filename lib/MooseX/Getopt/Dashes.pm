@@ -31,12 +31,33 @@ MooseX::Getopt::Dashes - convert underscores in attribute names to dashes
   use Moose;
   with 'MooseX::Getopt::Dashes';
 
+  # Will be called as --some-thingy, not --some_thingy
+  has 'some_thingy' => (
+      is      => 'ro',
+      isa     => 'Str',
+      default => 'foo'
+  );
+
+  # Will be called as --another_thingy, not --another-thingy
+  has 'another_thingy' => (
+      traits   => [ 'Getopt' ],
+      cmd_flag => 'another_thingy'
+      is       => 'ro',
+      isa      => 'Str',
+      default  => 'foo'
+  );
+
   # use as MooseX::Getopt
 
 =head1 DESCRIPTION
 
 This is a version of C<MooseX::Getopt> which converts underscores in
 attribute names to dashes when generating command line flags.
+
+You can selectively disable this on a per-attribute basis by supplying
+a L<cmd_flag|MooseX::Getopt::Meta::Attribute/METHODS> argument with
+the command flag you'd like for a given attribute. No underscore to
+dash replacement will be done on the C<cmd_flag>.
 
 =head1 METHODS
 
@@ -59,6 +80,8 @@ Dagfinn Ilmari MannsE<aring>ker E<lt>ilmari@ilmari.orgE<gt>
 Stevan Little E<lt>stevan@iinteractive.comE<gt>
 
 Yuval Kogman  C<< <nuffin@cpan.org> >>
+
+E<AElig>var ArnfjE<ouml>rE<eth> Bjarmason E<lt>avar@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
