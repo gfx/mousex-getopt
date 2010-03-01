@@ -1,5 +1,9 @@
 Revision history for Perl extension MooseX-Getopt
 
+  * Makefile.PL:
+   - Bump dependency to Getopt::Long::Descriptive to 0.081 in an attempt to
+     avoid test failures.
+
   * MooseX::Getopt::Dashes
    - Document that using a cmd_flag argument to attributes can be used to
      override the tr/_/-/ replacement ::Dashes does on attribute names
