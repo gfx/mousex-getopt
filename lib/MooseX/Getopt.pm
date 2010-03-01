@@ -3,7 +3,7 @@ use Moose::Role;
 
 use constant _HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
-our $VERSION   = '0.26';
+our $VERSION   = '0.27';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with _HAVE_GLD ? 'MooseX::Getopt::GLD' : 'MooseX::Getopt::Basic';

@@ -3,7 +3,7 @@ package MooseX::Getopt::Meta::Attribute::Trait;
 use Moose::Role;
 use Moose::Util::TypeConstraints;
 
-our $VERSION   = '0.26';
+our $VERSION   = '0.27';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has 'cmd_flag' => (
