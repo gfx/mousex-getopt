@@ -7,8 +7,8 @@ with 'MooseX::Getopt';
 around '_compute_getopt_attrs' => sub {
     my $next = shift;
     my ( $class, @args ) = @_;
-    grep { 
-        $_->isa("MooseX::Getopt::Meta::Attribute") 
+    grep {
+        $_->does("MooseX::Getopt::Meta::Attribute::Trait")
     } $class->$next(@args);
 };
 

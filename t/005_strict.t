@@ -34,7 +34,7 @@ BEGIN {
     );
 
     has 'horse' => (
-        metaclass   => 'Getopt',
+        traits      => ['Getopt'],
         is          => 'ro',
         isa         => 'Str',
         default     => 'bray',
