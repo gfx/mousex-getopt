@@ -1,22 +1,15 @@
 package MooseX::Getopt;
-use Moose::Role;
+# ABSTRACT: A Moose role for processing command line options
+
+use Moose::Role 0.56;
 
 use constant _HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
 
-our $VERSION   = '0.27';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with _HAVE_GLD ? 'MooseX::Getopt::GLD' : 'MooseX::Getopt::Basic';
 
-no Moose::Role; 1;
+no Moose::Role;
 
-__END__
-
-=pod
-
-=head1 NAME
-
-MooseX::Getopt - A Moose role for processing command line options
+1;
 
 =head1 SYNOPSIS
 
@@ -191,11 +184,7 @@ type for it to the C<OptionTypeMap>, it would be treated just
 like a normal C<ArrayRef> type for Getopt purposes (that is,
 C<=s@>).
 
-=head1 METHODS
-
-=over 4
-
-=item B<new_with_options (%params)>
+=method B<new_with_options (%params)>
 
 This method will take a set of default C<%params> and then collect
 params from the command line (possibly overriding those in C<%params>)
@@ -219,52 +208,19 @@ B<documentation> option for each attribute to document.
 If you have L<Getopt::Long::Descriptive> the C<usage> param is also passed to
 C<new>.
 
-=item B<ARGV>
+=method B<ARGV>
 
 This accessor contains a reference to a copy of the C<@ARGV> array
 as it originally existed at the time of C<new_with_options>.
 
-=item B<extra_argv>
+=method B<extra_argv>
 
 This accessor contains an arrayref of leftover C<@ARGV> elements that
 L<Getopt::Long> did not parse.  Note that the real C<@ARGV> is left
 un-mangled.
 
-=item B<meta>
+=method B<meta>
 
 This returns the role meta object.
-
-=back
-
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
-
-=head1 AUTHOR
-
-Stevan Little E<lt>stevan@iinteractive.comE<gt>
-
-Brandon L. Black, E<lt>blblack@gmail.comE<gt>
-
-Yuval Kogman, E<lt>nothingmuch@woobling.orgE<gt>
-
-=head1 CONTRIBUTORS
-
-Ryan D Johnson, E<lt>ryan@innerfence.comE<gt>
-
-Drew Taylor, E<lt>drew@drewtaylor.comE<gt>
-
-Tomas Doran, (t0m) C<< <bobtfish@bobtfish.net> >>
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright 2007-2008 by Infinity Interactive, Inc.
-
-L<http://www.iinteractive.com>
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut

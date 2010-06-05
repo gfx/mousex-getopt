@@ -1,8 +1,9 @@
-
 package MooseX::Getopt::GLD;
+# ABSTRACT: A Moose role for processing command line options with Getopt::Long::Descriptive
+
 use Moose::Role;
 
-use Getopt::Long::Descriptive;
+use Getopt::Long::Descriptive 0.081;
 
 with 'MooseX::Getopt::Basic';
 
@@ -49,15 +50,9 @@ sub _gld_spec {
     return ( \@options, \%name_to_init_arg );
 }
 
-no Moose::Role; 1;
+no Moose::Role;
 
-__END__
-
-=pod
-
-=head1 NAME
-
-MooseX::Getopt::GLD - A Moose role for processing command line options with Getopt::Long::Descriptive
+1;
 
 =head1 SYNOPSIS
 
@@ -82,16 +77,5 @@ MooseX::Getopt::GLD - A Moose role for processing command line options with Geto
 
   ## on the command line
   % perl my_app_script.pl -in file.input -out file.dump
-
-=head1 DESCRIPTION
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright 2007-2009 by Infinity Interactive, Inc.
-
-L<http://www.iinteractive.com>
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut

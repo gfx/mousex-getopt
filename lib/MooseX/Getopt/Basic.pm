@@ -1,5 +1,6 @@
-
 package MooseX::Getopt::Basic;
+# ABSTRACT: MooseX::Getopt::Basic - role to implement the Getopt::Long functionality
+
 use Moose::Role;
 
 use MooseX::Getopt::OptionTypeMap;
@@ -7,7 +8,7 @@ use MooseX::Getopt::Meta::Attribute;
 use MooseX::Getopt::Meta::Attribute::NoGetopt;
 use Carp ();
 
-use Getopt::Long ();
+use Getopt::Long 2.37 ();
 
 has ARGV       => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
 has extra_argv => (is => 'rw', isa => 'ArrayRef', metaclass => "NoGetopt");
@@ -220,15 +221,8 @@ sub _attrs_to_options {
     return @options;
 }
 
-no Moose::Role; 1;
-
-__END__
-
-=pod
-
-=head1 NAME
-
-MooseX::Getopt::Basic - role to implement the Getopt::Long functionality
+no Moose::Role;
+1;
 
 =head1 SYNOPSIS
 
@@ -259,20 +253,8 @@ MooseX::Getopt::Basic - role to implement the Getopt::Long functionality
 This is like L<MooseX::Getopt> and can be used instead except that it
 doesn't make use of L<Getopt::Long::Descriptive> (or "GLD" for short).
 
-=head1 METHODS
-
-=head2 new_with_options
+=method new_with_options
 
 See L<MooseX::Getopt/new_with_options>.
 
-=head1 COPYRIGHT AND LICENSE
-
-Copyright 2007-2008 by Infinity Interactive, Inc.
-
-L<http://www.iinteractive.com>
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
-
 =cut
-
