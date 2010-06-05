@@ -8,3 +8,5 @@ META.yml
 MANIFEST
 MANIFEST.bak
 *.*.swp
+.*
+!.gitignore
