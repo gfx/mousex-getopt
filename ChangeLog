@@ -1,5 +1,6 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.27 Sun. Feb 10 2010
   * Makefile.PL:
    - Bump dependency to Getopt::Long::Descriptive to 0.081 in an attempt to
      avoid test failures.
