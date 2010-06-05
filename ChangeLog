@@ -1,17 +1,21 @@
 Revision history for Perl extension MooseX-Getopt
 
+  * MooseX::Getopt::Strict
+    - Make it work with Getopt attribute traits in addition to
+      attribute metaclasses.
+
 0.27 Sun. Feb 10 2010
   * Makefile.PL:
-   - Bump dependency to Getopt::Long::Descriptive to 0.081 in an attempt to
-     avoid test failures.
+    - Bump dependency to Getopt::Long::Descriptive to 0.081 in an attempt to
+      avoid test failures.
 
   * MooseX::Getopt::Dashes
-   - Document that using a cmd_flag argument to attributes can be used to
-     override the tr/_/-/ replacement ::Dashes does on attribute names
+    - Document that using a cmd_flag argument to attributes can be used to
+      override the tr/_/-/ replacement ::Dashes does on attribute names
 
 0.26 Thu. Dec 10 2009
   * MooseX::Getopt::Basic
-   - Fix bug with attribute names containing upper case letters.
+    - Fix bug with attribute names containing upper case letters.
   * Test suite:
     - Add t/106_no_ignore_case.t for testing the compatibility with
       no_ignore_case
