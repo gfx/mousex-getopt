@@ -1,8 +1,11 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.28 Sat. Jun 05 2010
   * MooseX::Getopt::Strict
     - Make it work with Getopt attribute traits in addition to
       attribute metaclasses.
+
+  * Switch from Module::Install to Dist::Zilla.
 
 0.27 Sun. Feb 10 2010
   * Makefile.PL:
