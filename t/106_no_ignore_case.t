@@ -17,7 +17,7 @@ foreach my $role (qw/
     $meta->add_attribute('BigD', traits => ['Getopt'], isa => 'Bool',
         cmd_aliases => ['D'], is => 'ro');
     $meta->add_attribute('SmallD', traits => ['Getopt'], isa => 'Bool',
-        cmd_aliases => ['d'], is => 'ro');    
+        cmd_aliases => ['d'], is => 'ro');
     $role->meta->apply($meta);
 
     {

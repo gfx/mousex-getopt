@@ -32,9 +32,9 @@ sub _gld_spec {
             {
                 ( ( $opt->{required} && !exists($constructor_params->{$opt->{init_arg}}) ) ? (required => $opt->{required}) : () ),
                 # NOTE:
-                # remove this 'feature' because it didn't work 
+                # remove this 'feature' because it didn't work
                 # all the time, and so is better to not bother
-                # since Moose will handle the defaults just 
+                # since Moose will handle the defaults just
                 # fine anyway.
                 # - SL
                 #( exists $opt->{default}  ? (default  => $opt->{default})  : () ),

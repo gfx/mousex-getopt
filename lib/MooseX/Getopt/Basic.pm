@@ -206,9 +206,9 @@ sub _attrs_to_options {
             opt_string => $opt_string,
             required   => $attr->is_required && !$attr->has_default && !$attr->has_builder && !exists $config_from_file->{$attr->name},
             # NOTE:
-            # this "feature" was breaking because 
-            # Getopt::Long::Descriptive would return 
-            # the default value as if it was a command 
+            # this "feature" was breaking because
+            # Getopt::Long::Descriptive would return
+            # the default value as if it was a command
             # line flag, which would then override the
             # one passed into a constructor.
             # See 100_gld_default_bug.t for an example

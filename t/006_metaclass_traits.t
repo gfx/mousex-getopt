@@ -13,11 +13,11 @@ BEGIN {
 {
     package App;
     use Moose;
-    
+
     with 'MooseX::Getopt';
 
     has 'data' => (
-        traits    => [ 'MooseX::Getopt::Meta::Attribute::Trait' ],        
+        traits    => [ 'MooseX::Getopt::Meta::Attribute::Trait' ],
         is        => 'ro',
         isa       => 'Str',
         default   => 'file.dat',
@@ -25,7 +25,7 @@ BEGIN {
     );
 
     has 'cow' => (
-        traits      => [ 'Getopt' ],        
+        traits      => [ 'Getopt' ],
         is          => 'ro',
         isa         => 'Str',
         default     => 'moo',
@@ -33,7 +33,7 @@ BEGIN {
     );
 
     has 'horse' => (
-        traits      => [ 'Getopt' ], 
+        traits      => [ 'Getopt' ],
         is          => 'ro',
         isa         => 'Str',
         default     => 'bray',
@@ -49,15 +49,15 @@ BEGIN {
 
     has 'verbose' => (
         is     => 'ro',
-        isa    => 'Bool',       
+        isa    => 'Bool',
     );
-    
+
     has 'libs' => (
         is      => 'ro',
         isa     => 'ArrayRef',
         default => sub { [] },
-    ); 
-    
+    );
+
     has 'details' => (
         is      => 'ro',
         isa     => 'HashRef',
@@ -71,22 +71,22 @@ BEGIN {
     );
 
     has '_private_stuff_cmdline' => (
-        traits    => [ 'Getopt' ],        
+        traits    => [ 'Getopt' ],
         is        => 'ro',
         isa       => 'Int',
         default   => 832,
         cmd_flag  => 'p',
     );
-  
+
 }
 
 foreach my $attr_name (qw(data cow horse _private_stuff_cmdline)) {
     my $attr = App->meta->get_attribute($attr_name);
     isa_ok($attr, 'Moose::Meta::Attribute');
     does_ok($attr, 'MooseX::Getopt::Meta::Attribute::Trait');
-    
+
     can_ok($attr, 'cmd_flag');
-    can_ok($attr, 'cmd_aliases');    
+    can_ok($attr, 'cmd_aliases');
 }
 
 {
@@ -96,10 +96,10 @@ foreach my $attr_name (qw(data cow horse _private_stuff_cmdline)) {
     isa_ok($app, 'App');
 
     ok(!$app->verbose, '... verbosity is off as expected');
-    is($app->length, 24, '... length is 24 as expected');    
-    is($app->data, 'file.dat', '... data is file.dat as expected');        
-    is_deeply($app->libs, [], '... libs is [] as expected'); 
-    is_deeply($app->details, {}, '... details is {} as expected');           
+    is($app->length, 24, '... length is 24 as expected');
+    is($app->data, 'file.dat', '... data is file.dat as expected');
+    is_deeply($app->libs, [], '... libs is [] as expected');
+    is_deeply($app->details, {}, '... details is {} as expected');
 }
 
 {
@@ -109,10 +109,10 @@ foreach my $attr_name (qw(data cow horse _private_stuff_cmdline)) {
     isa_ok($app, 'App');
 
     ok($app->verbose, '... verbosity is turned on as expected');
-    is($app->length, 50, '... length is 50 as expected');    
-    is($app->data, 'file.dat', '... data is file.dat as expected'); 
-    is_deeply($app->libs, [], '... libs is [] as expected');  
-    is_deeply($app->details, {}, '... details is {} as expected');                            
+    is($app->length, 50, '... length is 50 as expected');
+    is($app->data, 'file.dat', '... data is file.dat as expected');
+    is_deeply($app->libs, [], '... libs is [] as expected');
+    is_deeply($app->details, {}, '... details is {} as expected');
 }
 
 {
@@ -122,10 +122,10 @@ foreach my $attr_name (qw(data cow horse _private_stuff_cmdline)) {
     isa_ok($app, 'App');
 
     ok($app->verbose, '... verbosity is turned on as expected');
-    is($app->length, 24, '... length is 24 as expected');    
-    is($app->data, 'foo.txt', '... data is foo.txt as expected'); 
-    is_deeply($app->libs, [], '... libs is [] as expected');    
-    is_deeply($app->details, {}, '... details is {} as expected');                             
+    is($app->length, 24, '... length is 24 as expected');
+    is($app->data, 'foo.txt', '... data is foo.txt as expected');
+    is_deeply($app->libs, [], '... libs is [] as expected');
+    is_deeply($app->details, {}, '... details is {} as expected');
 }
 
 {
@@ -135,12 +135,12 @@ foreach my $attr_name (qw(data cow horse _private_stuff_cmdline)) {
     isa_ok($app, 'App');
 
     ok($app->verbose, '... verbosity is turned on as expected');
-    is($app->length, 24, '... length is 24 as expected');    
-    is($app->data, 'file.dat', '... data is foo.txt as expected'); 
-    is_deeply($app->libs, 
-    ['libs/', 'includes/lib'], 
-    '... libs is [libs/, includes/lib] as expected');   
-    is_deeply($app->details, {}, '... details is {} as expected');                              
+    is($app->length, 24, '... length is 24 as expected');
+    is($app->data, 'file.dat', '... data is foo.txt as expected');
+    is_deeply($app->libs,
+    ['libs/', 'includes/lib'],
+    '... libs is [libs/, includes/lib] as expected');
+    is_deeply($app->details, {}, '... details is {} as expected');
 }
 
 {
@@ -150,12 +150,12 @@ foreach my $attr_name (qw(data cow horse _private_stuff_cmdline)) {
     isa_ok($app, 'App');
 
     ok(!$app->verbose, '... verbosity is turned on as expected');
-    is($app->length, 24, '... length is 24 as expected');    
-    is($app->data, 'file.dat', '... data is foo.txt as expected'); 
-    is_deeply($app->libs, [], '... libs is [] as expected');    
-    is_deeply($app->details, 
-    { os => 'mac', name => 'foo' }, 
-    '... details is { os => mac, name => foo } as expected');                              
+    is($app->length, 24, '... length is 24 as expected');
+    is($app->data, 'file.dat', '... data is foo.txt as expected');
+    is_deeply($app->libs, [], '... libs is [] as expected');
+    is_deeply($app->details,
+    { os => 'mac', name => 'foo' },
+    '... details is { os => mac, name => foo } as expected');
 }
 
 {
@@ -166,10 +166,10 @@ foreach my $attr_name (qw(data cow horse _private_stuff_cmdline)) {
     isa_ok($app, 'App');
 
     ok(!$app->verbose, '... verbosity is turned off as expected');
-    is($app->length, 24, '... length is 24 as expected');    
-    is($app->data, 'file.dat', '... file is file.dat as expected');   
-    is_deeply($app->libs, [], '... libs is [] as expected');                
-    is_deeply($app->details, {}, '... details is {} as expected');               
+    is($app->length, 24, '... length is 24 as expected');
+    is($app->data, 'file.dat', '... file is file.dat as expected');
+    is_deeply($app->libs, [], '... libs is [] as expected');
+    is_deeply($app->details, {}, '... details is {} as expected');
 }
 
 # Test cmd_alias without cmd_flag

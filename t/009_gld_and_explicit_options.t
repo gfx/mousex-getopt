@@ -6,7 +6,7 @@ use warnings;
 use Test::More;
 use Test::Exception;
 
-BEGIN { 
+BEGIN {
     eval 'use Getopt::Long::Descriptive;';
     plan skip_all => "Getopt::Long::Descriptive required for this test" if $@;
     plan tests => 5;
@@ -16,20 +16,20 @@ BEGIN {
 {
     package Testing::Foo;
     use Moose;
-    
+
     with 'MooseX::Getopt';
-    
+
     has 'bar' => (
         is       => 'ro',
-        isa      => 'Int',   
+        isa      => 'Int',
         required => 1,
     );
-    
+
     has 'baz' => (
         is       => 'ro',
-        isa      => 'Int',   
-        required => 1,        
-    );    
+        isa      => 'Int',
+        required => 1,
+    );
 }
 
 @ARGV = qw(--bar 10);

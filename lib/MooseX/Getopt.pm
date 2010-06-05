@@ -195,7 +195,7 @@ If L<Getopt::Long/GetOptions> fails (due to invalid arguments),
 C<new_with_options> will throw an exception.
 
 If L<Getopt::Long::Descriptive> is installed and any of the following
-command line params are passed, the program will exit with usage 
+command line params are passed, the program will exit with usage
 information. You can add descriptions for each option by including a
 B<documentation> option for each attribute to document.
 
