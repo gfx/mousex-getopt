@@ -3,9 +3,7 @@ package MooseX::Getopt;
 
 use Moose::Role 0.56;
 
-use constant _HAVE_GLD => not not eval { require Getopt::Long::Descriptive };
-
-with _HAVE_GLD ? 'MooseX::Getopt::GLD' : 'MooseX::Getopt::Basic';
+with 'MooseX::Getopt::GLD';
 
 no Moose::Role;
 
