@@ -1,5 +1,8 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.29 Tue. Jun 15 2010
+  * Fix repository metadata. Thanks Robert Bohne for noticing!
+
 0.28 Sat. Jun 05 2010
   * MooseX::Getopt::Strict
     - Make it work with Getopt attribute traits in addition to
