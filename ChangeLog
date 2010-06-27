@@ -1,5 +1,11 @@
 Revision history for Perl extension MooseX-Getopt
 
+N+1 0.29_01 Fri. Jun 25 2010
+  * MooseX::Getopt::Basic
+    - Disable auto_help config in Getopt::Long, to avoid calling into
+    pod2usage when the --help option is used (the intent is just to fetch the
+    value of the configfile option).  (RT#57683)
+
 0.29 Tue. Jun 15 2010
   * Fix repository metadata. Thanks Robert Bohne for noticing!
 
