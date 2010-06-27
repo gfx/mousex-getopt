@@ -30,11 +30,6 @@ my $fail_on_exit = 1;
         },
     );
 
-    # only here to avoid an "unknown option: help" warning
-    has help => (
-        is => 'ro', isa => 'Bool',
-    );
-
     no Moose;
     1;
 }
@@ -55,7 +50,8 @@ END {
 
 warning_like {
     throws_ok { Class->new_with_options }
-        qr/^usage: [\d\w]+\Q.t [long options...]\E.\t--configfile\s*.\t--help/ms,
+           #usage: 107_no_auto_help.t [-?] [long options...]
+        qr/^usage: [\d\w]+\Q.t [-?] [long options...]\E.\t--configfile\s*.\t\Q-? --usage --help  Prints this usage information.\E/ms,
         'usage information looks good';
     }
     qr/^Specified configfile \'this_value_unimportant\' does not exist, is empty, or is not readable$/,

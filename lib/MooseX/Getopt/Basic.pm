@@ -63,7 +63,7 @@ sub new_with_options {
     my $params = $config_from_file ? { %$config_from_file, %{$processed{params}} } : $processed{params};
 
     # did the user request usage information?
-    if ( $processed{usage} && ($params->{'?'} or $params->{help} or $params->{usage}) )
+    if ( $processed{usage} and $params->{help_flag} )
     {
         $class->_getopt_full_usage($processed{usage});
     }
@@ -71,6 +71,7 @@ sub new_with_options {
     $class->new(
         ARGV       => $processed{argv_copy},
         extra_argv => $processed{argv},
+        ( $processed{usage} ? ( usage => $processed{usage} ) : () ),
         %$constructor_params, # explicit params to ->new
         %$params, # params from CLI
     );

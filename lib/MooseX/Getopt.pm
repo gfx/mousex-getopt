@@ -196,7 +196,8 @@ C<new_with_options> will throw an exception.
 
 If L<Getopt::Long::Descriptive> is installed and any of the following
 command line params are passed, the program will exit with usage
-information. You can add descriptions for each option by including a
+information (and the option's state will be stored in the help_flag
+attribute). You can add descriptions for each option by including a
 B<documentation> option for each attribute to document.
 
   --?
@@ -204,7 +205,7 @@ B<documentation> option for each attribute to document.
   --usage
 
 If you have L<Getopt::Long::Descriptive> the C<usage> param is also passed to
-C<new>.
+C<new> as the usage option.
 
 =method B<ARGV>
 
@@ -216,6 +217,16 @@ as it originally existed at the time of C<new_with_options>.
 This accessor contains an arrayref of leftover C<@ARGV> elements that
 L<Getopt::Long> did not parse.  Note that the real C<@ARGV> is left
 un-mangled.
+
+=method B<usage>
+
+This accessor contains the L<Getopt::Long::Descriptive::Usage> object (if
+L<Getopt::Long::Descriptive> is used).
+
+=method B<help_flag>
+
+This accessor contains the boolean state of the --help, --usage and --?
+options (true if any of these options were passed on the command line).
 
 =method B<meta>
 

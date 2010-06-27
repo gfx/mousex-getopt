@@ -1,10 +1,18 @@
 Revision history for Perl extension MooseX-Getopt
+  * MooseX::Getopt::Basic
+    - store the usage object to the usage attr (RT#58715)
+    - properly checks whether the *option* --help, --usage, or --? were used,
+      rather than the attribute 'help', 'usage' or '?' were set
+  * MooseX::Getopt::GLD
+    - add the usage attribute for storing the Getopt::Long::Descriptive::Usage
+      object, and the help attribute for storing --help, --usage and --? state
+  (RT#47865, RT#56783, RT#52474).  (Karen Etheridge)
 
   * MooseX::Getopt::Basic
     - Disable auto_help config in Getopt::Long, to avoid calling into
     pod2usage when the --help option is used while MooseX::ConfigFromFile
     is in use (the intent is just to fetch the value of the configfile
-    option).  (RT#57683) (Karen Etheridge)
+    option) (RT#57683). (Karen Etheridge)
 
 0.29 Tue. Jun 15 2010
   * Fix repository metadata. Thanks Robert Bohne for noticing!
