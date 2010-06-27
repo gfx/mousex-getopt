@@ -39,7 +39,9 @@ my $fail_on_exit = 1;
     1;
 }
 
-use Test::More tests => 1;
+use Test::More tests => 3;
+use Test::Warn;
+use Test::Exception;
 
 END {
     ok(!$fail_on_exit, 'getoptions() lives');
@@ -50,5 +52,12 @@ END {
 
 
 @ARGV = ('--help');
-Class->new_with_options;
+
+warning_like {
+    throws_ok { Class->new_with_options }
+        qr/^usage: [\d\w]+\Q.t [long options...]\E.\t--configfile\s*.\t--help/ms,
+        'usage information looks good';
+    }
+    qr/^Specified configfile \'this_value_unimportant\' does not exist, is empty, or is not readable$/,
+    'Our dummy config file doesn\'t exist';
 
