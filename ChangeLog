@@ -1,5 +1,10 @@
 Revision history for Perl extension MooseX-Getopt
   * MooseX::Getopt::Basic
+    - uses attribute insertion order when determining the order in which
+      options are documented in the usage (e.g. in $obj->usage->text). (Karen
+      Etheridge)
+
+  * MooseX::Getopt::Basic
     - store the usage object to the usage attr (RT#58715)
     - properly checks whether the *option* --help, --usage, or --? were used,
       rather than the attribute 'help', 'usage' or '?' were set

@@ -158,6 +158,7 @@ sub _traditional_spec {
 
 sub _compute_getopt_attrs {
     my $class = shift;
+    sort { $a->insertion_order <=> $b->insertion_order }
     grep {
         $_->does("MooseX::Getopt::Meta::Attribute::Trait")
             or
