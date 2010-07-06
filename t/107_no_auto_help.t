@@ -7,7 +7,13 @@
 # Summary: If we disable the "auto_help" option in Getopt::Long, then
 # getoptions() will not call into pod2usage() (causing program termination)
 # when --help is passed (and MooseX::ConfigFromFile is in use).
+use strict;
+use warnings;
 
+use Test::More;
+
+plan skip_all => 'This test needs MooseX::SimpleConfig 0.07'
+    unless eval { require MooseX::SimpleConfig && MooseX::SimpleConfig->VERSION(0.07); };
 
 my $fail_on_exit = 1;
 {
@@ -34,12 +40,13 @@ my $fail_on_exit = 1;
     1;
 }
 
-use Test::More tests => 3;
 use Test::Warn;
 use Test::Exception;
 
 END {
     ok(!$fail_on_exit, 'getoptions() lives');
+
+    done_testing;
 
     # cancel the non-zero exit status from _getopt_full_usage()
     exit 0;
