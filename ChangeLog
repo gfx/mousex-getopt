@@ -1,4 +1,6 @@
 Revision history for Perl extension MooseX-Getopt
+
+0.30 Tue 6 Jul 2010
   * MooseX::Getopt::Basic
     - uses attribute insertion order when determining the order in which
       options are documented in the usage (e.g. in $obj->usage->text). (Karen
