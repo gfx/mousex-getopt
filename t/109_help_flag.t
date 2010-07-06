@@ -29,7 +29,7 @@ use Test::Exception;
 
 # before fix, prints this on stderr:
 #Unknown option: ?
-#usage: test1.t 
+#usage: test1.t
 
 # after fix, prints this on stderr:
 #usage: test1.t [-?] [long options...]
