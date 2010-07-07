@@ -1,5 +1,8 @@
 Revision history for Perl extension MooseX-Getopt
 
+0.31 Wed 7 Jul 2010
+  * Fix issue causing tests to fail if MooseX::SimpleConfig isn't installed.
+
 0.30 Tue 6 Jul 2010
   * MooseX::Getopt::Basic
     - uses attribute insertion order when determining the order in which
