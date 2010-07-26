@@ -1,18 +1,18 @@
 use strict;
 use warnings;
 use Test::More;
-use Moose ();
-use Moose::Meta::Class;
+use Mouse ();
+use Mouse::Meta::Class;
 
 foreach my $role (qw/
-    MooseX::Getopt
-    MooseX::Getopt::GLD
-    MooseX::Getopt::Basic
+    MouseX::Getopt
+    MouseX::Getopt::GLD
+    MouseX::Getopt::Basic
 /) {
-    Class::MOP::load_class($role);
+    Mouse::Util::load_class($role);
 
-    my $meta = Moose::Meta::Class->create_anon_class(
-        superclasses => ['Moose::Object'],
+    my $meta = Mouse::Meta::Class->create_anon_class(
+        superclasses => ['Mouse::Object'],
     );
     $meta->add_attribute('Debug', traits => ['Getopt'], isa => 'Bool',
         cmd_aliases => ['d'], is => 'ro');

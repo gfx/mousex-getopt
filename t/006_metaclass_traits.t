@@ -4,20 +4,20 @@ use strict;
 use warnings;
 
 use Test::More tests => 69;
-use Test::Moose;
+use Test::Mouse;
 
 BEGIN {
-    use_ok('MooseX::Getopt');
+    use_ok('MouseX::Getopt');
 }
 
 {
     package App;
-    use Moose;
+    use Mouse;
 
-    with 'MooseX::Getopt';
+    with 'MouseX::Getopt';
 
     has 'data' => (
-        traits    => [ 'MooseX::Getopt::Meta::Attribute::Trait' ],
+        traits    => [ 'MouseX::Getopt::Meta::Attribute::Trait' ],
         is        => 'ro',
         isa       => 'Str',
         default   => 'file.dat',
@@ -82,8 +82,8 @@ BEGIN {
 
 foreach my $attr_name (qw(data cow horse _private_stuff_cmdline)) {
     my $attr = App->meta->get_attribute($attr_name);
-    isa_ok($attr, 'Moose::Meta::Attribute');
-    does_ok($attr, 'MooseX::Getopt::Meta::Attribute::Trait');
+    isa_ok($attr, 'Mouse::Meta::Attribute');
+    does_ok($attr, 'MouseX::Getopt::Meta::Attribute::Trait');
 
     can_ok($attr, 'cmd_flag');
     can_ok($attr, 'cmd_aliases');

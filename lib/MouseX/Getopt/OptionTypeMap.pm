@@ -1,8 +1,8 @@
-package MooseX::Getopt::OptionTypeMap;
+package MouseX::Getopt::OptionTypeMap;
 # ABSTRACT: Storage for the option to type mappings
 
-use Moose 'confess', 'blessed';
-use Moose::Util::TypeConstraints 'find_type_constraint';
+use Mouse 'confess', 'blessed';
+use Mouse::Util::TypeConstraints 'find_type_constraint';
 
 my %option_type_map = (
     'Bool'     => '!',
@@ -66,14 +66,14 @@ sub add_option_type_to_map {
     $option_type_map{$type_name} = $option_string;
 }
 
-no Moose::Util::TypeConstraints;
-no Moose;
+no Mouse::Util::TypeConstraints;
+no Mouse;
 
 1;
 
 =head1 DESCRIPTION
 
-See the I<Custom Type Constraints> section in the L<MooseX::Getopt> docs
+See the I<Custom Type Constraints> section in the L<MouseX::Getopt> docs
 for more info about how to use this module.
 
 =method B<has_option_type ($type_or_name)>

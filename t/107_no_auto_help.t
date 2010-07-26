@@ -6,15 +6,15 @@
 
 # Summary: If we disable the "auto_help" option in Getopt::Long, then
 # getoptions() will not call into pod2usage() (causing program termination)
-# when --help is passed (and MooseX::ConfigFromFile is in use).
+# when --help is passed (and MouseX::ConfigFromFile is in use).
 use strict;
 use warnings;
 
 use Test::More;
 
 BEGIN {
-plan skip_all => 'This test needs MooseX::SimpleConfig 0.07'
-    unless eval { require MooseX::SimpleConfig && MooseX::SimpleConfig->VERSION(0.07); };
+plan skip_all => 'This test needs MouseX::SimpleConfig 0.07'
+    unless eval { require MouseX::SimpleConfig && MouseX::SimpleConfig->VERSION(0.07); };
 }
 
 my $fail_on_exit = 1;
@@ -22,10 +22,10 @@ my $fail_on_exit = 1;
     package Class;
     use strict; use warnings;
 
-    use Moose;
+    use Mouse;
     with
-        'MooseX::SimpleConfig',
-        'MooseX::Getopt';
+        'MouseX::SimpleConfig',
+        'MouseX::Getopt';
 
     # this is a hacky way of being able to check that we made it past the
     # $opt_parser->getoptions() call in new_with_options, because it is
@@ -38,7 +38,7 @@ my $fail_on_exit = 1;
         },
     );
 
-    no Moose;
+    no Mouse;
     1;
 }
 

@@ -23,8 +23,8 @@ use Test::Exception;
 {
     package MyClass;
     use strict; use warnings;
-    use Moose;
-    with 'MooseX::Getopt';
+    use Mouse;
+    with 'MouseX::Getopt';
 }
 
 # before fix, prints this on stderr:

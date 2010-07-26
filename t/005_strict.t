@@ -7,15 +7,15 @@ use Test::More tests => 10;
 use Test::Exception;
 
 BEGIN {
-    use_ok('MooseX::Getopt');
+    use_ok('MouseX::Getopt');
 }
 
 {
 
     package App;
-    use Moose;
+    use Mouse;
 
-    with 'MooseX::Getopt::Strict';
+    with 'MouseX::Getopt::Strict';
 
     has 'data' => (
         metaclass => 'Getopt',

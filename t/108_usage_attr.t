@@ -11,21 +11,21 @@ use Test::More tests => 3;
 {
     package MyClass;
     use strict; use warnings;
-    use Moose;
-    with 'MooseX::Getopt';
+    use Mouse;
+    with 'MouseX::Getopt';
 }
 
-Moose::Meta::Class->create('MyClassWithBasic',
+Mouse::Meta::Class->create('MyClassWithBasic',
     superclasses => ['MyClass'],
-    roles => [ 'MooseX::Getopt::Basic' ],
+    roles => [ 'MouseX::Getopt::Basic' ],
 );
 
 my $basic_obj = MyClassWithBasic->new_with_options();
 ok(!$basic_obj->meta->has_attribute('usage'), 'basic class has no usage attribute');
 
-Moose::Meta::Class->create('MyClassWithGLD',
+Mouse::Meta::Class->create('MyClassWithGLD',
     superclasses => ['MyClass'],
-    roles => [ 'MooseX::Getopt' ],
+    roles => [ 'MouseX::Getopt' ],
 );
 
 my $gld_obj = MyClassWithGLD->new_with_options();

@@ -3,7 +3,7 @@
 # attributes, except the order is not deterministic (rather, it uses the order
 # in which the attributes are stored in the metaclass 'attributes' hash).
 # Let's sort them by insertion order, which should lead to nicer output:
-# If MooseX::Getopt is applied early, the help options will be on top
+# If MouseX::Getopt is applied early, the help options will be on top
 # the help options will always be on top (assuming this role is applied
 # early), followed by options added by parent classes and roles, and then
 # options added by this class.
@@ -15,8 +15,8 @@ use Test::Exception;
 {
     package MyClass;
     use strict; use warnings;
-    use Moose;
-    with 'MooseX::Getopt';
+    use Mouse;
+    with 'MouseX::Getopt';
 
     has $_ => (
         is => 'ro', isa => 'Str',
@@ -27,13 +27,13 @@ use Test::Exception;
 
 my $obj = MyClass->new_with_options();
 
-my $expected = <<USAGE;
+my $expected = <<'USAGE';
 usage: 110_sort_usage_by_attr_order.t [-?] [long options...]
-	-? --usage --help  Prints this usage information.
-	--foo              Documentation for "foo"
-	--bar              Documentation for "bar"
-	--baz              Documentation for "baz"
+    -? --usage --help  Prints this usage information.
+    --foo              Documentation for "foo"
+    --bar              Documentation for "bar"
+    --baz              Documentation for "baz"
 USAGE
-
+$expected =~ s/^[ ]{4}/\t/xmsg;
 is($obj->usage->text, $expected, 'Usage text has nicely sorted options');
 

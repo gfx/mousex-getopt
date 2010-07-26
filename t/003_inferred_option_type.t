@@ -6,17 +6,17 @@ use warnings;
 use Test::More tests => 5;
 
 BEGIN {
-    use_ok('MooseX::Getopt');
+    use_ok('MouseX::Getopt');
 }
 
 {
     package App;
-    use Moose;
-    use Moose::Util::TypeConstraints;
+    use Mouse;
+    use Mouse::Util::TypeConstraints;
 
     use Scalar::Util 'looks_like_number';
 
-    with 'MooseX::Getopt';
+    with 'MouseX::Getopt';
 
     subtype 'ArrayOfInts'
         => as 'ArrayRef'

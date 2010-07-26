@@ -1,11 +1,11 @@
-package MooseX::Getopt::GLD;
-# ABSTRACT: A Moose role for processing command line options with Getopt::Long::Descriptive
+package MouseX::Getopt::GLD;
+# ABSTRACT: A Mouse role for processing command line options with Getopt::Long::Descriptive
 
-use Moose::Role;
+use Mouse::Role;
 
 use Getopt::Long::Descriptive 0.081;
 
-with 'MooseX::Getopt::Basic';
+with 'MouseX::Getopt::Basic';
 
 has usage => (
     is => 'rw', isa => 'Getopt::Long::Descriptive::Usage',
@@ -48,7 +48,7 @@ sub _gld_spec {
                 # NOTE:
                 # remove this 'feature' because it didn't work
                 # all the time, and so is better to not bother
-                # since Moose will handle the defaults just
+                # since Mouse will handle the defaults just
                 # fine anyway.
                 # - SL
                 #( exists $opt->{default}  ? (default  => $opt->{default})  : () ),
@@ -64,7 +64,7 @@ sub _gld_spec {
     return ( \@options, \%name_to_init_arg );
 }
 
-no Moose::Role;
+no Mouse::Role;
 
 1;
 
@@ -72,9 +72,9 @@ no Moose::Role;
 
   ## In your class
   package My::App;
-  use Moose;
+  use Mouse;
 
-  with 'MooseX::Getopt::GLD';
+  with 'MouseX::Getopt::GLD';
 
   has 'out' => (is => 'rw', isa => 'Str', required => 1);
   has 'in'  => (is => 'rw', isa => 'Str', required => 1);
