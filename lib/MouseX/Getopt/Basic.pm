@@ -95,9 +95,10 @@ sub _parse_argv {
 
         return $class->_getopt_get_options(\%params, $opt_spec);
     };
+    my $e = $@;
 
     $class->_getopt_spec_warnings(@warnings) if @warnings;
-    $class->_getopt_spec_exception(\@warnings, $@) if $@;
+    $class->_getopt_spec_exception(\@warnings, $e) if $e;
 
     # Get a copy of the Getopt::Long-mangled @ARGV
     my $argv_mangled = [ @ARGV ];
