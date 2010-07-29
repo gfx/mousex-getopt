@@ -1,5 +1,9 @@
 Revision history for Perl extension MouseX-Getopt
 
+0.32 Thu Jul 29 20:21:56 JST 2010
+
+  * added workaround for $@ issue in Data::Util.
+
 0.31 Mon Jul 26 20:52:38 2010
   * Just copied from MooseX-Getopt 0.31. See MouseX-Getopt.diff for details.
 
