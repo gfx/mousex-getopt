@@ -91,7 +91,7 @@ else
 {
     local @ARGV = qw( --required_from_argv 1 );
 
-    throws_ok { App->new_with_options } qr/Required option missing: required_from_config/;
+    throws_ok { App->new_with_options } qr/Mandatory parameter 'required_from_config' missing/;
 
     {
         my $app = App::DefaultConfigFile->new_with_options;
@@ -160,7 +160,7 @@ else
 # Required arg not supplied from cmdline
 {
     local @ARGV = qw( --configfile /notused );
-    throws_ok { App->new_with_options } qr/Required option missing: required_from_argv/;
+    throws_ok { App->new_with_options } qr/Mandatory parameter 'required_from_argv' missing/;
 }
 
 # Config file value overriden from cmdline
