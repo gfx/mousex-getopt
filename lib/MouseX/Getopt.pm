@@ -73,7 +73,7 @@ specified by the C<--configfile> option (or the default you've
 given for the configfile attribute) for you.
 
 Options specified in multiple places follow the following
-precendence order: commandline overrides configfile, which
+precedence order: commandline overrides configfile, which
 overrides explicit new_with_options parameters.
 
 =head2 Supported Type Constraints
