@@ -1,5 +1,12 @@
 Revision history for Perl extension MouseX-Getopt
 
+0.33 Thu Jul 29 20:21:56 JST 2010
+
+  * GLD 0.097 no longer defaults to no_ignore_case
+    https://rt.cpan.org/Public/Bug/Display.html?id=93593
+    See also
+    https://github.com/moose/MooseX-Getopt/commit/c8459ee3ab47cdd7e0b1ccde1787f
+
 0.32 Thu Jul 29 20:21:56 JST 2010
 
   * added workaround for $@ issue in Data::Util.
