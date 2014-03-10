@@ -35,6 +35,8 @@ sub register_implementation { 'MouseX::Getopt::Meta::Attribute::Trait' }
 
 1;
 
+=for stopwords metaclass commandline params configfile
+
 =head1 SYNOPSIS
 
   package App;
@@ -68,18 +70,22 @@ This is a custom attribute metaclass trait which can be used to
 specify a the specific command line flag to use instead of the
 default one which L<MouseX::Getopt> will create for you.
 
-=method B<cmd_flag>
+=over 4
+
+=item B<cmd_flag>
 
 Changes the commandline flag to be this value, instead of the default,
 which is the same as the attribute name.
 
-=method B<cmd_aliases>
+=item B<cmd_aliases>
 
 Adds more aliases for this commandline flag, useful for short options
 and such.
 
-=method B<has_cmd_flag>
+=item B<has_cmd_flag>
 
-=method B<has_cmd_aliases>
+=item B<has_cmd_aliases>
+
+=back
 
 =cut

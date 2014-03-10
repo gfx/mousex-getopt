@@ -76,10 +76,14 @@ no Mouse;
 See the I<Custom Type Constraints> section in the L<MouseX::Getopt> docs
 for more info about how to use this module.
 
-=method B<has_option_type ($type_or_name)>
+=over 4
 
-=method B<get_option_type ($type_or_name)>
+=item B<has_option_type ($type_or_name)>
 
-=method B<add_option_type_to_map ($type_name, $option_spec)>
+=item B<get_option_type ($type_or_name)>
+
+=item B<add_option_type_to_map ($type_name, $option_spec)>
+
+=back
 
 =cut

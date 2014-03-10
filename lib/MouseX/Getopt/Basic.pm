@@ -258,8 +258,12 @@ no Mouse::Role;
 This is like L<MouseX::Getopt> and can be used instead except that it
 doesn't make use of L<Getopt::Long::Descriptive> (or "GLD" for short).
 
-=method new_with_options
+=over 4
+
+=item new_with_options
 
 See L<MouseX::Getopt/new_with_options>.
+
+=back
 
 =cut

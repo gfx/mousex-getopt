@@ -16,6 +16,8 @@ sub register_implementation { 'MouseX::Getopt::Meta::Attribute' }
 
 1;
 
+=for stopwords metaclass commandline params configfile
+
 =head1 SYNOPSIS
 
   package App;
@@ -60,18 +62,22 @@ use this as the B<Getopt> alias, like so:
 
   has 'foo' => (metaclass => 'Getopt', cmd_flag => 'f');
 
-=method B<cmd_flag>
+=over 4
+
+=item B<cmd_flag>
 
 Changes the commandline flag to be this value, instead of the default,
 which is the same as the attribute name.
 
-=method B<cmd_aliases>
+=item B<cmd_aliases>
 
 Adds more aliases for this commandline flag, useful for short options
 and such.
 
-=method B<has_cmd_flag>
+=item B<has_cmd_flag>
 
-=method B<has_cmd_aliases>
+=item B<has_cmd_aliases>
+
+=back
 
 =cut

@@ -15,6 +15,8 @@ sub register_implementation { 'MouseX::Getopt::Meta::Attribute::NoGetopt' }
 
 1;
 
+=for stopwords metaclass commandline
+
 =head1 SYNOPSIS
 
   package App;

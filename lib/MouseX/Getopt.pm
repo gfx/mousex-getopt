@@ -1,7 +1,7 @@
 package MouseX::Getopt;
 # ABSTRACT: A Mouse role for processing command line options
 
-our $VERSION="0.34";
+our $VERSION="0.35";
 
 use Mouse::Role;
 
@@ -10,6 +10,8 @@ with 'MouseX::Getopt::GLD';
 no Mouse::Role;
 
 1;
+
+=for stopwords metaclass commandline params configfile
 
 =head1 SYNOPSIS
 
@@ -184,7 +186,9 @@ type for it to the C<OptionTypeMap>, it would be treated just
 like a normal C<ArrayRef> type for Getopt purposes (that is,
 C<=s@>).
 
-=method B<new_with_options (%params)>
+=over 4
+
+=item B<new_with_options (%params)>
 
 This method will take a set of default C<%params> and then collect
 params from the command line (possibly overriding those in C<%params>)
@@ -209,30 +213,32 @@ B<documentation> option for each attribute to document.
 If you have L<Getopt::Long::Descriptive> the C<usage> param is also passed to
 C<new> as the usage option.
 
-=method B<ARGV>
+=item B<ARGV>
 
 This accessor contains a reference to a copy of the C<@ARGV> array
 as it originally existed at the time of C<new_with_options>.
 
-=method B<extra_argv>
+=item B<extra_argv>
 
 This accessor contains an arrayref of leftover C<@ARGV> elements that
 L<Getopt::Long> did not parse.  Note that the real C<@ARGV> is left
 un-mangled.
 
-=method B<usage>
+=item B<usage>
 
 This accessor contains the L<Getopt::Long::Descriptive::Usage> object (if
 L<Getopt::Long::Descriptive> is used).
 
-=method B<help_flag>
+=item B<help_flag>
 
 This accessor contains the boolean state of the --help, --usage and --?
 options (true if any of these options were passed on the command line).
 
-=method B<meta>
+=item B<meta>
 
 This returns the role meta object.
+
+=back
 
 =head1 AUTHORS
 
