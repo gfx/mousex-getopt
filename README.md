@@ -220,19 +220,19 @@ like a normal `ArrayRef` type for Getopt purposes (that is,
 # AUTHORS
 
 - NAKAGAWA Masaki <masaki@cpan.org>
-=item FUJI Goro <gfuji@cpan.org>
-=item Stevan Little <stevan@iinteractive.com>
-=item Brandon L. Black <blblack@gmail.com>
-=item Yuval Kogman <nothingmuch@woobling.org>
-=item Ryan D Johnson <ryan@innerfence.com>
-=item Drew Taylor <drew@drewtaylor.com>
-=item Tomas Doran <bobtfish@bobtfish.net>
-=item Florian Ragwitz <rafl@debian.org>
-=item Dagfinn Ilmari Mannsaker <ilmari@ilmari.org>
-=item Avar Arnfjord Bjarmason <avar@cpan.org>
-=item Chris Prather <perigrin@cpan.org>
-=item Mark Gardner <mjgardner@cpan.org>
-=item Tokuhiro Matsuno <tokuhirom@cpan.org>
+- FUJI Goro <gfuji@cpan.org>
+- Stevan Little <stevan@iinteractive.com>
+- Brandon L. Black <blblack@gmail.com>
+- Yuval Kogman <nothingmuch@woobling.org>
+- Ryan D Johnson <ryan@innerfence.com>
+- Drew Taylor <drew@drewtaylor.com>
+- Tomas Doran <bobtfish@bobtfish.net>
+- Florian Ragwitz <rafl@debian.org>
+- Dagfinn Ilmari Mannsaker <ilmari@ilmari.org>
+- Avar Arnfjord Bjarmason <avar@cpan.org>
+- Chris Prather <perigrin@cpan.org>
+- Mark Gardner <mjgardner@cpan.org>
+- Tokuhiro Matsuno <tokuhirom@cpan.org>
 
 # COPYRIGHT AND LICENSE
 

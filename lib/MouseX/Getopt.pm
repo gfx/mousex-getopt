@@ -245,18 +245,31 @@ This returns the role meta object.
 =over 4
 
 =item NAKAGAWA Masaki <masaki@cpan.org>
+
 =item FUJI Goro <gfuji@cpan.org>
+
 =item Stevan Little <stevan@iinteractive.com>
+
 =item Brandon L. Black <blblack@gmail.com>
+
 =item Yuval Kogman <nothingmuch@woobling.org>
+
 =item Ryan D Johnson <ryan@innerfence.com>
+
 =item Drew Taylor <drew@drewtaylor.com>
+
 =item Tomas Doran <bobtfish@bobtfish.net>
+
 =item Florian Ragwitz <rafl@debian.org>
+
 =item Dagfinn Ilmari Mannsaker <ilmari@ilmari.org>
+
 =item Avar Arnfjord Bjarmason <avar@cpan.org>
+
 =item Chris Prather <perigrin@cpan.org>
+
 =item Mark Gardner <mjgardner@cpan.org>
+
 =item Tokuhiro Matsuno <tokuhirom@cpan.org>
 
 =back
