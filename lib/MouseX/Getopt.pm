@@ -1,6 +1,8 @@
 package MouseX::Getopt;
 # ABSTRACT: A Mouse role for processing command line options
 
+our $VERSION="0.34";
+
 use Mouse::Role;
 
 with 'MouseX::Getopt::GLD';
@@ -231,5 +233,33 @@ options (true if any of these options were passed on the command line).
 =method B<meta>
 
 This returns the role meta object.
+
+=head1 AUTHORS
+
+=over 4
+
+=item NAKAGAWA Masaki <masaki@cpan.org>
+=item FUJI Goro <gfuji@cpan.org>
+=item Stevan Little <stevan@iinteractive.com>
+=item Brandon L. Black <blblack@gmail.com>
+=item Yuval Kogman <nothingmuch@woobling.org>
+=item Ryan D Johnson <ryan@innerfence.com>
+=item Drew Taylor <drew@drewtaylor.com>
+=item Tomas Doran <bobtfish@bobtfish.net>
+=item Florian Ragwitz <rafl@debian.org>
+=item Dagfinn Ilmari Mannsaker <ilmari@ilmari.org>
+=item Avar Arnfjord Bjarmason <avar@cpan.org>
+=item Chris Prather <perigrin@cpan.org>
+=item Mark Gardner <mjgardner@cpan.org>
+=item Tokuhiro Matsuno <tokuhirom@cpan.org>
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2012 by Infinity Interactive, Inc.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
