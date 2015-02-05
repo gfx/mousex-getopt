@@ -43,10 +43,17 @@ use Test::Exception;
     my $exp = [
          'Unknown option: q
 ',
+         $Getopt::Long::Descriptive::VERSION < 0.099 ?
          qq{usage: 104_override_usage.t [-?] [long options...]
 \t-? --usage --help  Prints this usage information.
 \t--foo              A foo
 }
+        :
+         qq{usage: 104_override_usage.t [-?] [long options...]
+\t-? --usage --help    Prints this usage information.
+\t--foo INT            A foo
+}
+
      ];
 
      is_deeply \@MyScript::exception, $exp;
