@@ -2,6 +2,9 @@ Revision history for Perl extension MouseX-Getopt
 
 {{$NEXT}}
 
+0.36 2015-04-02T00:04:11Z
+  * Fix tests that follow GLD changes (#6)
+
 0.35 2014-03-10T07:02:02Z
 
   * GLD 0.097 no longer defaults to no_ignore_case

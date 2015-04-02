@@ -75,7 +75,7 @@
          "web" : "https://github.com/gfx/mousex-getopt"
       }
    },
-   "version" : "0.35",
+   "version" : "0.36",
    "x_authority" : "cpan:GFUJI",
    "x_contributors" : [
       "Brandon L Black <blblack@gmail.com>",
