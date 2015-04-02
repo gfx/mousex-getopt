@@ -4,7 +4,7 @@
       "=over 4"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v0.11.1, CPAN::Meta::Converter version 2.133380",
+   "generated_by" : "Minilla/v2.3.0, CPAN::Meta::Converter version 2.133380",
    "license" : [
       "perl_5"
    ],
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "mousex-getopt",
+   "name" : "MouseX-Getopt",
    "no_index" : {
       "directory" : [
          "t",
@@ -28,15 +28,14 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "CPAN::Meta" : "0",
-            "CPAN::Meta::Prereqs" : "0",
             "Module::Build" : "0.38"
          }
       },
       "develop" : {
          "requires" : {
             "Test::CPAN::Meta" : "0",
-            "Test::MinimumVersion" : "0.10108",
+            "Test::MinimumVersion::Fast" : "0.04",
+            "Test::PAUSE::Permissions" : "0.04",
             "Test::Pod" : "1.41",
             "Test::Spellunker" : "v0.2.7"
          }
@@ -86,23 +85,24 @@
       "Chris Prather <chris@prather.org>",
       "Stevan Little <stevan.little@iinteractive.com>",
       "Yuval Kogman <nothingmuch@woobling.org>",
-      "Dagfinn Ilmari MannsÃ¥ker <ilmari@ilmari.org>",
+      "Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>",
       "Hans Dieter Pearcey <hdp@weftsoar.net>",
       "Nelo Onyiah <nelo.onyiah@gmail.com>",
       "Ricardo SIGNES <rjbs@cpan.org>",
       "Devin Austin <devin@devin-laptop.(none)>",
       "Gordon Irving <goraxe@goraxe.me.uk>",
       "Shlomi Fish <shlomif@iglu.org.il>",
-      "Hinrik Ãrn SigurÃ°sson <hinrik.sig@gmail.com>",
+      "Hinrik Örn Sigurðsson <hinrik.sig@gmail.com>",
       "Tomas Doran (t0m) <t0m@state51.co.uk>",
-      "Ãvar ArnfjÃ¶rÃ° Bjarmason <avarab@gmail.com>",
+      "Ævar Arnfjörð Bjarmason <avarab@gmail.com>",
       "Jesse Luehrs <doy@tozt.net>",
       "Florian Ragwitz <rafl@debian.org>",
       "Karen Etheridge <karen@etheridge.ca>",
       "Justin Hunter <justin.d.hunter@gmail.com>",
       "Tomas Doran <bobtfish@bobtfish.net>",
       "Mark Gardner <gardnerm@gsicommerce.com>",
-      "Fuji, Goro <gfuji@cpan.org>",
-      "Tokuhiro Matsuno <tokuhirom@gmail.com>"
+      "Tokuhiro Matsuno <tokuhirom@gmail.com>",
+      "Paul Howarth <paul@city-fan.org>",
+      "FUJI Goro (gfx) <gfuji@cpan.org>"
    ]
 }
