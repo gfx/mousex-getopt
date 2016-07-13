@@ -34,7 +34,7 @@ usage: 110_sort_usage_by_attr_order.t [-?] [long options...]
     --bar              Documentation for "bar"
     --baz              Documentation for "baz"
 USAGE
-if ( $Getopt::Long::Descriptive::VERSION >= 0.099 )
+if ( $Getopt::Long::Descriptive::VERSION == 0.099 )
 {
 $expected = <<'USAGE';
 usage: 110_sort_usage_by_attr_order.t [-?] [long options...]
@@ -42,6 +42,16 @@ usage: 110_sort_usage_by_attr_order.t [-?] [long options...]
     --foo STR            Documentation for "foo"
     --bar STR            Documentation for "bar"
     --baz STR            Documentation for "baz"
+USAGE
+}
+if ( $Getopt::Long::Descriptive::VERSION >= 0.100 )
+{
+$expected = <<'USAGE';
+usage: 110_sort_usage_by_attr_order.t [-?] [long options...]
+    -? --usage --help  Prints this usage information.
+    --foo STR          Documentation for "foo"
+    --bar STR          Documentation for "bar"
+    --baz STR          Documentation for "baz"
 USAGE
 }
 $expected =~ s/^[ ]{4}/\t/xmsg;
