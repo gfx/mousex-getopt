@@ -167,7 +167,7 @@ type for it to the `OptionTypeMap`, it would be treated just
 like a normal `ArrayRef` type for Getopt purposes (that is,
 `=s@`).
 
-- __new\_with\_options (%params)__
+- **new\_with\_options (%params)**
 
     This method will take a set of default `%params` and then collect
     params from the command line (possibly overriding those in `%params`)
@@ -183,7 +183,7 @@ like a normal `ArrayRef` type for Getopt purposes (that is,
     command line params are passed, the program will exit with usage
     information (and the option's state will be stored in the help\_flag
     attribute). You can add descriptions for each option by including a
-    __documentation__ option for each attribute to document.
+    **documentation** option for each attribute to document.
 
         --?
         --help
@@ -192,28 +192,28 @@ like a normal `ArrayRef` type for Getopt purposes (that is,
     If you have [Getopt::Long::Descriptive](https://metacpan.org/pod/Getopt::Long::Descriptive) the `usage` param is also passed to
     `new` as the usage option.
 
-- __ARGV__
+- **ARGV**
 
     This accessor contains a reference to a copy of the `@ARGV` array
     as it originally existed at the time of `new_with_options`.
 
-- __extra\_argv__
+- **extra\_argv**
 
     This accessor contains an arrayref of leftover `@ARGV` elements that
     [Getopt::Long](https://metacpan.org/pod/Getopt::Long) did not parse.  Note that the real `@ARGV` is left
     un-mangled.
 
-- __usage__
+- **usage**
 
     This accessor contains the [Getopt::Long::Descriptive::Usage](https://metacpan.org/pod/Getopt::Long::Descriptive::Usage) object (if
     [Getopt::Long::Descriptive](https://metacpan.org/pod/Getopt::Long::Descriptive) is used).
 
-- __help\_flag__
+- **help\_flag**
 
     This accessor contains the boolean state of the --help, --usage and --?
     options (true if any of these options were passed on the command line).
 
-- __meta__
+- **meta**
 
     This returns the role meta object.
 
