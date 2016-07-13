@@ -75,7 +75,7 @@
          "web" : "https://github.com/gfx/mousex-getopt"
       }
    },
-   "version" : "0.36",
+   "version" : "0.37",
    "x_authority" : "cpan:GFUJI",
    "x_contributors" : [
       "Brandon L Black <blblack@gmail.com>",
@@ -104,6 +104,7 @@
       "Tokuhiro Matsuno <tokuhirom@gmail.com>",
       "FUJI Goro (gfx) <gfuji@cpan.org>",
       "Paul Howarth <paul@city-fan.org>",
-      "FUJI Goro <gfx@users.noreply.github.com>"
+      "FUJI Goro <gfx@users.noreply.github.com>",
+      "FUJI Goro <goro.fuji@ebookjapan.co.jp>"
    ]
 }
