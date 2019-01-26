@@ -217,16 +217,6 @@ like a normal `ArrayRef` type for Getopt purposes (that is,
 
     This returns the role meta object.
 
-# DEVELOPMENT
-
-This repository is managed by [Minilla](https://metacpan.org/pod/Minilla)
-
-```shell
-$ cpanm Minilla # to install minil(1)
-$ minil test
-$ minil release
-```
-
 # AUTHORS
 
 - NAKAGAWA Masaki <masaki@cpan.org>
