@@ -18,3 +18,7 @@ MANIFEST.bak
 !Build/
 !META.json
 !LICENSE
+/local/
+MYMETA.json
+MYMETA.yml
+cpanfile.snapshot
