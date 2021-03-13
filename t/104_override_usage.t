@@ -61,9 +61,17 @@ use Test::Exception;
 \t--foo INT          A foo
 }
         :
+         $Getopt::Long::Descriptive::VERSION < 0.106 ?
          qq{usage: 104_override_usage.t [-?] [long options...]
 \t-? --[no-]usage --[no-]help       Prints this usage information.
 \t--foo INT                         A foo
+}
+        :
+         qq{usage: 104_override_usage.t [-?] [long options...]
+\t--[no-]help (or -?)  Prints
+\t             this usage information.
+\t             aka --usage
+\t--foo INT    A foo
 }
 
      ];
