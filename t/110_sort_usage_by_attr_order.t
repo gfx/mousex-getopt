@@ -64,12 +64,12 @@ usage: 110_sort_usage_by_attr_order.t [-?] [long options...]
     --baz STR                         Documentation for "baz"
 USAGE
 }
-if ( $Getopt::Long::Descriptive::VERSION >= 0.106 )
+# Note: Getopt::Long::Descriptive 0.106 not supported
+if ( $Getopt::Long::Descriptive::VERSION >= 0.107 )
 {
 $expected = <<'USAGE';
 usage: 110_sort_usage_by_attr_order.t [-?] [long options...]
-    --[no-]help (or -?)  Prints
-                 this usage information.
+    --[no-]help (or -?)  Prints this usage information.
                  aka --usage
     --foo STR    Documentation for "foo"
     --bar STR    Documentation for "bar"
