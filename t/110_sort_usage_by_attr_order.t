@@ -76,6 +76,6 @@ usage: 110_sort_usage_by_attr_order.t [-?] [long options...]
     --baz STR    Documentation for "baz"
 USAGE
 }
-$expected =~ s/^[ ]{4}/\t/xmsg;
+$expected =~ s/^[ ]{4}/\t/xmsg unless $Getopt::Long::Descriptive::VERSION >= 0.113;
 is($obj->usage->text, $expected, 'Usage text has nicely sorted options');
 
