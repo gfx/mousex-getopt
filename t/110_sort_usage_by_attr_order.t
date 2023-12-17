@@ -64,6 +64,18 @@ usage: 110_sort_usage_by_attr_order.t [-?] [long options...]
     --baz STR                         Documentation for "baz"
 USAGE
 }
-$expected =~ s/^[ ]{4}/\t/xmsg;
+# Note: Getopt::Long::Descriptive 0.106 not supported
+if ( $Getopt::Long::Descriptive::VERSION >= 0.107 )
+{
+$expected = <<'USAGE';
+usage: 110_sort_usage_by_attr_order.t [-?] [long options...]
+    --[no-]help (or -?)  Prints this usage information.
+                 aka --usage
+    --foo STR    Documentation for "foo"
+    --bar STR    Documentation for "bar"
+    --baz STR    Documentation for "baz"
+USAGE
+}
+$expected =~ s/^[ ]{4}/\t/xmsg unless $Getopt::Long::Descriptive::VERSION >= 0.113;
 is($obj->usage->text, $expected, 'Usage text has nicely sorted options');
 
